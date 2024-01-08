@@ -1,7 +1,7 @@
-interface Weapon {
+export interface Weapon {
     name: string;
     impactPower: number | string;
-    type: 'Shell' | 'Energy' | 'Missile';
+    type: 'Shell' | 'Energy' | 'Missile' | 'Combat' | '';
     range: number | string;
     costMod: number;
     costSpeed: number;
@@ -9,7 +9,7 @@ interface Weapon {
     primed: string;
 };
 
-const weapons: Weapon[] = [
+export const weapons: Weapon[] = [
     {
         name: 'Accelator',
         impactPower: 4,

@@ -1,4 +1,4 @@
-interface Mine {
+export interface Mine {
     name: string;
     range: number;
     impactPower: number;
@@ -7,7 +7,7 @@ interface Mine {
     effects: string;
 };
 
-const mines: Mine[] = [
+export const mines: Mine[] = [
     {
         name: 'Nova',
         range: 5,

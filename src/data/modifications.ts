@@ -1,9 +1,9 @@
-interface SpecialEffect {
+export interface SpecialEffect {
     prop: string;
     value: number;
 };
 
-interface Modification {
+export interface Modification {
     name: string;
     effect: string;
     costMod: number;
@@ -18,7 +18,7 @@ interface Modification {
 //Required to lay mines in the Arena. Comes with 1 type of Mine included. Further Mines
 //can be taken at the cost listed below.
 
-const rigModifications: Modification[] = [
+export const rigModifications: Modification[] = [
     {
         name: 'Mine Launcher',
         effect: `Cannot be modified .
@@ -171,7 +171,7 @@ const rigModifications: Modification[] = [
     },
 ];
 
-const weaponModifications: Modification[] = [
+export const weaponModifications: Modification[] = [
     {
         name: 'Annihilator Module',
         effect: `Add +4 to this Weaponʼs Impact Power total.
