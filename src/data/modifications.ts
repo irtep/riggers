@@ -8,7 +8,7 @@ export interface Modification {
     effect: string;
     costMod: number;
     costSpeed: number;
-    specialEffect?: SpecialEffect;
+    specialEffect?: SpecialEffect[];
     onePerWeapon?: boolean;
     onePerRig?: boolean;
 };
@@ -48,10 +48,12 @@ export const rigModifications: Modification[] = [
         reroll a failed Handling Test.`,
         costMod: 1,
         costSpeed: 0,
-        specialEffect: {
-            prop: 'handling',
-            value: 1
-        }
+        specialEffect: [
+            {
+                prop: 'handling',
+                value: 1
+            }
+        ]
     },
     {
         name: 'Decoy Flare Launcher',
@@ -150,10 +152,12 @@ export const rigModifications: Modification[] = [
         effect: `A Rig with this Modification rounds its final Speed value up to the nearest 5 instead of down.`,
         costMod: 0,
         costSpeed: 0,
-        specialEffect: {
-            prop: 'handling',
-            value: -2
-        }
+        specialEffect: [
+            {
+                prop: 'handling',
+                value: -2
+            }
+        ]
     },
     {
         name: 'Target Acquisition System',

@@ -105,7 +105,6 @@ export const familiarWeapons: Weapon[] = [
     }
 ];
 
-// gotta check those special effects for familiars still
 const familiarModifications: Modification[] = [
     {
         name: `Familiar Armour Plating`,
@@ -153,7 +152,17 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        specialEffect: [
+            {
+                prop: 'speed',
+                value: 5
+            },
+            {
+                prop: 'armour',
+                value: 3
+            }
+        ]
     },
     {
         name: `Warden
@@ -165,7 +174,17 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        specialEffect: [
+            {
+                prop: 'speed',
+                value: 5
+            },
+            {
+                prop: 'armour',
+                value: 5
+            }
+        ]
     },
     {
         name: `Comet Fire Combat
@@ -179,7 +198,17 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        specialEffect: [
+            {
+                prop: 'speed',
+                value: 15
+            },
+            {
+                prop: 'armour',
+                value: 3
+            }
+        ]
     },
     {
         name: `Shreik Amp`,

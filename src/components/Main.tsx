@@ -11,7 +11,9 @@ const Main: React.FC = (): React.ReactElement => {
     const [handling, setHandling] = useState<number>(6);
     const [resistanceFields, setResistanceFields] = useState<number>(0);
     const [emptySlots, setEmptySlots] = useState<number>(6);
-    const [specials, setSpecials] = useState<string>('');
+    //const [specials, setSpecials] = useState<string>('');
+    const [selectedWeapons, setSelectedWeapons] = useState<string[]>([]);
+    const [mods, setMods] = useState<string[]>([]);
     
     useEffect( () => {
         
@@ -20,10 +22,14 @@ const Main: React.FC = (): React.ReactElement => {
 
     }, [speed]);
 
+    useEffect( () => {
+      console.log('selected weapons: ', selectedWeapons);   
+    });
+
     return (
         <Container sx={{
-            margin: 5,
-            padding: 5
+            margin: 1,
+            padding: 1
         }}>
             {
                 (mode === 'main') ?
@@ -51,6 +57,10 @@ const Main: React.FC = (): React.ReactElement => {
                           setResistanceFields={setResistanceFields}
                           emptySlots={emptySlots}
                           setEmptySlots={setEmptySlots}
+                          mods={mods}
+                          setMods={setMods}
+                          selectedWeapons={selectedWeapons}
+                          setSelectedWeapons={setSelectedWeapons}
                         />
                     </> :
                     <></>

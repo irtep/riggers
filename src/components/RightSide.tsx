@@ -1,7 +1,8 @@
 import { Container, Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
+import { CreateProps } from './Create';
 
-const RightSide: React.FC = (): React.ReactElement => {
+const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
     return (
         <Grid item xs={6}>
             <Paper sx={{

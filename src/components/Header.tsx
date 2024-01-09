@@ -4,12 +4,12 @@ import React from 'react';
 const Header: React.FC = (): React.ReactElement => {
     return (
         <Container sx={{
-            background: "darkBlue",
-            color: "rgb(170,170,170)",
+            background: "rgb(80,80,80)",
+            color: "orange",
             borderRadius: 2
         }}>
 
-            <Typography variant="h2">
+            <Typography variant="h2" align='center'>
                 * Steelhearts Rig Garage *
             </Typography>
 

@@ -8,7 +8,7 @@ interface Ammunition {
     desc: string;
 }
 
-const gunnerSpecials: GunnerSpecial[] = [
+export const gunnerSpecials: GunnerSpecial[] = [
     {
         name: `Brace of grenades`,
         desc: `Once per Round , during your own Action, your Gunner

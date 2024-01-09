@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 
 const App : React.FC = () : React.ReactElement => {
   return (
-    <Container>
+    <Container sx={{ background: "black", padding: 1}}>
       <Header/>
       <Main/>
       <Footer/>
