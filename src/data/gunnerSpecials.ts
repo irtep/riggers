@@ -1,11 +1,13 @@
-interface GunnerSpecial {
+export interface GunnerSpecial {
     name: string;
     desc: string;
+    whatIsThis: 'gunnerSpecial';
 };
 
-interface Ammunition {
+export interface Ammunition {
     name: string;
     desc: string;
+    whatIsThis: 'ammunition';
 }
 
 export const gunnerSpecials: GunnerSpecial[] = [
@@ -21,7 +23,8 @@ export const gunnerSpecials: GunnerSpecial[] = [
         Detonate [5cm].
         ● Flash Shock Grenade : Deals 0 Damage. Targets hit
         cannot activate Crew Specialties for the duration of
-        the current Action.`
+        the current Action.`,
+        whatIsThis: 'gunnerSpecial'
     },
     {
         name: `Eye of the hunter`,
@@ -29,7 +32,8 @@ export const gunnerSpecials: GunnerSpecial[] = [
         Evasion Attempt results by -1; also, apply this Specialty's
         eﬀect to a single re-rolled Evasion Attempt. The use of this
         Speciality must be declared at the same time the target of the
-        Attack is declared.`
+        Attack is declared.`,
+        whatIsThis: 'gunnerSpecial'
     },
     {
         name: `Tactical distraction`,
@@ -40,11 +44,12 @@ export const gunnerSpecials: GunnerSpecial[] = [
         Evasion Attempt results when trying to evade their Attack.
         However, Attacks made with this Speciality may not use
         Primer to activate their Specialities and the same Weapon
-        cannot be used during your next Action.`
+        cannot be used during your next Action.`,
+        whatIsThis: 'gunnerSpecial'
     },
     {
         name: `The right tool`,
-        desc: `Choose 3 items from the table on the next page; the same
+        desc: `Choose 3 items from the table; the same
         item can be taken multiple times. The Player must declare
         they are using the ammunition before they declare their
         target. A Weapon can only fire 1 type of ammunition each
@@ -55,7 +60,8 @@ export const gunnerSpecials: GunnerSpecial[] = [
         ammunition can be used with a Familiarʼs Weapons ( The
         Rigʼs Gunner has preloaded some of the ammunition into the
         Familiar before the Event); although a Familiar cannot use
-        the ʻDrastic Payloadʼ ammunition.`
+        the ʻDrastic Payloadʼ ammunition.`,
+        whatIsThis: 'gunnerSpecial'
     },
     {
         name: `Itchy tinker fingers`,
@@ -72,7 +78,8 @@ export const gunnerSpecials: GunnerSpecial[] = [
         Event with 1 Primer.
         3. Honed Projectiles: +1 to all of this Weaponʼs Impact
         Power results.
-        4. Adept Tinker : Choose two of the options above.`
+        4. Adept Tinker : Choose two of the options above.`,
+        whatIsThis: 'gunnerSpecial'
     },
     {
         name: `Trigger happy`,
@@ -85,7 +92,8 @@ export const gunnerSpecials: GunnerSpecial[] = [
         Attacks made this way may not use Primer to activate their
         Specialities. This Speciality can be used in conjunction
         with a Weapon equipped to a Familiar, but not from the
-        Driver Specialty ʻConcealed Weaponʼ or a Mine Launcher.`
+        Driver Specialty ʻConcealed Weaponʼ or a Mine Launcher.`,
+        whatIsThis: 'gunnerSpecial'
     },
     {
         name: `Severe precision`,
@@ -93,7 +101,8 @@ export const gunnerSpecials: GunnerSpecial[] = [
         the target's armour with ease and knows exactly how to exploit
         them. Once per Round, you may reroll up to 2 of your
         Weaponʼs Impact Power dice when rolling as a result of that
-        Weapon dealing Damage.`
+        Weapon dealing Damage.`,
+        whatIsThis: 'gunnerSpecial'
     },
     {
         name: `Veteran dogfighter`,
@@ -102,52 +111,62 @@ export const gunnerSpecials: GunnerSpecial[] = [
         needing to reduce your Momentum. Additionally, your
         target cannot be Obscured by any means and modifiers or
         rules of any kind that would normally be applied to Evasion
-        Attempts by the target are negated.`
+        Attempts by the target are negated.`,
+        whatIsThis: 'gunnerSpecial'
     },
     {
         name: `Familiar`,
         desc: `Your Gunner is an adept robotics enthusiast and has
         created a personal, remote control, cybernetic assistant to
-        use in the Arena.`
+        use in the Arena.`,
+        whatIsThis: 'gunnerSpecial'
     },
 ];
 
 const ammunitions: Ammunition[] = [
     {
         name: `Overcharger Cell`,
-        desc: `An Energy Weapon using this ammo increases the number of Impact Power dice it rolls by 1.`
+        desc: `An Energy Weapon using this ammo increases the number of Impact Power dice it rolls by 1.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Hammer Shells`,
-        desc: `A Shell Weapon using this ammo increases the number of Impact Power dice it rolls by 1.`
+        desc: `A Shell Weapon using this ammo increases the number of Impact Power dice it rolls by 1.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Thermite Warheads`,
-        desc: `A Missile Weapon using this ammo increases the number of Impact Power dice it rolls by 1.`
+        desc: `A Missile Weapon using this ammo increases the number of Impact Power dice it rolls by 1.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Nullifiers`,
         desc: `If it hits, an Attack made by an Energy Weapon using this ammo deals 0 Damage but the target
-        must discard 1 Primer Token if they have any.`
+        must discard 1 Primer Token if they have any.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Corrosive Cores`,
-        desc: `A Shell Weapon using this ammo gains a Breacher (3+) Effect.`
+        desc: `A Shell Weapon using this ammo gains a Breacher (3+) Effect.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Whiplash Missiles`,
         desc: `An Attack made by a Missile Weapon using this ammo requires at least 2 successful Evasion
-        Attempts to be evaded.`
+        Attempts to be evaded.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Tracer Tags`,
         desc: `Attacks using this ammo deal 0 damage. If the Attack hits, any further Attacks you make for the
         remainder of this Action at the same target are considered Aimed Shots without needing to
-        reduce your Momentum.`
+        reduce your Momentum.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Decoy Flares`,
-        desc: `Allows your Decoy Flare Launcher to be used an additional time.`
+        desc: `Allows your Decoy Flare Launcher to be used an additional time.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Flash Shock Bombs`,
@@ -157,7 +176,8 @@ const ammunitions: Ammunition[] = [
         Flash Shock Bombs — Range [5cm], Impact Power n/a.
         Eﬀects: Deals 0 Damage. Cannot be evaded. A Target that is hit by this ammunition cannot activate
         Crew Specialties for the duration of the current Action. This Ammunition can only aﬀect targets that
-        are behind the rear half of the attacking Rigʼs base and does not aﬀect the attackerʼs own Rig.`
+        are behind the rear half of the attacking Rigʼs base and does not aﬀect the attackerʼs own Rig.`,
+        whatIsThis: 'ammunition'
     },    
     {
         name: `Drastic Payload`,
@@ -169,6 +189,7 @@ const ammunitions: Ammunition[] = [
         Once you have used this, your Rig is considered Charred. In addition to any Favour Points
         that you received for dealing Damage or Charring Rigs by using this item, you earn 2 additional
         Favour points for doing whatever it takes to get the win.
-        Self damage does not award Favour Points.`
+        Self damage does not award Favour Points.`,
+        whatIsThis: 'ammunition'
     },
 ];

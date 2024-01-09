@@ -11,6 +11,7 @@ export interface Modification {
     specialEffect?: SpecialEffect[];
     onePerWeapon?: boolean;
     onePerRig?: boolean;
+    whatIsThis: 'modification';
 };
 
 
@@ -26,13 +27,15 @@ export const rigModifications: Modification[] = [
         can be taken at the cost listed below.`,
         costMod: 1,
         costSpeed: 0,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Armour Plating',
         effect: `+3 Armour. A Rig can never have more than a total of 12 Armour.`,
         costMod: 1,
-        costSpeed: 2
+        costSpeed: 2,
+        whatIsThis: 'modification'
     },
 
     {
@@ -40,7 +43,8 @@ export const rigModifications: Modification[] = [
         effect: `The Impact Power results of all Shell type Weapon Attacks that target you are reduced by -3.
         Only one instance of these Modifications may be taken per Rig.`,
         costMod: 0,
-        costSpeed: 2
+        costSpeed: 2,
+        whatIsThis: 'modification'
     },
     {
         name: 'Computer Assisted Steering',
@@ -53,7 +57,8 @@ export const rigModifications: Modification[] = [
                 prop: 'handling',
                 value: 1
             }
-        ]
+        ],
+        whatIsThis: 'modification'
     },
     {
         name: 'Decoy Flare Launcher',
@@ -61,13 +66,15 @@ export const rigModifications: Modification[] = [
         the duration of the current Action. (1 use only) . Max one per rig`,
         costMod: 0,
         costSpeed: 0,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Decoy Flares',
         effect: `Increase the number of uses of your Decoy Flare Launcher by 1.`,
         costMod: 0,
-        costSpeed: 1
+        costSpeed: 1,
+        whatIsThis: 'modification'
     },
     {
         name: 'Exo-plate Panelling',
@@ -75,7 +82,8 @@ export const rigModifications: Modification[] = [
         MAX one per rig`,
         costMod: 0,
         costSpeed: 2,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Extended Chassis',
@@ -84,7 +92,8 @@ export const rigModifications: Modification[] = [
         MAX one per rig`,
         costMod: -1,
         costSpeed: 0,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Gunner',
@@ -93,14 +102,16 @@ export const rigModifications: Modification[] = [
         MAX one per rig`,
         costMod: 1,
         costSpeed: 0,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Polarised Matter Webbing',
         effect: `The Impact Power results of all Energy type Weapon Attacks that target you are reduced by -3.
         MAX one per rig`,
         costMod: 0,
-        costSpeed: 2
+        costSpeed: 2,
+        whatIsThis: 'modification'
     },
     {
         name: 'Reinforced Armour',
@@ -109,7 +120,8 @@ export const rigModifications: Modification[] = [
         Write the amount of Reinforced Armour your Rig has in brackets beside your Rigʼs Armour value. For
         example — Armour: 12 (1).`,
         costMod: 0,
-        costSpeed: 2
+        costSpeed: 2,
+        whatIsThis: 'modification'
     },
     {
         name: 'Resistance Field',
@@ -121,13 +133,15 @@ export const rigModifications: Modification[] = [
         MAX one per rigg`,
         costMod: 1,
         costSpeed: 0,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Resistance Field Capacitor',
         effect: `Provides 1 extra Layer to a Resistance Field.`,
         costMod: 1,
-        costSpeed: 0
+        costSpeed: 0,
+        whatIsThis: 'modification'
     },
     {
         name: 'Slam Ram',
@@ -145,11 +159,13 @@ export const rigModifications: Modification[] = [
         Armour, the target receives 1 Damage. MAX one per rig`,
         costMod: 1,
         costSpeed: 0,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Turbo Charger',
-        effect: `A Rig with this Modification rounds its final Speed value up to the nearest 5 instead of down.`,
+        effect: `A Rig with this Modification rounds its final Speed value up to the nearest 5 instead of down.
+        and -2 handling.`,
         costMod: 0,
         costSpeed: 0,
         specialEffect: [
@@ -157,7 +173,8 @@ export const rigModifications: Modification[] = [
                 prop: 'handling',
                 value: -2
             }
-        ]
+        ],
+        whatIsThis: 'modification'
     },
     {
         name: 'Target Acquisition System',
@@ -165,13 +182,15 @@ export const rigModifications: Modification[] = [
         only 1, rather than the normal 2. MAX one per rig`,
         costMod: 1,
         costSpeed: 0,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Hardened Chassis Floor',
         effect: `Reduce the total amount of Damage you receive from a Mine by -1 to a minimum of 0.`,
         costMod: 0,
-        costSpeed: 2
+        costSpeed: 2,
+        whatIsThis: 'modification'
     },
 ];
 
@@ -183,7 +202,8 @@ export const weaponModifications: Modification[] = [
         Only one instance of these Modifications can be taken per Weapon.`,
         costMod: 0,
         costSpeed: 3,
-        onePerWeapon: true
+        onePerWeapon: true,
+        whatIsThis: 'modification'
     },
 
     {
@@ -193,7 +213,8 @@ export const weaponModifications: Modification[] = [
         Only one instance of these Modifications can be taken per Weapon.`,
         costMod: 1,
         costSpeed: 0,
-        onePerWeapon: true
+        onePerWeapon: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Destructor Module',
@@ -202,7 +223,8 @@ export const weaponModifications: Modification[] = [
         MAX one per weapon`,
         costMod: 0,
         costSpeed: 1,
-        onePerWeapon: true
+        onePerWeapon: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Prototype Variant',
@@ -217,7 +239,8 @@ export const weaponModifications: Modification[] = [
         MAX one per weapon.`,
         costMod: 0,
         costSpeed: 2,
-        onePerWeapon: true
+        onePerWeapon: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Heavy Variant',
@@ -227,7 +250,8 @@ export const weaponModifications: Modification[] = [
         MAX one per weapon`,
         costMod: 1,
         costSpeed: 0,
-        onePerWeapon: true
+        onePerWeapon: true,
+        whatIsThis: 'modification'
     },
     {
         name: 'Omni-directional Mount',
@@ -236,6 +260,7 @@ export const weaponModifications: Modification[] = [
         MAX one per weapon`,
         costMod: 0,
         costSpeed: 1,
-        onePerWeapon: true
+        onePerWeapon: true,
+        whatIsThis: 'modification'
     }
 ];

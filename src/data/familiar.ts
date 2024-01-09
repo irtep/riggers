@@ -11,7 +11,8 @@ export const familiarWeapons: Weapon[] = [
         costMod: 1,
         costSpeed: 0,
         specialties: ``,
-        primed: `PARTICLE FOCUS`
+        primed: `PARTICLE FOCUS`,
+        whatIsThis: 'weapon'
     },
     {
         name: `Mawler Appendages`,
@@ -23,7 +24,8 @@ export const familiarWeapons: Weapon[] = [
         specialties: ``,
         primed: `BLAST-FORCE PISTONS : When rolling for this Weaponʼs
         Impact Power, you may roll 2 additonal Impact Power dice
-        and choose the 6 highest results.`
+        and choose the 6 highest results.`,
+        whatIsThis: 'weapon'
     },
     {
         name: `Pin-rod Spitter`,
@@ -33,7 +35,8 @@ export const familiarWeapons: Weapon[] = [
         costMod: 1,
         costSpeed: 0,
         specialties: ``,
-        primed: `BREACHER (3+)`
+        primed: `BREACHER (3+)`,
+        whatIsThis: 'weapon'
     },
     {
         name: `Scorch Tongue`,
@@ -43,7 +46,8 @@ export const familiarWeapons: Weapon[] = [
         costMod: 1,
         costSpeed: 0,
         specialties: ``,
-        primed: `SUSTAINED TRIGGER`
+        primed: `SUSTAINED TRIGGER`,
+        whatIsThis: 'weapon'
     },
     {
         name: `Shatter Pod Missiles`,
@@ -53,7 +57,8 @@ export const familiarWeapons: Weapon[] = [
         costMod: 1,
         costSpeed: 0,
         specialties: `Detonate [5cm]`,
-        primed: ``
+        primed: ``,
+        whatIsThis: 'weapon'
     },
     {
         name: `Starfall Missiles`,
@@ -64,7 +69,8 @@ export const familiarWeapons: Weapon[] = [
         costSpeed: 0,
         specialties: `Can only be equipped to a Familiar with a Comet Fire Combat
         Module.`,
-        primed: `FULL PAYLOAD`
+        primed: `FULL PAYLOAD`,
+        whatIsThis: 'weapon'
     },
     {
         name: `Thorax Mortar`,
@@ -77,7 +83,8 @@ export const familiarWeapons: Weapon[] = [
         Action in which this Weapon is used.
         Descending Destruction — Attacks with this Weapon ignore the
         Obscured rule.`,
-        primed: ``
+        primed: ``,
+        whatIsThis: 'weapon'
     },
     {
         name: `Shocking Barbs`,
@@ -88,7 +95,8 @@ export const familiarWeapons: Weapon[] = [
         costSpeed: 0,
         specialties: `Deals 0 Damage. If this attack hits, the targetʼs Resistance Field
         Layers are reduced by 1 until the end of the current Action.`,
-        primed: ``
+        primed: ``,
+        whatIsThis: 'weapon'
     },
     {
         name: `Vibro Drivers`,
@@ -101,7 +109,8 @@ export const familiarWeapons: Weapon[] = [
         and rock. If a Familiar is equipped with 2 Vibro Drivers, change
         this Weaponʼs Breacher Speciality to read ʻBreacher (2+)ʼ
         .`,
-        primed: `BREACHER (3+)`
+        primed: `BREACHER (3+)`,
+        whatIsThis: 'weapon'
     }
 ];
 
@@ -112,7 +121,8 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: false
+        onePerRig: false,
+        whatIsThis: 'modification'
     },
     {
         name: `MK. 1 Primer Capacitor
@@ -122,7 +132,8 @@ const familiarModifications: Modification[] = [
         costMod: 0,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: `MK.2 Primer Capacitor &
@@ -132,7 +143,8 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: `Agility
@@ -142,7 +154,8 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: `Destroyer
@@ -162,7 +175,8 @@ const familiarModifications: Modification[] = [
                 prop: 'armour',
                 value: 3
             }
-        ]
+        ],
+        whatIsThis: 'modification'
     },
     {
         name: `Warden
@@ -184,7 +198,8 @@ const familiarModifications: Modification[] = [
                 prop: 'armour',
                 value: 5
             }
-        ]
+        ],
+        whatIsThis: 'modification'
     },
     {
         name: `Comet Fire Combat
@@ -208,7 +223,8 @@ const familiarModifications: Modification[] = [
                 prop: 'armour',
                 value: 3
             }
-        ]
+        ],
+        whatIsThis: 'modification'
     },
     {
         name: `Shreik Amp`,
@@ -221,7 +237,8 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: `Static Haze Projector`,
@@ -233,7 +250,8 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     },
     {
         name: `Second Eye Module`,
@@ -244,6 +262,7 @@ const familiarModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: false,
-        onePerRig: true
+        onePerRig: true,
+        whatIsThis: 'modification'
     }
 ];

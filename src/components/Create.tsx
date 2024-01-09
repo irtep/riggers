@@ -3,6 +3,7 @@ import React from 'react';
 import LeftSide from './LeftSide';
 import RightSide from './RightSide';
 import { weapons, Weapon } from '../data/weapons';
+import { gunnerSpecials } from '../data/gunnerSpecials';
 
 export interface CreateProps {
     name: string;
@@ -22,6 +23,10 @@ export interface CreateProps {
     mods: string[];
     setSelectedWeapons: (value: string[]) => void;
     setMods: (value: string[]) => void;
+    hovered: any;
+    setHovered: (value: any) => void;
+    gunnerSpecial: string;
+    setGunnerSpecial: (value: string) => void;
 }
 
 const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
@@ -35,8 +40,10 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
             <Grid container spacing={3} margin={3}>
                 <Grid item xs={3}>
                     <Container>
-                        <Typography>
-                            Name of rig: <span style={{ color: "rgb(57,255,20)" }}>{props.name}</span><br />
+                        <Typography sx={{
+                            background: "black", color: "orange", fontWeight: "strong", padding: 1
+                        }}>
+                            Name of rig: {props.name}<br />
                         </Typography>
                         <Typography>
                             Chassis: <span style={{ color: "rgb(57,255,20)" }}>{props.chassis}</span><br />
@@ -60,45 +67,86 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                 </Grid>
                 <Grid item xs={3}>
                     <Typography>
-                        Weapons:
+                        <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                            Weapons:
+                        </span>
                         {
-                            props.selectedWeapons.map( (w: string, i: number) => {
-                               return(
-                                <Typography 
-                                    sx={{
-                                        margin: 1
-                                    }}
-                                    key={`sW: ${i}`}
-                                >
-                                    {w}
-                                </Typography>
-                               ) 
+                            props.selectedWeapons.map((w: string, i: number) => {
+                                return (
+                                    <Typography
+                                        onMouseEnter={() => {
+                                            //  props.setHovered(w);
+                                        }}
+                                        onMouseLeave={() => {
+                                            //  props.setHovered(undefined);
+                                        }}
+                                        sx={{
+                                            margin: 1
+                                        }}
+                                        key={`sW: ${i}`}
+                                    >
+                                        {w}
+                                    </Typography>
+                                )
                             })
                         }
                     </Typography>
                     <Typography>
-                        Modifications:
+                        <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                            Modifications:
+                        </span>
                         {
-                            props.mods.map( (m: string, i: number) => {
-                               return(
-                                <Typography 
-                                    sx={{
-                                        margin: 1
-                                    }}
-                                    key={`sm: ${i}`}
-                                >
-                                    {m}
-                                </Typography>
-                               ) 
+                            props.mods.map((m: string, i: number) => {
+                                return (
+                                    <Typography
+                                        onMouseEnter={() => {
+                                            //  props.setHovered(w);
+                                        }}
+                                        onMouseLeave={() => {
+                                            //  props.setHovered(undefined);
+                                        }}
+                                        sx={{
+                                            margin: 1
+                                        }}
+                                        key={`sm: ${i}`}
+                                    >
+                                        {m}
+                                    </Typography>
+                                )
                             })
                         }
                     </Typography>
                 </Grid>
                 <Grid item xs={3}>
-                    Gunner:
+                    {
+                        (props.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
+                            <>
+                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                    Gunner:
+                                </span>
+                                <br/>
+                                {props.gunnerSpecial}
+                            </> : <></>
+                    }
+
                 </Grid>
                 <Grid item xs={3}>
-                    Familiar:
+                    { 
+                        (props.gunnerSpecial.includes('Familiar')) ?
+                            <>
+                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                    Familiar:
+                                </span>
+                            </> : <></>
+                    }
+                    { 
+                        (props.gunnerSpecial.includes('The right tool')) ?
+                            <>
+                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                    Right tool weapons:
+                                </span>
+                            </> : <></>
+                    }
                 </Grid>
             </Grid>
 
@@ -125,7 +173,12 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         mods={props.mods}
                         setMods={props.setMods}
                         selectedWeapons={props.selectedWeapons}
-                        setSelectedWeapons={props.setSelectedWeapons} />
+                        setSelectedWeapons={props.setSelectedWeapons}
+                        setHovered={props.setHovered}
+                        hovered={props.hovered}
+                        gunnerSpecial={props.gunnerSpecial}
+                        setGunnerSpecial={props.setGunnerSpecial}
+                    />
 
                     <RightSide
                         name={props.name}
@@ -144,7 +197,12 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         mods={props.mods}
                         setMods={props.setMods}
                         selectedWeapons={props.selectedWeapons}
-                        setSelectedWeapons={props.setSelectedWeapons} />
+                        setSelectedWeapons={props.setSelectedWeapons}
+                        setHovered={props.setHovered}
+                        hovered={props.hovered}
+                        gunnerSpecial={props.gunnerSpecial}
+                        setGunnerSpecial={props.setGunnerSpecial}
+                    />
 
                 </Grid>
             </Container>

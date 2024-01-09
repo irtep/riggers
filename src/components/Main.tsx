@@ -14,6 +14,8 @@ const Main: React.FC = (): React.ReactElement => {
     //const [specials, setSpecials] = useState<string>('');
     const [selectedWeapons, setSelectedWeapons] = useState<string[]>([]);
     const [mods, setMods] = useState<string[]>([]);
+    const [hovered, setHovered] = useState<string>('');
+    const [gunnerSpecial, setGunnerSpecial] = useState<string>('');
     
     useEffect( () => {
         
@@ -61,6 +63,10 @@ const Main: React.FC = (): React.ReactElement => {
                           setMods={setMods}
                           selectedWeapons={selectedWeapons}
                           setSelectedWeapons={setSelectedWeapons}
+                          hovered={hovered}
+                          setHovered={setHovered}
+                          gunnerSpecial={gunnerSpecial}
+                          setGunnerSpecial={setGunnerSpecial}
                         />
                     </> :
                     <></>
