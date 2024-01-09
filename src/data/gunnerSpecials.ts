@@ -123,7 +123,7 @@ export const gunnerSpecials: GunnerSpecial[] = [
     },
 ];
 
-const ammunitions: Ammunition[] = [
+export const ammunitions: Ammunition[] = [
     {
         name: `Overcharger Cell`,
         desc: `An Energy Weapon using this ammo increases the number of Impact Power dice it rolls by 1.`,

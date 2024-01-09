@@ -1,4 +1,4 @@
-import { Container, Grid, Paper, Typography } from '@mui/material';
+import { Container, Grid, Paper } from '@mui/material';
 import React from 'react';
 import { CreateProps } from './Create';
 
@@ -36,7 +36,7 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                                                     Primed special:</span> {props.hovered.primed} <br /><br />
                                             </> : <></>
                                     }
-                                                                        {
+                                    {
                                         (props.hovered.whatIsThis === 'modification') ?
                                             <>
                                                 {props.hovered.effect} <br /><br />
@@ -44,7 +44,18 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                                                     Cost in mod slots:</span> {props.hovered.costMod} <br /><br />
                                                 <span style={{ color: 'navy' }}>
                                                     Cost in speed:</span> {props.hovered.costSpeed} <br /><br />
-
+                                            </> : <></>
+                                    }
+                                    {
+                                        (props.hovered.whatIsThis === 'gunnerSpecial') ?
+                                            <>
+                                                {props.hovered.desc} <br /><br />
+                                            </> : <></>
+                                    }
+                                    {
+                                        (props.hovered.whatIsThis === 'ammunition') ?
+                                            <>
+                                                {props.hovered.desc} <br /><br />
                                             </> : <></>
                                     }
                                 </Container> : <></>

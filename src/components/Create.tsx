@@ -3,7 +3,7 @@ import React from 'react';
 import LeftSide from './LeftSide';
 import RightSide from './RightSide';
 import { weapons, Weapon } from '../data/weapons';
-import { gunnerSpecials } from '../data/gunnerSpecials';
+import { Ammunition, ammunitions, gunnerSpecials } from '../data/gunnerSpecials';
 
 export interface CreateProps {
     name: string;
@@ -27,6 +27,12 @@ export interface CreateProps {
     setHovered: (value: any) => void;
     gunnerSpecial: string;
     setGunnerSpecial: (value: string) => void;
+    rightTool: string;
+    setRightTool: (value: string) => void;
+    familiar: string[];
+    setFamiliar: (value: string[]) => void;
+    familiarStats: any;
+    setFamiliarStats: (value: any) => void;
 }
 
 const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
@@ -117,7 +123,7 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         }
                     </Typography>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                     {
                         (props.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
                             <>
@@ -128,23 +134,50 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                                 {props.gunnerSpecial}
                             </> : <></>
                     }
-
+                    {
+                        (props.mods.filter((mod: string) => mod === 'Mine Launcher').length === 1) ?
+                            <>
+                                <br/>
+                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                    Mines:
+                                </span>
+                                <br/>
+                                tähän valitut miinat
+                            </> : <></>
+                    }
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     { 
-                        (props.gunnerSpecial.includes('Familiar')) ?
+                        (props.gunnerSpecial.includes('Familiar') && props.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
                             <>
                                 <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
                                     Familiar:
                                 </span>
+                                <Typography>
+                                    Speed: <span style={{color:"navy"}}>{props.familiarStats.speed}</span> Armour: <span style={{color:"navy"}}>{props.familiarStats.armour}</span> Empty slots: <span style={{color:"navy"}}>{props.familiarStats.emptySlots}</span>
+                                </Typography>
+                                    {
+                                        props.familiar.map( (fa: string, indx: number) => {
+                                            return(
+                                                <Typography key={`faStuff ${indx}`}>
+                                                    {fa}
+                                                </Typography>
+                                            )
+                                        })
+                                    }
                             </> : <></>
                     }
                     { 
                         (props.gunnerSpecial.includes('The right tool')) ?
                             <>
                                 <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                                    Right tool weapons:
+                                    Right tool weapon:
                                 </span>
+
+                                <br/>
+
+                                {props.rightTool}
+                                
                             </> : <></>
                     }
                 </Grid>
@@ -178,6 +211,12 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         hovered={props.hovered}
                         gunnerSpecial={props.gunnerSpecial}
                         setGunnerSpecial={props.setGunnerSpecial}
+                        rightTool={props.rightTool}
+                        setRightTool={props.setRightTool}
+                        familiar={props.familiar}
+                        setFamiliar={props.setFamiliar}
+                        familiarStats={props.familiarStats}
+                        setFamiliarStats={props.setFamiliarStats}
                     />
 
                     <RightSide
@@ -202,6 +241,12 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         hovered={props.hovered}
                         gunnerSpecial={props.gunnerSpecial}
                         setGunnerSpecial={props.setGunnerSpecial}
+                        rightTool={props.rightTool}
+                        setRightTool={props.setRightTool}
+                        familiar={props.familiar}
+                        setFamiliar={props.setFamiliar}
+                        familiarStats={props.familiarStats}
+                        setFamiliarStats={props.setFamiliarStats}
                     />
 
                 </Grid>

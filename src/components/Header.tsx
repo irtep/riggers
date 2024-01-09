@@ -10,7 +10,7 @@ const Header: React.FC = (): React.ReactElement => {
         }}>
 
             <Typography variant="h2" align='center'>
-                * Steelhearts Rig Garage *
+                * Rig Garage *
             </Typography>
 
         </Container>

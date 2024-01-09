@@ -114,7 +114,7 @@ export const familiarWeapons: Weapon[] = [
     }
 ];
 
-const familiarModifications: Modification[] = [
+export const familiarModifications: Modification[] = [
     {
         name: `Familiar Armour Plating`,
         effect: `+2 Armour`,

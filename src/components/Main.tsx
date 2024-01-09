@@ -16,6 +16,13 @@ const Main: React.FC = (): React.ReactElement => {
     const [mods, setMods] = useState<string[]>([]);
     const [hovered, setHovered] = useState<string>('');
     const [gunnerSpecial, setGunnerSpecial] = useState<string>('');
+    const [rightTool, setRightTool] = useState<string>('');
+    const [familiar, setFamiliar] = useState<string[]>([]);
+    const [familiarStats,setFamiliarStats] = useState<any>({
+        speed: 10,
+        armour: 2,
+        emptySlots: 3
+    });
     
     useEffect( () => {
         
@@ -67,6 +74,12 @@ const Main: React.FC = (): React.ReactElement => {
                           setHovered={setHovered}
                           gunnerSpecial={gunnerSpecial}
                           setGunnerSpecial={setGunnerSpecial}
+                          rightTool={rightTool}
+                          setRightTool={setRightTool}
+                          familiar={familiar}
+                          setFamiliar={setFamiliar}
+                          familiarStats={familiarStats}
+                          setFamiliarStats={setFamiliarStats}
                         />
                     </> :
                     <></>

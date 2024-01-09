@@ -4,13 +4,17 @@ import { CreateProps } from './Create';
 import { chassises } from '../data/chassises';
 import { Weapon, weapons } from '../data/weapons';
 import { Modification, rigModifications, weaponModifications } from '../data/modifications';
-import { GunnerSpecial, gunnerSpecials } from '../data/gunnerSpecials';
+import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../data/gunnerSpecials';
+import { familiarModifications, familiarWeapons } from '../data/familiar';
 
 const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
     const [showWeapons, setShowWeapons] = useState<boolean>(false);
     const [showMods, setShowMods] = useState<boolean>(false);
     const [showWeaponMods, setShowWeaponMods] = useState<boolean>(false);
     const [showGunnerSpecials, setShowGunnerSpecials] = useState<boolean>(false);
+    const [showRightTools, setShowRightTools] = useState<boolean>(false);
+    const [showFamiliarWeapons, setShowFamiliarWeapons] = useState<boolean>(false);
+    const [showFamiliarMods, setShowFamiliarMods] = useState<boolean>(false);
 
     const handleWeaponChange = (event: React.ChangeEvent<HTMLInputElement>, weapon: Weapon, dublicates: number) => {
         let weaponName = weapon.name;
@@ -27,6 +31,25 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
             }
         } else {
             props.setSelectedWeapons(prevSelectedWeapons.filter((name: string) => name !== weaponName));
+        }
+
+    };
+
+    const handleFamiliarChange = (event: React.ChangeEvent<HTMLInputElement>, eq: Weapon | Modification, dublicates: number) => {
+        let eqName = eq.name;
+        const isChecked = event.target.checked;
+        const prevFamiliar = [...props.familiar];
+
+        if (dublicates !== 0) {
+            eqName = `${eq.name}(${dublicates})`;
+        }
+
+        if (isChecked) {
+            if (!prevFamiliar.includes(eqName)) {
+                props.setFamiliar([...prevFamiliar, eqName]);
+            }
+        } else {
+            props.setFamiliar(prevFamiliar.filter((name: string) => name !== eqName));
         }
 
     };
@@ -128,7 +151,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                 />
                             </> : <></>
                     }
-                                        {
+                    {
                         (props.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
                             <>
                                 <br />
@@ -137,6 +160,43 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                     checked={showGunnerSpecials}
                                     onChange={(e) => {
                                         setShowGunnerSpecials(e.target.checked);
+                                    }}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            </> : <></>
+                    }
+                    {
+                        (props.gunnerSpecial === 'The right tool') ?
+                            <>
+                                <br />
+                                Show "right tools" :
+                                <Switch
+                                    checked={showRightTools}
+                                    onChange={(e) => {
+                                        setShowRightTools(e.target.checked);
+                                    }}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            </> : <></>
+                    }
+                    {
+                        (props.gunnerSpecial === 'Familiar') ?
+                            <>
+                                <br />
+                                Show familiar weapons:
+                                <Switch
+                                    checked={showFamiliarWeapons}
+                                    onChange={(e) => {
+                                        setShowFamiliarWeapons(e.target.checked);
+                                    }}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                                <br />
+                                Show familiar modifications:
+                                <Switch
+                                    checked={showFamiliarMods}
+                                    onChange={(e) => {
+                                        setShowFamiliarMods(e.target.checked);
                                     }}
                                     inputProps={{ 'aria-label': 'controlled' }}
                                 />
@@ -238,8 +298,8 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                 props.setHovered(undefined);
                                             }}
                                             sx={{
-                                                margin: 2, 
-                                                border: 2, 
+                                                margin: 2,
+                                                border: 2,
                                                 borderColor: "darkGreen"
                                             }}
                                         >
@@ -250,7 +310,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                 props.selectedWeapons.map((sw: string, ixx: number) => {
                                                     return (
                                                         <>
-                                                            <br/>for {sw} :
+                                                            <br />for {sw} :
                                                             <Checkbox
                                                                 checked={props.mods.includes(`${wm.name}(${sw})`)}
                                                                 onChange={(event) => handleModChange(event, wm, 0, sw)}
@@ -282,7 +342,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             }
                         </> : <></>
                 }
-                                {
+                {
                     showGunnerSpecials ?
                         <>
                             {
@@ -297,8 +357,8 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                 props.setHovered(undefined);
                                             }}
                                             sx={{
-                                                margin: 2, 
-                                                border: 2, 
+                                                margin: 2,
+                                                border: 2,
                                                 borderColor: "darkGreen"
                                             }}
                                         >
@@ -306,18 +366,135 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {gs.name}
 
                                             <Checkbox
-                                                            checked={props.gunnerSpecial.includes(gs.name)}
-                                                            onChange={() => props.setGunnerSpecial(gs.name)}
-                                                            inputProps={{ 'aria-label': 'controlled' }}
-                                                        />
+                                                checked={props.gunnerSpecial.includes(gs.name)}
+                                                onChange={() => props.setGunnerSpecial(gs.name)}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />
                                         </Container>
                                     )
                                 })
                             }
                         </> : <></>
                 }
+                {
+                    showRightTools ?
+                        <>
+                            {
+                                ammunitions.map((ammu: Ammunition, i: number) => {
+                                    return (
+                                        <Container
+                                            key={`ammux ${i}`}
+                                            onMouseEnter={() => {
+                                                props.setHovered(ammu);
+                                            }}
+                                            onMouseLeave={() => {
+                                                props.setHovered(undefined);
+                                            }}
+                                            sx={{
+                                                margin: 2,
+                                                border: 2,
+                                                borderColor: "darkGreen"
+                                            }}
+                                        >
 
+                                            {ammu.name}
 
+                                            <Checkbox
+                                                checked={props.rightTool.includes(ammu.name)}
+                                                onChange={() => props.setRightTool(ammu.name)}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />
+                                        </Container>
+                                    )
+                                })
+                            }
+                        </> : <></>
+                }
+                {
+                    showFamiliarWeapons ?
+                        <>
+                            {
+                                familiarWeapons.map((faWe: Weapon, i: number) => {
+                                    return (
+                                        <Container
+                                            key={`faWex ${i}`}
+                                            onMouseEnter={() => {
+                                                props.setHovered(faWe);
+                                            }}
+                                            onMouseLeave={() => {
+                                                props.setHovered(undefined);
+                                            }}
+                                            sx={{
+                                                margin: 2,
+                                                border: 2,
+                                                borderColor: "darkGreen"
+                                            }}
+                                        >
+
+                                            {faWe.name}
+
+                                            <Checkbox
+                                                checked={props.familiar.includes(faWe.name)}
+                                                onChange={(event) => handleFamiliarChange(event, faWe, 0)}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />
+
+                                            <Checkbox
+                                                checked={props.familiar.includes(`${faWe.name}(2)`)}
+                                                onChange={(event) => handleFamiliarChange(event, faWe, 2)}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />
+
+                                        </Container>
+                                    )
+                                })
+                            }
+                        </> : <></>
+                }
+                                {
+                    showFamiliarMods ?
+                        <>
+                            {
+                                familiarModifications.map((faMo: Modification, i: number) => {
+                                    return (
+                                        <Container
+                                            key={`faMox ${i}`}
+                                            onMouseEnter={() => {
+                                                props.setHovered(faMo);
+                                            }}
+                                            onMouseLeave={() => {
+                                                props.setHovered(undefined);
+                                            }}
+                                            sx={{
+                                                margin: 2,
+                                                border: 2,
+                                                borderColor: "darkBlue"
+                                            }}
+                                        >
+
+                                            {faMo.name}
+
+                                            <Checkbox
+                                                checked={props.familiar.includes(faMo.name)}
+                                                onChange={(event) => handleFamiliarChange(event, faMo, 0)}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />
+                                            {
+                                                (!faMo.onePerRig) ?
+                                                    <>
+                                                        <Checkbox
+                                                            checked={props.familiar.includes(`${faMo.name}(2)`)}
+                                                            onChange={(event) => handleFamiliarChange(event, faMo, 2)}
+                                                            inputProps={{ 'aria-label': 'controlled' }}
+                                                        />
+                                                    </> : <></>
+                                            }
+                                        </Container>
+                                    )
+                                })
+                            }
+                        </> : <></>
+                }
             </Paper>
         </Grid>
     );
