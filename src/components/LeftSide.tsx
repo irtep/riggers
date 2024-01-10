@@ -6,6 +6,8 @@ import { Weapon, weapons } from '../data/weapons';
 import { Modification, rigModifications, weaponModifications } from '../data/modifications';
 import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../data/gunnerSpecials';
 import { familiarModifications, familiarWeapons } from '../data/familiar';
+import { Mine, mines } from '../data/mines';
+import { RigObject } from './Main';
 
 const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
     const [showWeapons, setShowWeapons] = useState<boolean>(false);
@@ -15,22 +17,104 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
     const [showRightTools, setShowRightTools] = useState<boolean>(false);
     const [showFamiliarWeapons, setShowFamiliarWeapons] = useState<boolean>(false);
     const [showFamiliarMods, setShowFamiliarMods] = useState<boolean>(false);
+    const [showMines, setShowMines] = useState<boolean>(false);
+
+    interface Prices {
+        slots: number;
+        speed: number;
+    }
+
+    const payPrice = (values: Prices): void => {
+        let newSlots: number = (props.rigObject.emptySlots as number) - values.slots;
+        let newSpeed: number = (props.rigObject.speed as number) - values.speed;
+
+        //console.log('what: ', props.rigObject[what]);
+        //console.log('pay called: ', what, value);
+        //console.log('new value: ', newValue);
+        
+        props.setRigObject((prevRigObject: any) => ({
+            ...prevRigObject,
+            emptySlots: newSlots,
+            speed: newSpeed
+        }));
+        /*
+        props.setRigObject({
+            ...props.rigObject,
+            [what]: newValue
+        });
+        */
+    };
 
     const handleWeaponChange = (event: React.ChangeEvent<HTMLInputElement>, weapon: Weapon, dublicates: number) => {
         let weaponName = weapon.name;
         const isChecked = event.target.checked;
-        const prevSelectedWeapons = [...props.selectedWeapons];
+        //const prevSelectedWeapons = [...props.rigObject.selectedWeapons];
 
         if (dublicates !== 0) {
             weaponName = `${weapon.name}(${dublicates})`;
         }
 
         if (isChecked) {
-            if (!prevSelectedWeapons.includes(weaponName)) {
-                props.setSelectedWeapons([...prevSelectedWeapons, weaponName]);
+            if (!props.rigObject.selectedWeapons.includes(weaponName)) {
+
+                payPrice({
+                    slots: weapon.costMod,
+                    speed: weapon.costSpeed
+                });
+        
+                props.setRigObject((prevRigObject: RigObject) => ({
+                    ...prevRigObject,
+                    selectedWeapons: [...prevRigObject.selectedWeapons, weaponName]
+                }));
             }
         } else {
-            props.setSelectedWeapons(prevSelectedWeapons.filter((name: string) => name !== weaponName));
+
+            payPrice({
+                slots: -weapon.costMod,
+                speed: -weapon.costSpeed
+            });
+
+            props.setRigObject((prevRigObject: RigObject) => ({
+                ...prevRigObject,
+                selectedWeapons: prevRigObject.selectedWeapons.filter((name: string) => name !== weaponName)
+            }));
+        }
+
+    };
+
+    const handleMineChange = (event: React.ChangeEvent<HTMLInputElement>, mine: Mine, dublicates: number) => {
+        let mineName = mine.name;
+        const isChecked = event.target.checked;
+
+        if (isChecked) {
+            if (!props.rigObject.mines.includes(mineName)) {
+
+                console.log('pRml ', props.rigObject.mines.length);
+                if (props.rigObject.mines.length > 0) {
+                    payPrice({
+                        slots: mine.costMod,
+                        speed: mine.costSpeed
+                    });
+                }
+
+                props.setRigObject((prevRigObject: RigObject) => ({
+                    ...prevRigObject,
+                    mines: [...prevRigObject.mines, mineName]
+                }));
+            }
+        } else {
+            console.log('pRml ', props.rigObject.mines.length);
+            if (props.rigObject.mines.length > 1) {
+                payPrice({
+                    slots: -mine.costMod,
+                    speed: -mine.costSpeed
+                });
+            }
+
+            props.setRigObject((prevRigObject: RigObject) => ({
+                ...prevRigObject,
+                mines: prevRigObject.mines.filter((name: string) => name !== mineName)
+            }));
         }
 
     };
@@ -38,18 +122,26 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
     const handleFamiliarChange = (event: React.ChangeEvent<HTMLInputElement>, eq: Weapon | Modification, dublicates: number) => {
         let eqName = eq.name;
         const isChecked = event.target.checked;
-        const prevFamiliar = [...props.familiar];
+        //const prevFamiliar = [...props.rigObject.familiar];
 
         if (dublicates !== 0) {
             eqName = `${eq.name}(${dublicates})`;
         }
 
         if (isChecked) {
-            if (!prevFamiliar.includes(eqName)) {
-                props.setFamiliar([...prevFamiliar, eqName]);
+            if (!props.rigObject.familiar.includes(eqName)) {
+                //props.rigObject.setFamiliar([...prevFamiliar, eqName]);
+                props.setRigObject({
+                    ...props.rigObject,
+                    familiar: [...props.rigObject.familiar, eqName]
+                });
             }
         } else {
-            props.setFamiliar(prevFamiliar.filter((name: string) => name !== eqName));
+            //props.rigObject.setFamiliar(prevFamiliar.filter((name: string) => name !== eqName));
+            props.setRigObject({
+                ...props.rigObject,
+                familiar: props.rigObject.familiar.filter((name: string) => name !== eqName)
+            })
         }
 
     };
@@ -57,7 +149,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
     const handleModChange = (event: React.ChangeEvent<HTMLInputElement>, mod: Modification, dublicates: number, forWho?: string) => {
         let modName = mod.name;
         const isChecked = event.target.checked;
-        const prevMods = [...props.mods];
+        //const prevRigObject = {...props.rigObject];
 
         if (dublicates !== 0) {
             modName = `${mod.name}(${dublicates})`;
@@ -68,11 +160,19 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
         }
 
         if (isChecked) {
-            if (!prevMods.includes(modName)) {
-                props.setMods([...prevMods, modName]);
+            if (!props.rigObject.mods.includes(modName)) {
+                //props.rigObject.setMods([...prevMods, modName]);
+                props.setRigObject({
+                    ...props.rigObject,
+                    mods: [...props.rigObject.mods, modName]
+                });
             }
         } else {
-            props.setMods(prevMods.filter((name: string) => name !== modName));
+            //props.rigObject.setMods(prevMods.filter((name: string) => name !== modName));
+            props.setRigObject({
+                ...props.rigObject,
+                mods: props.rigObject.mods.filter((name: string) => name !== modName)
+            });
         }
 
     };
@@ -89,10 +189,14 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 <FormControl sx={{ margin: 2, minWidth: '80%' }}>
                     <TextField
                         type="text"
-                        value={props.name}
+                        value={props.rigObject.name}
                         label="Name your rig"
                         onChange={(e) => {
-                            props.setName(e.target.value)
+                            //props.rigObject.setName(e.target.value)
+                            props.setRigObject({
+                                ...props.rigObject,
+                                name: e.target.value
+                            });
                         }}
                     />
                 </FormControl>
@@ -106,9 +210,15 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                     <Select
                         labelId="dropdown-label"
                         id="dropdown"
-                        value={props.chassis}
+                        value={props.rigObject.chassis}
                         label="What game?"
-                        onChange={(e) => { props.setChassis(e.target.value) }}
+                        onChange={(e) => { 
+                            //props.rigObject.setChassis(e.target.value) 
+                            props.setRigObject({
+                                ...props.rigObject,
+                                chassis: e.target.value
+                            });
+                        }}
                     >
                         {chassises.map((value: string, index: number) => (
                             <MenuItem key={index} value={value}>
@@ -138,7 +248,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
                     {
-                        (props.selectedWeapons.length > 0) ?
+                        (props.rigObject.selectedWeapons.length > 0) ?
                             <>
                                 <br />
                                 Show weapon modifications:
@@ -152,7 +262,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             </> : <></>
                     }
                     {
-                        (props.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
+                        (props.rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
                             <>
                                 <br />
                                 Show gunner specials:
@@ -166,7 +276,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             </> : <></>
                     }
                     {
-                        (props.gunnerSpecial === 'The right tool') ?
+                        (props.rigObject.gunnerSpecial === 'The right tool') ?
                             <>
                                 <br />
                                 Show "right tools" :
@@ -179,8 +289,22 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                 />
                             </> : <></>
                     }
+                                        {
+                        (props.rigObject.mods.includes('Mine Launcher')) ?
+                            <>
+                                <br />
+                                Show mines :
+                                <Switch
+                                    checked={showMines}
+                                    onChange={(e) => {
+                                        setShowMines(e.target.checked);
+                                    }}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            </> : <></>
+                    }
                     {
-                        (props.gunnerSpecial === 'Familiar') ?
+                        (props.rigObject.gunnerSpecial === 'Familiar') ?
                             <>
                                 <br />
                                 Show familiar weapons:
@@ -222,12 +346,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {w.name}
 
                                             <Checkbox
-                                                checked={props.selectedWeapons.includes(w.name)}
+                                                checked={props.rigObject.selectedWeapons.includes(w.name)}
                                                 onChange={(event) => handleWeaponChange(event, w, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
                                             <Checkbox
-                                                checked={props.selectedWeapons.includes(`${w.name}(2)`)}
+                                                checked={props.rigObject.selectedWeapons.includes(`${w.name}(2)`)}
                                                 onChange={(event) => handleWeaponChange(event, w, 2)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -256,7 +380,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {m.name}
 
                                             <Checkbox
-                                                checked={props.mods.includes(m.name)}
+                                                checked={props.rigObject.mods.includes(m.name)}
                                                 onChange={(event) => handleModChange(event, m, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -264,12 +388,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                 (!m.onePerRig) ?
                                                     <>
                                                         <Checkbox
-                                                            checked={props.mods.includes(`${m.name}(2)`)}
+                                                            checked={props.rigObject.mods.includes(`${m.name}(2)`)}
                                                             onChange={(event) => handleModChange(event, m, 2)}
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />
                                                         <Checkbox
-                                                            checked={props.mods.includes(`${m.name}(3)`)}
+                                                            checked={props.rigObject.mods.includes(`${m.name}(3)`)}
                                                             onChange={(event) => handleModChange(event, m, 3)}
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />
@@ -307,12 +431,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {wm.name}
 
                                             {
-                                                props.selectedWeapons.map((sw: string, ixx: number) => {
+                                                props.rigObject.selectedWeapons.map((sw: string, ixx: number) => {
                                                     return (
                                                         <>
                                                             <br />for {sw} :
                                                             <Checkbox
-                                                                checked={props.mods.includes(`${wm.name}(${sw})`)}
+                                                                checked={props.rigObject.mods.includes(`${wm.name}(${sw})`)}
                                                                 onChange={(event) => handleModChange(event, wm, 0, sw)}
                                                                 inputProps={{ 'aria-label': 'controlled' }}
                                                             />
@@ -320,12 +444,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                                 (!wm.onePerWeapon) ?
                                                                     <>
                                                                         <Checkbox
-                                                                            checked={props.mods.includes(`${wm.name}(2)(${sw})`)}
+                                                                            checked={props.rigObject.mods.includes(`${wm.name}(2)(${sw})`)}
                                                                             onChange={(event) => handleModChange(event, wm, 2, sw)}
                                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                                         />
                                                                         <Checkbox
-                                                                            checked={props.mods.includes(`${wm.name}(3)(${sw})`)}
+                                                                            checked={props.rigObject.mods.includes(`${wm.name}(3)(${sw})`)}
                                                                             onChange={(event) => handleModChange(event, wm, 3, sw)}
                                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                                         />
@@ -366,8 +490,44 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {gs.name}
 
                                             <Checkbox
-                                                checked={props.gunnerSpecial.includes(gs.name)}
-                                                onChange={() => props.setGunnerSpecial(gs.name)}
+                                                checked={props.rigObject.gunnerSpecial.includes(gs.name)}
+                                                onChange={() => props.setRigObject({
+                                                    ...props.rigObject, gunnerSpecial: gs.name
+                                                })}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />
+                                        </Container>
+                                    )
+                                })
+                            }
+                        </> : <></>
+                }
+                                {
+                    showMines ?
+                        <>
+                            {
+                                mines.map((mine: Mine, i: number) => {
+                                    return (
+                                        <Container
+                                            key={`minex ${i}`}
+                                            onMouseEnter={() => {
+                                                props.setHovered(mine);
+                                            }}
+                                            onMouseLeave={() => {
+                                                props.setHovered(undefined);
+                                            }}
+                                            sx={{
+                                                margin: 2,
+                                                border: 2,
+                                                borderColor: "darkGreen"
+                                            }}
+                                        >
+
+                                            {mine.name}
+
+                                            <Checkbox
+                                                checked={props.rigObject.mines.includes(mine.name)}
+                                                onChange={(event) => handleMineChange(event, mine, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
                                         </Container>
@@ -400,8 +560,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {ammu.name}
 
                                             <Checkbox
-                                                checked={props.rightTool.includes(ammu.name)}
-                                                onChange={() => props.setRightTool(ammu.name)}
+                                                checked={props.rigObject.rightTool.includes(ammu.name)}
+                                                onChange={() => props.setRigObject({
+                                                    ...props.rigObject, rightTool: ammu.name
+                                                })}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
                                         </Container>
@@ -434,13 +596,13 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {faWe.name}
 
                                             <Checkbox
-                                                checked={props.familiar.includes(faWe.name)}
+                                                checked={props.rigObject.familiar.includes(faWe.name)}
                                                 onChange={(event) => handleFamiliarChange(event, faWe, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
 
                                             <Checkbox
-                                                checked={props.familiar.includes(`${faWe.name}(2)`)}
+                                                checked={props.rigObject.familiar.includes(`${faWe.name}(2)`)}
                                                 onChange={(event) => handleFamiliarChange(event, faWe, 2)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -451,7 +613,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             }
                         </> : <></>
                 }
-                                {
+                {
                     showFamiliarMods ?
                         <>
                             {
@@ -475,7 +637,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {faMo.name}
 
                                             <Checkbox
-                                                checked={props.familiar.includes(faMo.name)}
+                                                checked={props.rigObject.familiar.includes(faMo.name)}
                                                 onChange={(event) => handleFamiliarChange(event, faMo, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -483,7 +645,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                 (!faMo.onePerRig) ?
                                                     <>
                                                         <Checkbox
-                                                            checked={props.familiar.includes(`${faMo.name}(2)`)}
+                                                            checked={props.rigObject.familiar.includes(`${faMo.name}(2)`)}
                                                             onChange={(event) => handleFamiliarChange(event, faMo, 2)}
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />

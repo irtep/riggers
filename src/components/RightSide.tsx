@@ -36,6 +36,21 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                                                     Primed special:</span> {props.hovered.primed} <br /><br />
                                             </> : <></>
                                     }
+                                                                        {
+                                        (props.hovered.whatIsThis === 'mine') ?
+                                            <>
+                                                <span style={{ color: 'navy' }}>
+                                                    Impact Power:</span> {props.hovered.impactPower} <br /><br />
+                                                <span style={{ color: 'navy' }}>
+                                                    Range:</span> {props.hovered.range} <br /><br />
+                                                <span style={{ color: 'navy' }}>
+                                                    Cost in mod slots:</span> {props.hovered.costMod} <br /><br />
+                                                <span style={{ color: 'navy' }}>
+                                                    Cost in speed:</span> {props.hovered.costSpeed} <br /><br />
+                                                <span style={{ color: 'navy' }}>
+                                                    specials:</span> {props.hovered.effects} <br /><br />
+                                            </> : <></>
+                                    }
                                     {
                                         (props.hovered.whatIsThis === 'modification') ?
                                             <>
