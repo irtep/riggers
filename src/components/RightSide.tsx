@@ -36,7 +36,7 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                                                     Primed special:</span> {props.hovered.primed} <br /><br />
                                             </> : <></>
                                     }
-                                                                        {
+                                    {
                                         (props.hovered.whatIsThis === 'mine') ?
                                             <>
                                                 <span style={{ color: 'navy' }}>
@@ -62,12 +62,25 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                                             </> : <></>
                                     }
                                     {
+                                        (props.hovered.whatIsThis === 'concealedWeapon') ?
+                                            <>
+                                                <span style={{ color: 'navy' }}>
+                                                    Impact Power:</span> {props.hovered.impactPower} <br /><br />
+                                                <span style={{ color: 'navy' }}>
+                                                    Range:</span> {props.hovered.range} <br /><br />
+                                                <span style={{ color: 'navy' }}>
+                                                    Type:</span> {props.hovered.type} <br /><br />
+                                                <span style={{ color: 'navy' }}>
+                                                    specials:</span> {props.hovered.effects} <br /><br />
+                                            </> : <></>
+                                    }
+                                    {
                                         (props.hovered.whatIsThis === 'gunnerSpecial') ?
                                             <>
                                                 {props.hovered.desc} <br /><br />
                                             </> : <></>
                                     }
-                                                                        {
+                                    {
                                         (props.hovered.whatIsThis === 'driverSpecial') ?
                                             <>
                                                 {props.hovered.desc} <br /><br />

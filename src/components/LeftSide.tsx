@@ -8,7 +8,7 @@ import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../data/
 import { familiarModifications, familiarWeapons } from '../data/familiar';
 import { Mine, mines } from '../data/mines';
 import { RigObject } from './Main';
-import { DriverSpecial, driverSpecials } from '../data/driverSpecials';
+import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../data/driverSpecials';
 
 const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
     const [showWeapons, setShowWeapons] = useState<boolean>(false);
@@ -20,6 +20,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
     const [showFamiliarMods, setShowFamiliarMods] = useState<boolean>(false);
     const [showMines, setShowMines] = useState<boolean>(false);
     const [showDriverSpecials, setShowDriverSpecials] = useState<boolean>(false);
+    const [showConcealedWeapons, setShowConcealedWeapons] = useState<boolean>(false);
     const [msg, setMsg] = useState<string>('');
 
     interface Prices {
@@ -130,13 +131,19 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
     const handleMineChange = (event: React.ChangeEvent<HTMLInputElement>, mine: Mine, dublicates: number) => {
         let mineName = mine.name;
         const isChecked = event.target.checked;
+        let statsToAdd = {
+            speed: -mine.costSpeed,
+            armour: 0,
+            handling: 0,
+            resistanceFields: 0
+        }
 
         if (isChecked) {
             if (!props.rigObject.mines.includes(mineName)) {
 
                 //console.log('pRml ', props.rigObject.mines.length);
                 if (props.rigObject.mines.length > 0) {
-                    payPrice({ slots: mine.costMod }, false);
+                    addStats(statsToAdd, false, false);
                 }
 
                 props.setRigObject((prevRigObject: RigObject) => ({
@@ -147,7 +154,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
         } else {
 
             if (props.rigObject.mines.length > 1) {
-                payPrice({ slots: -mine.costMod }, false);
+                addStats(statsToAdd, false, true);
             }
 
             props.setRigObject((prevRigObject: RigObject) => ({
@@ -299,7 +306,15 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 background: "rgb(70,70,70)",
                 color: "rgb(150,150,150)"
             }}>
-
+                <Button
+                    onClick={
+                        () => {
+                            props.setMode('main');
+                        }
+                    }
+                >
+                    Back to main page
+                </Button>
                 <Button
                     onClick={() => {
                         try {
@@ -380,7 +395,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                         }}
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
-                    <br/>
+                    <br />
                     Show driver specials:
                     <Switch
                         checked={showDriverSpecials}
@@ -398,6 +413,20 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                     checked={showWeaponMods}
                                     onChange={(e) => {
                                         setShowWeaponMods(e.target.checked);
+                                    }}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            </> : <></>
+                    }
+                    {
+                        (props.rigObject.driverSpecial.includes('Concealed weapon')) ?
+                            <>
+                                <br />
+                                Show weapon concealed weapons:
+                                <Switch
+                                    checked={showConcealedWeapons}
+                                    onChange={(e) => {
+                                        setShowConcealedWeapons(e.target.checked);
                                     }}
                                     inputProps={{ 'aria-label': 'controlled' }}
                                 />
@@ -609,6 +638,42 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                         </> : <></>
                 }
                 {
+                    showConcealedWeapons ?
+                        <>
+                            {
+                                concealedWeapons.map((gW: ConcealedWeapons, i: number) => {
+                                    return (
+                                        <Container
+                                            key={`gWx ${i}`}
+                                            onMouseEnter={() => {
+                                                props.setHovered(gW);
+                                            }}
+                                            onMouseLeave={() => {
+                                                props.setHovered(undefined);
+                                            }}
+                                            sx={{
+                                                margin: 2,
+                                                border: 2,
+                                                borderColor: "darkGreen"
+                                            }}
+                                        >
+
+                                            {gW.name}
+
+                                            <Checkbox
+                                                checked={props.rigObject.concealedWeapon.includes(gW.name)}
+                                                onChange={() => props.setRigObject({
+                                                    ...props.rigObject, concealedWeapon: gW.name
+                                                })}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />
+                                        </Container>
+                                    )
+                                })
+                            }
+                        </> : <></>
+                }
+                {
                     showGunnerSpecials ?
                         <>
                             {
@@ -644,7 +709,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             }
                         </> : <></>
                 }
-                                {
+                {
                     showDriverSpecials ?
                         <>
                             {

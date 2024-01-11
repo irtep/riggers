@@ -16,6 +16,7 @@ export interface ConcealedWeapons {
     type: 'Shell' | 'Energy' | 'Missile';
     impactPower: number | string;
     effects: string;
+    whatIsThis: 'concealedWeapon'
 };
 
 export const driverSpecials: DriverSpecial[] = [
@@ -96,7 +97,7 @@ export const driverSpecials: DriverSpecial[] = [
     }
 ];
 
-const concealedWeapons: ConcealedWeapons[] = [
+export const concealedWeapons: ConcealedWeapons[] = [
     {
         name: 'Boom Stick',
         range: 10,
@@ -104,6 +105,7 @@ const concealedWeapons: ConcealedWeapons[] = [
         impactPower: 4,
         effects: `Point Blank — Add +2 to this Weaponʼs Impact Power result if the target is no more than
         [5cm] away.`,
+        whatIsThis: 'concealedWeapon'
     },
     {
         name: 'Bad Ugly',
@@ -112,6 +114,7 @@ const concealedWeapons: ConcealedWeapons[] = [
         impactPower: '1-6',
         effects: `Punk Buster — This Weapon can only roll a combined total of 6 Impact Power dice during
         the game. However, the owner chooses how many to roll each time they use this Weapon.`,
+        whatIsThis: 'concealedWeapon'
     },   
     {
         name: 'Razor',
@@ -121,6 +124,7 @@ const concealedWeapons: ConcealedWeapons[] = [
         effects: `Sticky Trigger — When Rolling for Impact Power, any results of 1 are discarded but for each
         result of 4, the Player rolls 1 additional Impact Power dice. These additional Impact Power
         dice do not add nor remove any further Impact Power dice.`,
+        whatIsThis: 'concealedWeapon'
     },
 
 ];

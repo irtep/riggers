@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Create from './Create';
 
@@ -13,6 +13,7 @@ export interface RigObject {
     name: string;
     chassis: string;
     speed: number;
+    realSpeed: number;
     armour: number;
     handling: number;
     resistanceFields: number;
@@ -22,6 +23,7 @@ export interface RigObject {
     gunnerSpecial: string;
     driverSpecial: string;
     rightTool: string;
+    concealedWeapon: string;
     familiar: string[];
     familiarStats: FamiliarStats;
     mines: string[];
@@ -33,6 +35,7 @@ const Main: React.FC = (): React.ReactElement => {
         name: '',
         chassis: '',
         speed: 30,
+        realSpeed: 30,
         armour: 0,
         handling: 6,
         resistanceFields: 0,
@@ -42,6 +45,7 @@ const Main: React.FC = (): React.ReactElement => {
         gunnerSpecial: '',
         driverSpecial: '',
         rightTool: '',
+        concealedWeapon: '',
         familiar: [],
         familiarStats: {
             speed: 10,
@@ -51,7 +55,7 @@ const Main: React.FC = (): React.ReactElement => {
         mines: [],
         handlingMods: 0
     });
-    const [mode, setMode] = useState<'main' | 'create'>('main');
+    const [mode, setMode] = useState<'main' | 'create' | 'edit'>('main');
     const [hovered, setHovered] = useState<string>('');
     const [savedRigs, setSavedRigs] = useState<any[]>([]);
 
@@ -76,16 +80,27 @@ const Main: React.FC = (): React.ReactElement => {
     }
 
     useEffect(() => {
+        let roundedSpeed;
+
+        if (rigObject.mods.includes('Turbo Charger')) {
+            // Round up to the next multiple of 5
+            roundedSpeed = Math.ceil(rigObject.speed / 5) * 5;
+        } else {
+            // Round down to the closest multiple of 5
+            roundedSpeed = Math.floor(rigObject.speed / 5) * 5;
+        }
 
         setRigObject({
             ...rigObject,
-            handling: Math.floor(rigObject.speed / 5) + rigObject.handlingMods
+            handling: Math.floor(rigObject.speed / 5) + rigObject.handlingMods,
+            realSpeed: roundedSpeed
         });
 
-    }, [rigObject.speed]);
+    }, [rigObject.speed, rigObject.handlingMods]);
 
     useEffect(() => {
         console.log('rig Object: ', rigObject);
+        console.log('saved Rigs: ', savedRigs);
     });
 
     useEffect(() => {
@@ -117,6 +132,7 @@ const Main: React.FC = (): React.ReactElement => {
                             hovered={hovered}
                             setHovered={setHovered}
                             saveRig={saveRig}
+                            setMode={setMode}
                         />
                     </> :
                     <></>

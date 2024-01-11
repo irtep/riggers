@@ -21,6 +21,7 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
                     </Typography>
                     <Typography>
                         Speed: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.speed}</span><br />
+                        Speed in game: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.realSpeed}</span><br />
                     </Typography>
                     <Typography>
                         Armour: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.armour}</span><br />
@@ -91,14 +92,14 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
             <Grid item xs={2}>
                 {
                     (props.rigObject.driverSpecial.length > 0) ?
-                    <>
+                        <>
                             <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
                                 Driver special:
                             </span>
                             <br />
                             {props.rigObject.driverSpecial}
-                            <br/>
-                    </>:<></>
+                            <br />
+                        </> : <></>
                 }
                 {
                     (props.rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
@@ -118,8 +119,8 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
                                 Mines:
                             </span>
                             <br />
-                            {props.rigObject.mines.map( (mine: string, indx) => {
-                                return(
+                            {props.rigObject.mines.map((mine: string, indx) => {
+                                return (
                                     <Typography key={`mine:${indx}`}>
                                         {mine}
                                     </Typography>
@@ -147,6 +148,19 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
                                     )
                                 })
                             }
+                        </> : <></>
+                }
+                {
+                    (props.rigObject.concealedWeapon.length > 0) ?
+                        <>
+                            <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                Concealed weapon:
+                            </span>
+
+                            <br />
+
+                            {props.rigObject.concealedWeapon}
+
                         </> : <></>
                 }
                 {
