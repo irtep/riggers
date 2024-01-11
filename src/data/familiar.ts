@@ -131,8 +131,7 @@ export const familiarModifications: Modification[] = [
         whatIsThis: 'modification'
     },
     {
-        name: `MK. 1 Primer Capacitor
-        & Transfer Protocols*`,
+        name: `MK. 1 Primer Capacitor & Transfer Protocols`,
         effect: `Can hold a maximum of 1 Primer. Allows Primer to be transferred between the Rig
         and Familiar when their bases are touching.`,
         costMod: 0,
@@ -142,8 +141,7 @@ export const familiarModifications: Modification[] = [
         whatIsThis: 'modification'
     },
     {
-        name: `MK.2 Primer Capacitor &
-        Transfer Protocols*`,
+        name: `MK.2 Primer Capacitor & Transfer Protocols`,
         effect: `Can hold a maximum of 3 Primer. Allows Primer to be transferred between the Rig
         and Familiar when their bases are touching. Replaces MK.1 Capacitor.`,
         costMod: 1,
@@ -153,8 +151,7 @@ export const familiarModifications: Modification[] = [
         whatIsThis: 'modification'
     },
     {
-        name: `Agility
-        Combat Module`,
+        name: `Agility Combat Module`,
         effect: `The Familiar is built for Speed. +10 to the Familiarʼs Speed and it may reroll 1 failed
         Evasion Attempt when evading an Attack`,
         costMod: 1,
@@ -170,8 +167,7 @@ export const familiarModifications: Modification[] = [
         whatIsThis: 'modification'
     },
     {
-        name: `Destroyer
-        Combat Module`,
+        name: `Destroyer Combat Module`,
         effect: `+5 to Speed. +2 Armour. +3 to Impact Power roll totals of all Weapons fitted to the
         Familiar.`,
         costMod: 1,
@@ -191,8 +187,7 @@ export const familiarModifications: Modification[] = [
         whatIsThis: 'modification'
     },
     {
-        name: `Warden
-        Combat Module`,
+        name: `Warden Combat Module`,
         effect: ` + 5 Speed. +5 Armour. When within [5cm] of its Rig, if an Attack
         would hit its controlling Rig, the Familiar may immediately move so that its base is
         touching the closest part of its Rigʼs base, and take the Damage instead. Roll for
@@ -214,8 +209,7 @@ export const familiarModifications: Modification[] = [
         whatIsThis: 'modification'
     },
     {
-        name: `Comet Fire Combat
-        Module`,
+        name: `Comet Fire Combat Module`,
         effect: `Familiar with low altitude flight capability. +15 Speed. Armour +3. Flight — This
         Familiar can move over Obstacles, Rigs and Creatures as if they were not in the Arena but it
         can never be Obscured.

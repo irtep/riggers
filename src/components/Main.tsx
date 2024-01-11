@@ -1,4 +1,4 @@
-import { Button, Container } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Create from './Create';
 
@@ -10,6 +10,7 @@ export interface FamiliarStats {
 
 export interface RigObject {
     [key: string]: string | number | string[] | FamiliarStats;
+    id: number;
     name: string;
     chassis: string;
     speed: number;
@@ -30,44 +31,73 @@ export interface RigObject {
     handlingMods: number;
 }
 
+const initialObject: RigObject = {
+    id: 0,
+    name: '',
+    chassis: '',
+    speed: 30,
+    realSpeed: 30,
+    armour: 0,
+    handling: 6,
+    resistanceFields: 0,
+    emptySlots: 6,
+    selectedWeapons: [],
+    mods: [],
+    gunnerSpecial: '',
+    driverSpecial: '',
+    rightTool: '',
+    concealedWeapon: '',
+    familiar: [],
+    familiarStats: {
+        speed: 10,
+        armour: 2,
+        emptySlots: 3
+    },
+    mines: [],
+    handlingMods: 0
+};
+
 const Main: React.FC = (): React.ReactElement => {
-    const [rigObject, setRigObject] = useState<RigObject>({
-        name: '',
-        chassis: '',
-        speed: 30,
-        realSpeed: 30,
-        armour: 0,
-        handling: 6,
-        resistanceFields: 0,
-        emptySlots: 6,
-        selectedWeapons: [],
-        mods: [],
-        gunnerSpecial: '',
-        driverSpecial: '',
-        rightTool: '',
-        concealedWeapon: '',
-        familiar: [],
-        familiarStats: {
-            speed: 10,
-            armour: 2,
-            emptySlots: 3
-        },
-        mines: [],
-        handlingMods: 0
-    });
+    const [rigObject, setRigObject] = useState<RigObject>(initialObject);
     const [mode, setMode] = useState<'main' | 'create' | 'edit'>('main');
     const [hovered, setHovered] = useState<string>('');
     const [savedRigs, setSavedRigs] = useState<any[]>([]);
 
-    const saveRig = (rig: any[]) => {
-
-        let toBeSaved = [...savedRigs, rig]
-
+    const saveRig = (rig: RigObject) => {
+        // Find the maximum ID in the existing rigs
+        const maxId = savedRigs.reduce((max, rig) => (rig.id > max ? rig.id : max), 0);
+    
+        // Assign a new unique ID
+        rig.id = maxId + 1;
+    
+        // Create a new array with the rig and save it
+        const toBeSaved = [...savedRigs, rig];
         localStorage.setItem("rigs", JSON.stringify(toBeSaved));
-
         setSavedRigs(toBeSaved);
+    };
 
-    }
+    const overwriteRig = (rigToSave: RigObject) => {
+        // Find the index of the rig with the same ID in savedRigs array
+        const indexToUpdate = savedRigs.findIndex((rig) => rig.id === rigToSave.id);
+
+        // If the rig with the same ID is found, update it; otherwise, add the new rig
+        if (indexToUpdate !== -1) {
+            // Create a new array with the updated rig
+            const updatedRigs = [...savedRigs];
+            updatedRigs[indexToUpdate] = rigToSave;
+
+            // Update localStorage and state with the updated array
+            localStorage.setItem("rigs", JSON.stringify(updatedRigs));
+            setSavedRigs(updatedRigs);
+        } else {
+            // If the rig with the same ID is not found, add the new rig to the array
+            const updatedRigs = [...savedRigs, rigToSave];
+
+            // Update localStorage and state with the updated array
+            localStorage.setItem("rigs", JSON.stringify(updatedRigs));
+            setSavedRigs(updatedRigs);
+        }
+    };
 
     const fetchSavedRigs = () => {
         const storedRigs = localStorage.getItem("rigs");
@@ -78,6 +108,15 @@ const Main: React.FC = (): React.ReactElement => {
             setSavedRigs([]);
         }
     }
+
+    const deleteRig = (id: number): void => {
+        // Create a new array excluding the rig with the specified ID
+        const updatedRigs = savedRigs.filter((rig) => rig.id !== id);
+    
+        // Update localStorage and state with the modified array
+        localStorage.setItem("rigs", JSON.stringify(updatedRigs));
+        setSavedRigs(updatedRigs);
+    };
 
     useEffect(() => {
         let roundedSpeed;
@@ -117,9 +156,54 @@ const Main: React.FC = (): React.ReactElement => {
             {
                 (mode === 'main') ?
                     <>
-                        <Button onClick={() => { setMode('create'); }}>new rig</Button>
+                        <Button onClick={() => {
+                            setRigObject(initialObject);
+                            setMode('create');
+                        }}>new rig</Button>
 
-                        <Button>load rig</Button>
+                        {
+                            (savedRigs.length > 0) ?
+                                <>
+                                    <Typography padding={1} sx={{ color: "white" }}>
+                                        saved Rigs:
+                                    </Typography>
+                                    {
+                                        savedRigs.map((rig: RigObject, i: number) => {
+                                            return (
+                                                <Typography padding={1} key={`rig:${i}`}>
+                                                    <Button
+                                                        sx={{
+                                                            background: 'darkGreen',
+                                                            color: 'rgb(165,165,165)'
+                                                        }}
+                                                        onClick={() => {
+                                                            console.log('clicked: ', rig);
+                                                            setRigObject({ ...savedRigs[0] });
+                                                            setMode('edit');
+                                                        }}
+                                                    >
+                                                        Edit / Show: {rig.name}
+                                                    </Button>
+                                                    <Button
+                                                        sx={{
+                                                            background: 'darkRed',
+                                                            color: 'rgb(165,165,165)',
+                                                            marginLeft: 2
+                                                        }}
+                                                        onClick={() => {
+                                                            console.log('clicked: ', rig);
+                                                            deleteRig(rig.id);
+                                                        }}
+                                                    >
+                                                        Delete
+                                                    </Button>
+                                                </Typography>
+
+                                            )
+                                        })
+                                    }
+                                </> : <></>
+                        }
                     </> :
                     <></>
             }
@@ -133,6 +217,22 @@ const Main: React.FC = (): React.ReactElement => {
                             setHovered={setHovered}
                             saveRig={saveRig}
                             setMode={setMode}
+                            mode={mode}
+                        />
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'edit') ?
+                    <>
+                        <Create
+                            setRigObject={setRigObject}
+                            rigObject={rigObject}
+                            hovered={hovered}
+                            setHovered={setHovered}
+                            saveRig={overwriteRig}
+                            setMode={setMode}
+                            mode={mode}
                         />
                     </> :
                     <></>

@@ -330,8 +330,21 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                     }
                     }
                 >
-                    Save rig
+                    {
+                        (props.mode === 'create') ?
+                            <>
+                                Save new rig
+                            </> : <></>
+                    }
+                    {
+                        (props.mode === 'edit') ?
+                            <>
+                                Save changes to rig
+                            </> : <></>
+                    }
+
                 </Button>
+                
                 {msg}
 
                 <FormControl sx={{ margin: 2, minWidth: '80%' }}>

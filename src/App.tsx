@@ -9,9 +9,9 @@ const App : React.FC = () : React.ReactElement => {
     <Container sx={{ background: "black", padding: 1}}>
       <Header/>
       <Main/>
-      {/*
+      
       <Footer/>
-      */}
+      
     </Container>
   );
 }

@@ -14,6 +14,7 @@ export interface CreateProps {
     setHovered: (value: any) => void;
     saveRig: any;
     setMode: (value: 'main' | 'create' | 'edit') => void;
+    mode: string;
 }
 
 const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
@@ -42,6 +43,7 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         hovered={props.hovered}
                         saveRig={props.saveRig}
                         setMode={props.setMode}
+                        mode={props.mode}
                     />
 
                     <RightSide
@@ -51,6 +53,7 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         hovered={props.hovered}
                         saveRig={props.saveRig}
                         setMode={props.setMode}
+                        mode={props.mode}
                     />
 
                 </Grid>
