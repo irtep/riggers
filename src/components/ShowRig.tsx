@@ -90,6 +90,17 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
             </Grid>
             <Grid item xs={2}>
                 {
+                    (props.rigObject.driverSpecial.length > 0) ?
+                    <>
+                            <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                Driver special:
+                            </span>
+                            <br />
+                            {props.rigObject.driverSpecial}
+                            <br/>
+                    </>:<></>
+                }
+                {
                     (props.rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
                         <>
                             <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>

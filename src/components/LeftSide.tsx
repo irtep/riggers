@@ -1,13 +1,14 @@
-import { Checkbox, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Switch, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Switch, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { CreateProps } from './Create';
 import { chassises } from '../data/chassises';
 import { Weapon, weapons } from '../data/weapons';
-import { Modification, rigModifications, weaponModifications } from '../data/modifications';
+import { Modification, SpecialEffect, rigModifications, weaponModifications } from '../data/modifications';
 import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../data/gunnerSpecials';
 import { familiarModifications, familiarWeapons } from '../data/familiar';
 import { Mine, mines } from '../data/mines';
 import { RigObject } from './Main';
+import { DriverSpecial, driverSpecials } from '../data/driverSpecials';
 
 const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
     const [showWeapons, setShowWeapons] = useState<boolean>(false);
@@ -18,37 +19,83 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
     const [showFamiliarWeapons, setShowFamiliarWeapons] = useState<boolean>(false);
     const [showFamiliarMods, setShowFamiliarMods] = useState<boolean>(false);
     const [showMines, setShowMines] = useState<boolean>(false);
+    const [showDriverSpecials, setShowDriverSpecials] = useState<boolean>(false);
+    const [msg, setMsg] = useState<string>('');
 
     interface Prices {
         slots: number;
-        speed: number;
     }
 
-    const payPrice = (values: Prices): void => {
-        let newSlots: number = (props.rigObject.emptySlots as number) - values.slots;
-        let newSpeed: number = (props.rigObject.speed as number) - values.speed;
+    interface Stats {
+        speed: number;
+        armour: number;
+        handling: number;
+        resistanceFields: number;
+    }
 
-        //console.log('what: ', props.rigObject[what]);
-        //console.log('pay called: ', what, value);
-        //console.log('new value: ', newValue);
-        
-        props.setRigObject((prevRigObject: any) => ({
-            ...prevRigObject,
-            emptySlots: newSlots,
-            speed: newSpeed
-        }));
-        /*
-        props.setRigObject({
-            ...props.rigObject,
-            [what]: newValue
-        });
-        */
+    const payPrice = (values: Prices, familiar: boolean): void => {
+
+
+        if (familiar) {
+            const newSlots: number = (props.rigObject.familiarStats.emptySlots as number) - values.slots;
+
+            props.setRigObject((prevRigObject: any) => ({
+                ...prevRigObject,
+                familiarStats: {
+                    ...prevRigObject.familiarStats,
+                    emptySlots: newSlots
+                }
+            }));
+        } else {
+            const newSlots: number = (props.rigObject.emptySlots as number) - values.slots;
+
+            props.setRigObject((prevRigObject: any) => ({
+                ...prevRigObject,
+                emptySlots: newSlots,
+            }));
+        }
+
+    };
+
+    const addStats = (values: Stats, familiar: boolean, negative: boolean): void => {
+
+        if (familiar) {
+            let newSpeed: number = (props.rigObject.familiarStats.speed as number) + (negative ? -values.speed : values.speed);
+            let newArmour: number = (props.rigObject.familiarStats.armour as number) + (negative ? -values.armour : values.armour);
+
+            props.setRigObject((prevRigObject: any) => ({
+                ...prevRigObject,
+                familiarStats: {
+                    ...prevRigObject.familiarStats,
+                    speed: newSpeed,
+                    armour: newArmour
+                }
+            }));
+        } else {
+            let newSpeed: number = (props.rigObject.speed as number) + (negative ? -values.speed : values.speed);
+            let newArmour: number = (props.rigObject.armour as number) + (negative ? -values.armour : values.armour);
+            let newHandling: number = (props.rigObject.handlingMods as number) + (negative ? -values.handling : values.handling);
+            let newResistanceFields: number = (props.rigObject.resistanceFields as number) + (negative ? -values.resistanceFields : values.resistanceFields);
+
+            props.setRigObject((prevRigObject: any) => ({
+                ...prevRigObject,
+                speed: newSpeed,
+                armour: newArmour,
+                handlingMods: newHandling, // useEffect at Main.tsx handles the calculation
+                resistanceFields: newResistanceFields
+            }));
+        }
     };
 
     const handleWeaponChange = (event: React.ChangeEvent<HTMLInputElement>, weapon: Weapon, dublicates: number) => {
         let weaponName = weapon.name;
         const isChecked = event.target.checked;
-        //const prevSelectedWeapons = [...props.rigObject.selectedWeapons];
+        let statsToAdd = {
+            speed: -weapon.costSpeed,
+            armour: 0,
+            handling: 0,
+            resistanceFields: 0
+        }
 
         if (dublicates !== 0) {
             weaponName = `${weapon.name}(${dublicates})`;
@@ -57,11 +104,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
         if (isChecked) {
             if (!props.rigObject.selectedWeapons.includes(weaponName)) {
 
-                payPrice({
-                    slots: weapon.costMod,
-                    speed: weapon.costSpeed
-                });
-        
+                payPrice({ slots: weapon.costMod }, false);
+
+                addStats(statsToAdd, false, false);
+
                 props.setRigObject((prevRigObject: RigObject) => ({
                     ...prevRigObject,
                     selectedWeapons: [...prevRigObject.selectedWeapons, weaponName]
@@ -69,10 +115,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
             }
         } else {
 
-            payPrice({
-                slots: -weapon.costMod,
-                speed: -weapon.costSpeed
-            });
+            payPrice({ slots: -weapon.costMod }, false);
+
+            addStats(statsToAdd, false, true);
 
             props.setRigObject((prevRigObject: RigObject) => ({
                 ...prevRigObject,
@@ -89,12 +134,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
         if (isChecked) {
             if (!props.rigObject.mines.includes(mineName)) {
 
-                console.log('pRml ', props.rigObject.mines.length);
+                //console.log('pRml ', props.rigObject.mines.length);
                 if (props.rigObject.mines.length > 0) {
-                    payPrice({
-                        slots: mine.costMod,
-                        speed: mine.costSpeed
-                    });
+                    payPrice({ slots: mine.costMod }, false);
                 }
 
                 props.setRigObject((prevRigObject: RigObject) => ({
@@ -103,12 +145,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 }));
             }
         } else {
-            console.log('pRml ', props.rigObject.mines.length);
+
             if (props.rigObject.mines.length > 1) {
-                payPrice({
-                    slots: -mine.costMod,
-                    speed: -mine.costSpeed
-                });
+                payPrice({ slots: -mine.costMod }, false);
             }
 
             props.setRigObject((prevRigObject: RigObject) => ({
@@ -119,29 +158,67 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
 
     };
 
-    const handleFamiliarChange = (event: React.ChangeEvent<HTMLInputElement>, eq: Weapon | Modification, dublicates: number) => {
+    const handleFamiliarChange = (event: React.ChangeEvent<HTMLInputElement>, eq: any, dublicates: number) => {
         let eqName = eq.name;
         const isChecked = event.target.checked;
-        //const prevFamiliar = [...props.rigObject.familiar];
+        let statsToAdd = {
+            speed: 0,
+            armour: 0,
+            handling: 0,
+            resistanceFields: 0
+        }
+
+        if (eq.specialEffect) {
+            eq.specialEffect.forEach((spessu: SpecialEffect) => {
+                switch (spessu.prop) {
+                    case 'speed':
+                        statsToAdd.speed = spessu.value;
+                        break;
+                    case 'armour':
+                        statsToAdd.armour = spessu.value;
+                        break;
+                    case 'handling':
+                        statsToAdd.handling = spessu.value;
+                        break;
+                    case 'resistanceFields':
+                        statsToAdd.resistanceFields = spessu.value;
+                        break;
+                    default: console.log('spessu.prop not found: ', spessu.prop);
+                }
+            });
+        }
+
+        if (eq.costSpeed > 0) {
+            statsToAdd.speed = -eq.costSpeed;
+        }
 
         if (dublicates !== 0) {
             eqName = `${eq.name}(${dublicates})`;
         }
 
         if (isChecked) {
+
             if (!props.rigObject.familiar.includes(eqName)) {
-                //props.rigObject.setFamiliar([...prevFamiliar, eqName]);
-                props.setRigObject({
-                    ...props.rigObject,
-                    familiar: [...props.rigObject.familiar, eqName]
-                });
+
+                payPrice({ slots: eq.costMod }, true);
+
+                addStats(statsToAdd, true, false);
+
+                props.setRigObject((prevRigObject: RigObject) => ({
+                    ...prevRigObject,
+                    familiar: [...prevRigObject.familiar, eqName]
+                }));
             }
         } else {
-            //props.rigObject.setFamiliar(prevFamiliar.filter((name: string) => name !== eqName));
-            props.setRigObject({
-                ...props.rigObject,
-                familiar: props.rigObject.familiar.filter((name: string) => name !== eqName)
-            })
+
+            payPrice({ slots: -eq.costMod }, true);
+
+            addStats(statsToAdd, true, true);
+
+            props.setRigObject((prevRigObject: RigObject) => ({
+                ...prevRigObject,
+                familiar: prevRigObject.familiar.filter((name: string) => name !== eqName)
+            }));
         }
 
     };
@@ -149,7 +226,36 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
     const handleModChange = (event: React.ChangeEvent<HTMLInputElement>, mod: Modification, dublicates: number, forWho?: string) => {
         let modName = mod.name;
         const isChecked = event.target.checked;
-        //const prevRigObject = {...props.rigObject];
+        let statsToAdd = {
+            speed: 0,
+            armour: 0,
+            handling: 0,
+            resistanceFields: 0
+        }
+
+        if (mod.specialEffect) {
+            mod.specialEffect.forEach((spessu: SpecialEffect) => {
+                switch (spessu.prop) {
+                    case 'speed':
+                        statsToAdd.speed = spessu.value;
+                        break;
+                    case 'armour':
+                        statsToAdd.armour = spessu.value;
+                        break;
+                    case 'handling':
+                        statsToAdd.handling = spessu.value;
+                        break;
+                    case 'resistanceFields':
+                        statsToAdd.resistanceFields = spessu.value;
+                        break;
+                    default: console.log('spessu.prop not found: ', spessu.prop);
+                }
+            });
+        }
+
+        if (mod.costSpeed > 0) {
+            statsToAdd.speed = -mod.costSpeed;
+        }
 
         if (dublicates !== 0) {
             modName = `${mod.name}(${dublicates})`;
@@ -161,18 +267,26 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
 
         if (isChecked) {
             if (!props.rigObject.mods.includes(modName)) {
-                //props.rigObject.setMods([...prevMods, modName]);
-                props.setRigObject({
-                    ...props.rigObject,
-                    mods: [...props.rigObject.mods, modName]
-                });
+                console.log('price to pay:', mod.costMod, mod.costSpeed);
+                payPrice({ slots: mod.costMod }, false);
+
+                addStats(statsToAdd, false, false);
+
+                props.setRigObject((prevRigObject: RigObject) => ({
+                    ...prevRigObject,
+                    mods: [...prevRigObject.mods, modName]
+                }));
             }
         } else {
-            //props.rigObject.setMods(prevMods.filter((name: string) => name !== modName));
-            props.setRigObject({
-                ...props.rigObject,
-                mods: props.rigObject.mods.filter((name: string) => name !== modName)
-            });
+
+            payPrice({ slots: -mod.costMod }, false);
+
+            addStats(statsToAdd, false, true);
+
+            props.setRigObject((prevRigObject: RigObject) => ({
+                ...prevRigObject,
+                mods: prevRigObject.mods.filter((name: string) => name !== modName)
+            }));
         }
 
     };
@@ -185,6 +299,25 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 background: "rgb(70,70,70)",
                 color: "rgb(150,150,150)"
             }}>
+
+                <Button
+                    onClick={() => {
+                        try {
+                            props.saveRig(props.rigObject);
+                            setMsg('Rig saved to your browser!');
+                            setTimeout(() => {
+                                setMsg('');
+                            }, 2000);
+                        }
+                        catch (e) {
+                            setMsg('error, while trying to save');
+                        }
+                    }
+                    }
+                >
+                    Save rig
+                </Button>
+                {msg}
 
                 <FormControl sx={{ margin: 2, minWidth: '80%' }}>
                     <TextField
@@ -212,7 +345,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                         id="dropdown"
                         value={props.rigObject.chassis}
                         label="What game?"
-                        onChange={(e) => { 
+                        onChange={(e) => {
                             //props.rigObject.setChassis(e.target.value) 
                             props.setRigObject({
                                 ...props.rigObject,
@@ -244,6 +377,15 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                         checked={showMods}
                         onChange={(e) => {
                             setShowMods(e.target.checked);
+                        }}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                    <br/>
+                    Show driver specials:
+                    <Switch
+                        checked={showDriverSpecials}
+                        onChange={(e) => {
+                            setShowDriverSpecials(e.target.checked);
                         }}
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
@@ -289,7 +431,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                 />
                             </> : <></>
                     }
-                                        {
+                    {
                         (props.rigObject.mods.includes('Mine Launcher')) ?
                             <>
                                 <br />
@@ -503,6 +645,42 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                         </> : <></>
                 }
                                 {
+                    showDriverSpecials ?
+                        <>
+                            {
+                                driverSpecials.map((driverSpecial: DriverSpecial, i: number) => {
+                                    return (
+                                        <Container
+                                            key={`minex ${i}`}
+                                            onMouseEnter={() => {
+                                                props.setHovered(driverSpecial);
+                                            }}
+                                            onMouseLeave={() => {
+                                                props.setHovered(undefined);
+                                            }}
+                                            sx={{
+                                                margin: 2,
+                                                border: 2,
+                                                borderColor: "darkGreen"
+                                            }}
+                                        >
+
+                                            {driverSpecial.name}
+
+                                            <Checkbox
+                                                checked={props.rigObject.driverSpecial.includes(driverSpecial.name)}
+                                                onChange={() => props.setRigObject({
+                                                    ...props.rigObject, driverSpecial: driverSpecial.name
+                                                })}
+                                                inputProps={{ 'aria-label': 'controlled' }}
+                                            />
+                                        </Container>
+                                    )
+                                })
+                            }
+                        </> : <></>
+                }
+                {
                     showMines ?
                         <>
                             {

@@ -67,6 +67,12 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                                                 {props.hovered.desc} <br /><br />
                                             </> : <></>
                                     }
+                                                                        {
+                                        (props.hovered.whatIsThis === 'driverSpecial') ?
+                                            <>
+                                                {props.hovered.desc} <br /><br />
+                                            </> : <></>
+                                    }
                                     {
                                         (props.hovered.whatIsThis === 'ammunition') ?
                                             <>

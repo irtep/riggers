@@ -12,7 +12,7 @@ export interface CreateProps {
     rigObject: RigObject;
     hovered: any;
     setHovered: (value: any) => void;
-
+    saveRig: any;
 }
 
 const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
@@ -39,6 +39,7 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         setRigObject={props.setRigObject}
                         setHovered={props.setHovered}
                         hovered={props.hovered}
+                        saveRig={props.saveRig}
                     />
 
                     <RightSide
@@ -46,6 +47,7 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
                         setRigObject={props.setRigObject}
                         setHovered={props.setHovered}
                         hovered={props.hovered}
+                        saveRig={props.saveRig}
                     />
 
                 </Grid>

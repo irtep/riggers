@@ -120,6 +120,12 @@ export const familiarModifications: Modification[] = [
         effect: `+2 Armour`,
         costMod: 1,
         costSpeed: 0,
+        specialEffect: [
+            {
+                prop: 'armour',
+                value: 2
+            }
+        ],
         onePerWeapon: false,
         onePerRig: false,
         whatIsThis: 'modification'
@@ -153,6 +159,12 @@ export const familiarModifications: Modification[] = [
         Evasion Attempt when evading an Attack`,
         costMod: 1,
         costSpeed: 0,
+        specialEffect: [
+            {
+                prop: 'speed',
+                value: 10
+            }
+        ],
         onePerWeapon: false,
         onePerRig: true,
         whatIsThis: 'modification'

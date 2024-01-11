@@ -6,7 +6,8 @@ export interface SpecialEffect {
 export interface DriverSpecial {
     name: string;
     desc: string;
-    specialEffects?: SpecialEffect
+    specialEffects?: SpecialEffect;
+    whatIsThis: 'driverSpecial'
 };
 
 export interface ConcealedWeapons {
@@ -34,7 +35,8 @@ export const driverSpecials: DriverSpecial[] = [
         If a Rig fitted with Boost Juice is Charred, all Rigs and
         Creatures within [5cm] will automatically receive an
         amount of Damage equal to the number of remaining Boost
-        Juice canisters on the Rig.`
+        Juice canisters on the Rig.`,
+        whatIsThis: 'driverSpecial'
     },
     {
         name: 'Circle work',
@@ -43,34 +45,8 @@ export const driverSpecials: DriverSpecial[] = [
         Momentum by 1 to Obscure your Rig from all non-Combat
         Weapon Attacks until the start of your next Action. If you
         move your Rig after activating this Speciality, this eﬀect
-        ends.`
-    },
-    {
-        name: 'Circle work',
-        desc: `Once per
-        Round , during your own Action, you may reduce your
-        Momentum by 1 to Obscure your Rig from all non-Combat
-        Weapon Attacks until the start of your next Action. If you
-        move your Rig after activating this Speciality, this eﬀect
-        ends.`
-    },
-    {
-        name: 'Circle work',
-        desc: `Once per
-        Round , during your own Action, you may reduce your
-        Momentum by 1 to Obscure your Rig from all non-Combat
-        Weapon Attacks until the start of your next Action. If you
-        move your Rig after activating this Speciality, this eﬀect
-        ends.`
-    },
-    {
-        name: 'Circle work',
-        desc: `Once per
-        Round , during your own Action, you may reduce your
-        Momentum by 1 to Obscure your Rig from all non-Combat
-        Weapon Attacks until the start of your next Action. If you
-        move your Rig after activating this Speciality, this eﬀect
-        ends.`
+        ends.`,
+        whatIsThis: 'driverSpecial'
     },
     {
         name: 'Calculating optimist',
@@ -79,7 +55,8 @@ export const driverSpecials: DriverSpecial[] = [
         was Revealed. This Speciality can interrupt another Playerʼs
         Action. This does not replace any of your Actions for this
         Round. If multiple Players wish to do this, they must roll 2 dice
-        and add their Speed value to the result to see who acts first.`
+        and add their Speed value to the result to see who acts first.`,
+        whatIsThis: 'driverSpecial'
     },
     {
         name: 'Concealed weapon',
@@ -88,7 +65,8 @@ export const driverSpecials: DriverSpecial[] = [
         table at the bottom of this page. Once per Round, you may
         Attack with the Weapon during any of your Actions. This
         Speciality counts as using a Weapon. These weapons cannot
-        be modded in any way.`
+        be modded in any way.`,
+        whatIsThis: 'driverSpecial'
     },
     {
         name: 'Drifter',
@@ -98,7 +76,8 @@ export const driverSpecials: DriverSpecial[] = [
         specialEffects: {
             prop: 'handling',
             value: 1
-        }
+        },
+        whatIsThis: 'driverSpecial'
     },
     {
         name: 'Evasive Manoeuvres',
@@ -106,12 +85,14 @@ export const driverSpecials: DriverSpecial[] = [
         Attempts made against an incoming Attack; also, apply this
         Specialty's eﬀect to a single re-rolled Evasion Attempt. The
         use of this Speciality must be declared immediately after your
-        Rig is declared the target of an Attack.`
+        Rig is declared the target of an Attack.`,
+        whatIsThis: 'driverSpecial'
     },
     {
         name: 'Pedal to the metal',
         desc: `Once per Round, during your own Action, before moving
-        your Rig, add +5 to your Speed value for this Action.`
+        your Rig, add +5 to your Speed value for this Action.`,
+        whatIsThis: 'driverSpecial'
     }
 ];
 

@@ -35,6 +35,12 @@ export const rigModifications: Modification[] = [
         effect: `+3 Armour. A Rig can never have more than a total of 12 Armour.`,
         costMod: 1,
         costSpeed: 2,
+        specialEffect: [
+            {
+                prop: 'armour',
+                value: 3
+            }
+        ],
         whatIsThis: 'modification'
     },
 
@@ -133,6 +139,12 @@ export const rigModifications: Modification[] = [
         MAX one per rigg`,
         costMod: 1,
         costSpeed: 0,
+        specialEffect: [
+            {
+                prop: 'resistanceFields',
+                value: 1
+            }
+        ],
         onePerRig: true,
         whatIsThis: 'modification'
     },
@@ -141,6 +153,12 @@ export const rigModifications: Modification[] = [
         effect: `Provides 1 extra Layer to a Resistance Field.`,
         costMod: 1,
         costSpeed: 0,
+        specialEffect: [
+            {
+                prop: 'resistanceFields',
+                value: 1
+            }
+        ],
         whatIsThis: 'modification'
     },
     {
