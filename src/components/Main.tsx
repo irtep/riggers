@@ -178,7 +178,9 @@ const Main: React.FC = (): React.ReactElement => {
                                                         }}
                                                         onClick={() => {
                                                             console.log('clicked: ', rig);
-                                                            setRigObject({ ...savedRigs[0] });
+                                                            const matchingRig = savedRigs.find(savedRig => savedRig.id === rig.id);
+
+                                                            setRigObject({ ...matchingRig });
                                                             setMode('edit');
                                                         }}
                                                     >
