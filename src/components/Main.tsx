@@ -120,6 +120,7 @@ const Main: React.FC = (): React.ReactElement => {
 
     useEffect(() => {
         let roundedSpeed;
+        let extras = 0;
 
         if (rigObject.mods.includes('Turbo Charger')) {
             // Round up to the next multiple of 5
@@ -129,13 +130,20 @@ const Main: React.FC = (): React.ReactElement => {
             roundedSpeed = Math.floor(rigObject.speed / 5) * 5;
         }
 
+        // temporary fix, need to make so, that comes from all other... maybe
+        if (rigObject.driverSpecial.includes('Drifter')) {
+            extras = 1;
+        } else {
+            extras = 0;
+        }
+
         setRigObject({
             ...rigObject,
-            handling: Math.floor(rigObject.speed / 5) + rigObject.handlingMods,
+            handling: Math.floor(rigObject.speed / 5) + rigObject.handlingMods + extras,
             realSpeed: roundedSpeed
         });
 
-    }, [rigObject.speed, rigObject.handlingMods]);
+    }, [rigObject.speed, rigObject.handlingMods, rigObject.driverSpecial]);
 
     useEffect(() => {
         console.log('rig Object: ', rigObject);
