@@ -139,7 +139,7 @@ const Main: React.FC = (): React.ReactElement => {
 
         setRigObject({
             ...rigObject,
-            handling: Math.floor(rigObject.speed / 5) + rigObject.handlingMods + extras,
+            handling: Math.floor(rigObject.realSpeed / 5) + rigObject.handlingMods + extras,
             realSpeed: roundedSpeed
         });
 
