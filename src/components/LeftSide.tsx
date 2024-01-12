@@ -581,6 +581,17 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                             onChange={(event) => handleModChange(event, m, 3)}
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />
+                                                        {
+                                                            (m.name === 'Armour Plating') ?
+                                                            <>
+                                                                                                                    <Checkbox
+                                                            checked={props.rigObject.mods.includes(`${m.name}(4)`)}
+                                                            onChange={(event) => handleModChange(event, m, 4)}
+                                                            inputProps={{ 'aria-label': 'controlled' }}
+                                                        />
+                                                            </>
+                                                            :<></>
+                                                        }
                                                     </> :
                                                     <></>
                                             }
