@@ -1,7 +1,7 @@
 /**
  * 
  * DEV:
- *  
+ *  mobile version and or mobile friendly version
  *  
  * 
  * BUGS:
