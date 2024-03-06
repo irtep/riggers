@@ -143,7 +143,7 @@ const Main: React.FC = (): React.ReactElement => {
             realSpeed: roundedSpeed
         });
 
-    }, [rigObject.speed, rigObject.handlingMods, rigObject.driverSpecial]);
+    }, [rigObject.speed, rigObject.realSpeed, rigObject.handlingMods, rigObject.driverSpecial]);
 
     useEffect(() => {
         console.log('rig Object: ', rigObject);
