@@ -10,6 +10,9 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                     <Paper sx={{
                         padding: 2,
                         textAlign: 'center',
+                        position: 'fixed',
+                        borderRadius: 3,
+                        background: 'rgb(170,170,170)'
                     }}>
                         {
                             props.hovered !== undefined ?
@@ -103,11 +106,3 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
 }
 
 export default RightSide;
-/*
-        name: 'Target Acquisition System',
-        effect: `A Rig equipped with this Modification can make Aimed Shots by reducing its Momentum by
-        only 1, rather than the normal 2. MAX one per rig`,
-        costMod: 1,
-        costSpeed: 0,
-        onePerRig: true,
-*/
