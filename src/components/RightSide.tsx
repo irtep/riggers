@@ -11,6 +11,8 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                         padding: 2,
                         textAlign: 'center',
                         position: 'fixed',
+                        top: 0,
+                        bottom: 0,
                         borderRadius: 3,
                         background: 'rgb(170,170,170)'
                     }}>
