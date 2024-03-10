@@ -28,6 +28,7 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
 
             <ShowRig
                 rigObject={props.rigObject}
+                setHovered={props.setHovered}
             />
 
             <Container component="main" sx={{

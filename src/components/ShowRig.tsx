@@ -1,9 +1,12 @@
 import { Container, Grid, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { RigObject } from './Main';
+import { Weapon, weapons } from '../data/weapons';
+import { Modification, rigModifications } from '../data/modifications';
 
 interface LocalProps {
     rigObject: RigObject;
+    setHovered: (value: any) => void;
 }
 
 const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement => {
@@ -44,6 +47,7 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
                     </Container>
                 </Grid>
                 <Grid item xs={3}>
+
                     <Container>
                         <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
                             Weapons:
@@ -53,10 +57,12 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
                                 return (
                                     <Typography
                                         onMouseEnter={() => {
-                                            //  props.rigObject.setHovered(w);
+                                            // find details of this weapon
+                                            const foundWeapon: Weapon[] = weapons.filter( (wep: Weapon) => wep.name === w ); 
+                                            props.setHovered(foundWeapon[0]);
                                         }}
                                         onMouseLeave={() => {
-                                            //  props.rigObject.setHovered(undefined);
+                                            props.setHovered(undefined);
                                         }}
                                         sx={{
                                             margin: 1
@@ -69,6 +75,7 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
                             })
                         }
                     </Container>
+
                     <Container>
                         <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
                             Modifications:
@@ -78,10 +85,12 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
                                 return (
                                     <Typography
                                         onMouseEnter={() => {
-                                            //  props.rigObject.setHovered(w);
+                                            // find details of this Modification
+                                            const foundMod: Modification[] = rigModifications.filter( (modi: Modification) => modi.name === m ); 
+                                            props.setHovered(foundMod[0]);
                                         }}
                                         onMouseLeave={() => {
-                                            //  props.rigObject.setHovered(undefined);
+                                            props.setHovered(undefined);
                                         }}
                                         sx={{
                                             margin: 1
@@ -94,6 +103,7 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
                             })
                         }
                     </Container>
+
                 </Grid>
                 <Grid item xs={2}>
                     {

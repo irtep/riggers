@@ -10,3 +10,4 @@ Versions:
 0.0.5 speedInGame is where handling should be calculated, not speed
 0.0.6 when hovered weapon/eq, it can not hide out of screen
 0.0.7 speeds and handling fix
+0.0.8 shows weapon and eq stats, in selected place too
