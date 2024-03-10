@@ -60,7 +60,7 @@ const initialObject: RigObject = {
 const Main: React.FC = (): React.ReactElement => {
     const [rigObject, setRigObject] = useState<RigObject>(initialObject);
     const [mode, setMode] = useState<'main' | 'create' | 'edit'>('main');
-    const [hovered, setHovered] = useState<string>('');
+    const [hovered, setHovered] = useState<string | undefined>('');
     const [savedRigs, setSavedRigs] = useState<any[]>([]);
 
     const saveRig = (rig: RigObject) => {

@@ -6,7 +6,7 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
     return (
         <Grid item xs={6}>
             {
-                props.hovered !== undefined ?
+                (props.hovered !== undefined && props.hovered !== '') ?
                     <Paper sx={{
                         padding: 2,
                         textAlign: 'center',
