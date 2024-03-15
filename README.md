@@ -13,3 +13,4 @@ Versions:
 0.0.8 shows weapon and eq stats, in selected place too
 0.0.9 shows better now, those of 0.0.9
 0.10.0 fixed an empty description panel bug
+0.10.1 omni-directional mount had a wrong description

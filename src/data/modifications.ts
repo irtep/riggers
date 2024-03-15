@@ -273,9 +273,7 @@ export const weaponModifications: Modification[] = [
     },
     {
         name: 'Omni-directional Mount',
-        effect: `Add +1 to this Weaponʼs Impact Power total.
-        This Modification is assigned to a Weapon on your Rig Blueprint and cannot be changed.
-        MAX one per weapon`,
+        effect: `This weapon can attack any direction`,
         costMod: 0,
         costSpeed: 1,
         onePerWeapon: true,
