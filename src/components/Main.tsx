@@ -57,7 +57,11 @@ const initialObject: RigObject = {
     handlingMods: 0
 };
 
-const Main: React.FC = (): React.ReactElement => {
+interface MainProps {
+    device: 'mobile' | 'laptop';
+};
+
+const Main: React.FC<MainProps> = (props: MainProps): React.ReactElement => {
     const [rigObject, setRigObject] = useState<RigObject>(initialObject);
     const [mode, setMode] = useState<'main' | 'create' | 'edit'>('main');
     const [hovered, setHovered] = useState<string | undefined>('');
@@ -74,6 +78,7 @@ const Main: React.FC = (): React.ReactElement => {
         const toBeSaved = [...savedRigs, rig];
         localStorage.setItem("rigs", JSON.stringify(toBeSaved));
         setSavedRigs(toBeSaved);
+        setMode('edit');
     };
 
     const overwriteRig = (rigToSave: RigObject) => {
@@ -144,11 +149,6 @@ const Main: React.FC = (): React.ReactElement => {
         });
 
     }, [rigObject.speed, rigObject.realSpeed, rigObject.handlingMods, rigObject.driverSpecial]);
-
-    useEffect(() => {
-        console.log('rig Object: ', rigObject);
-        console.log('saved Rigs: ', savedRigs);
-    });
 
     useEffect(() => {
 
@@ -228,6 +228,7 @@ const Main: React.FC = (): React.ReactElement => {
                             saveRig={saveRig}
                             setMode={setMode}
                             mode={mode}
+                            device={props.device}
                         />
                     </> :
                     <></>
@@ -243,11 +244,11 @@ const Main: React.FC = (): React.ReactElement => {
                             saveRig={overwriteRig}
                             setMode={setMode}
                             mode={mode}
+                            device={props.device}
                         />
                     </> :
                     <></>
             }
-
         </Container>
     );
 }

@@ -1,11 +1,8 @@
-import { Container, CssBaseline, Grid, Paper, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import React from 'react';
-import LeftSide from './LeftSide';
-import RightSide from './RightSide';
-//import { weapons, Weapon } from '../data/weapons';
-//import { Ammunition, ammunitions, gunnerSpecials } from '../data/gunnerSpecials';
 import { RigObject } from './Main';
-import ShowRig from './ShowRig';
+import LaptopCreate from './LaptopCreate';
+import MobileCreate from './MobileCreate';
 
 export interface CreateProps {
     setRigObject: any;
@@ -15,6 +12,7 @@ export interface CreateProps {
     saveRig: any;
     setMode: (value: 'main' | 'create' | 'edit') => void;
     mode: string;
+    device: 'mobile' | 'laptop';
 }
 
 const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
@@ -25,41 +23,29 @@ const Create: React.FC<CreateProps> = (props: CreateProps): React.ReactElement =
             color: "rgb(180,180,180)",
             borderRadius: 2
         }}>
-
-            <ShowRig
-                rigObject={props.rigObject}
-                setHovered={props.setHovered}
-            />
-
-            <Container component="main" sx={{
-                minHeight: '100vh',
-            }}>
-                <CssBaseline />
-                <Grid container spacing={3}>
-
-                    <LeftSide
-                        rigObject={props.rigObject}
+            {
+                (props.device === 'laptop') ?
+                    <LaptopCreate
                         setRigObject={props.setRigObject}
-                        setHovered={props.setHovered}
+                        rigObject={props.rigObject}
                         hovered={props.hovered}
+                        setHovered={props.setHovered}
                         saveRig={props.saveRig}
                         setMode={props.setMode}
                         mode={props.mode}
-                    />
-
-                    <RightSide
-                        rigObject={props.rigObject}
+                        device={props.device}
+                    /> :
+                    <MobileCreate
                         setRigObject={props.setRigObject}
-                        setHovered={props.setHovered}
+                        rigObject={props.rigObject}
                         hovered={props.hovered}
+                        setHovered={props.setHovered}
                         saveRig={props.saveRig}
                         setMode={props.setMode}
                         mode={props.mode}
+                        device={props.device} 
                     />
-
-                </Grid>
-            </Container>
-
+            }
         </Container>
     );
 }

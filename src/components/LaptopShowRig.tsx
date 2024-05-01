@@ -1,5 +1,5 @@
 import { Container, Grid, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { RigObject } from './Main';
 import { Weapon, weapons } from '../data/weapons';
 import { Modification, rigModifications } from '../data/modifications';
@@ -9,11 +9,7 @@ interface LocalProps {
     setHovered: (value: any) => void;
 }
 
-const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement => {
-
-    useEffect(() => {
-        console.log('show loaded: ', props.rigObject);
-    }, []);
+const LaptopShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement => {
 
     if (props.rigObject) {
         return (
@@ -202,4 +198,4 @@ const ShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement =>
 
 }
 
-export default ShowRig;
+export default LaptopShowRig;

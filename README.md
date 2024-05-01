@@ -14,3 +14,4 @@ Versions:
 0.0.9 shows better now, those of 0.0.9
 0.10.0 fixed an empty description panel bug
 0.10.1 omni-directional mount had a wrong description
+0.2.0 mobile support version 1, bug fix for double save bug when creating new

@@ -391,7 +391,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
 
                 <br />
 
-                <Typography>
+                <Typography sx={{borderBottom: " 1px solid green"}}>
                     Show weapons:
                     <Switch
                         checked={showWeapons}
