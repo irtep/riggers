@@ -15,3 +15,4 @@ Versions:
 0.10.0 fixed an empty description panel bug
 0.10.1 omni-directional mount had a wrong description
 0.2.0 mobile support version 1, bug fix for double save bug when creating new
+0.2.1 ShowDetails own component, to prepare mobile support for it
