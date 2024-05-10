@@ -1,11 +1,10 @@
 import { Container } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
 
 const App: React.FC = (): React.ReactElement => {
-  const [device, setDevice] = useState<'mobile' | 'laptop'>('laptop');
 
   return (
     <Container sx={{
@@ -15,19 +14,15 @@ const App: React.FC = (): React.ReactElement => {
       padding: 1
     }}>
 
-      <Header
-        device={device}
-        setDevice={setDevice}
-      />
+      <Header />
 
-      <Main
-        device={device}
-      />
+      <Main />
 
-      <Footer/>
+      <Footer />
 
     </Container>
   );
+
 }
 
 export default App;

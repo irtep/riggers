@@ -1,193 +1,219 @@
 import { Container, Typography } from '@mui/material';
-import React from 'react';
-import { RigObject } from './Main';
+import React, { useContext } from 'react';
+import { MobileDetails, RigContext } from '../context/RigContext';
+import { Visibility } from '@mui/icons-material';
 import { Weapon, weapons } from '../data/weapons';
-import { Modification, rigModifications } from '../data/modifications';
+import ShowDetails from './ShowDetails';
 
-interface LocalProps {
-    rigObject: RigObject;
-    setHovered: (value: any) => void;
-}
+const MobileShowRig: React.FC = (): React.ReactElement => {
 
-const MobileShowRig: React.FC<LocalProps> = (props: LocalProps): React.ReactElement => {
+    const { rigObject, setMobileDetails, mobileDetails } = useContext(RigContext);
 
-    if (props.rigObject) {
-        return (
-            <>
+    const stripParentheses = (str: string): string => {
+        const index = str.indexOf("(");
+        if (index !== -1) {
+            return str.substring(0, index);
+        }
+        return str;
+    }
+
+    const handleDetails = (name: string, type: string): void => {
+
+        let fullDetails: MobileDetails = {
+            name: name,
+            type: type,
+            fullDetails: ''
+        };
+
+        switch (type) {
+            case 'weapon':
+                const getWeapon = weapons.filter( (w: Weapon) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = getWeapon[0]
+            break;
+
+            default: console.log('not found');
+        };
+
+        setMobileDetails(fullDetails);
+
+        console.log('fD: ', fullDetails);
+    ;}
+
+    if (rigObject) {
+
+        if (mobileDetails.name !== '') {
+            return(
                 <Container>
-                    <Typography sx={{
-                        background: "black", color: "orange", fontWeight: "strong", padding: 1
-                    }}>
-                        Name of rig: {props.rigObject.name}<br />
-                    </Typography>
-                    <Typography>
-                        Chassis: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.chassis}</span><br />
-                    </Typography>
-                    <Typography>
-                        Speed: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.speed}</span><br />
-                        Speed in game: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.realSpeed}</span><br />
-                    </Typography>
-                    <Typography>
-                        Armour: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.armour}</span><br />
-                    </Typography>
-                    <Typography>
-                        Handling: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.handling}</span><br />
-                    </Typography>
-                    <Typography>
-                        Resistance fields: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.resistanceFields}</span><br />
-                    </Typography>
-                    <Typography>
-                        Empty mod slots: <span style={{ color: "rgb(57,255,20)" }}>{props.rigObject.emptySlots}</span><br />
-                    </Typography>
+                    <ShowDetails 
+                        item={mobileDetails.fullDetails}
+                    />
                 </Container>
-                <Container>
-                    <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                        Weapons:
-                    </span>
-                    {
-                        props.rigObject.selectedWeapons.map((w: string, i: number) => {
-                            return (
-                                <Typography
-                                    onMouseEnter={() => {
-                                        // find details of this weapon
-                                        const foundWeapon: Weapon[] = weapons.filter((wep: Weapon) => wep.name === w);
-                                        props.setHovered(foundWeapon[0]);
-                                    }}
-                                    onMouseLeave={() => {
-                                        props.setHovered(undefined);
-                                    }}
-                                    sx={{
-                                        margin: 1
-                                    }}
-                                    key={`sW: ${i}`}
-                                >
-                                    {w}
-                                </Typography>
-                            )
-                        })
-                    }
-                </Container>
+            )
+        } else {
+            return (
+                <>
+                    <Container>
+                        <Typography sx={{
+                            background: "black", color: "orange", fontWeight: "strong", padding: 1
+                        }}>
+                            Name of rig: {rigObject.name}<br />
+                        </Typography>
+                        <Typography>
+                            Chassis: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.chassis}</span><br />
+                        </Typography>
+                        <Typography>
+                            Speed: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.speed}</span><br />
+                            Speed in game: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.realSpeed}</span><br />
+                        </Typography>
+                        <Typography>
+                            Armour: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.armour}</span><br />
+                        </Typography>
+                        <Typography>
+                            Handling: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.handling}</span><br />
+                        </Typography>
+                        <Typography>
+                            Resistance fields: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.resistanceFields}</span><br />
+                        </Typography>
+                        <Typography>
+                            Empty mod slots: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.emptySlots}</span><br />
+                        </Typography>
+                    </Container>
+                    <Container>
+                        <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                            Weapons:
+                        </span>
+                        {
+                            rigObject.selectedWeapons.map((w: string, i: number) => {
+                                return (
+                                    <Typography
+                                        sx={{
+                                            margin: 1
+                                        }}
+                                        key={`sW: ${i}`}
+                                    >
+                                        {w}
+                                        <Visibility
+                                            onClick={() => {
+                                                handleDetails(w, 'weapon');
+                                            }}
+                                        />
+                                    </Typography>
+                                )
+                            })
+                        }
+                    </Container>
 
-                <Container>
-                    <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                        Modifications:
-                    </span>
-                    {
-                        props.rigObject.mods.map((m: string, i: number) => {
-                            return (
-                                <Typography
-                                    onMouseEnter={() => {
-                                        // find details of this Modification
-                                        const foundMod: Modification[] = rigModifications.filter((modi: Modification) => modi.name === m);
-                                        props.setHovered(foundMod[0]);
-                                    }}
-                                    onMouseLeave={() => {
-                                        props.setHovered(undefined);
-                                    }}
-                                    sx={{
-                                        margin: 1
-                                    }}
-                                    key={`sm: ${i}`}
-                                >
-                                    {m}
-                                </Typography>
-                            )
-                        })
-                    }
-                </Container>
-                <Container>
-                    {
-                        (props.rigObject.driverSpecial.length > 0) ?
-                            <>
-                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                                    Driver special:
-                                </span>
-                                <Typography>
-                                    {props.rigObject.driverSpecial}
-                                </Typography>
-                            </> : <></>
-                    }
-                    {
-                        (props.rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
-                            <>
-                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                                    Gunner:
-                                </span>
-                                <br />
-                                {props.rigObject.gunnerSpecial}
-                            </> : <></>
-                    }
-                    {
-                        (props.rigObject.mods.filter((mod: string) => mod === 'Mine Launcher').length === 1) ?
-                            <>
-                                <br />
-                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                                    Mines:
-                                </span>
-                                <br />
-                                {props.rigObject.mines.map((mine: string, indx) => {
-                                    return (
-                                        <Typography key={`mine:${indx}`}>
-                                            {mine}
-                                        </Typography>
-                                    )
-                                })}
-                            </> : <></>
-                    }
-                    {
-                        (props.rigObject.gunnerSpecial.includes('Familiar') && props.rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
-                            <>
-                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                                    Familiar:
-                                </span>
-                                <Typography>
-                                    Speed: <span style={{ color: "navy" }}>{props.rigObject.familiarStats.speed}</span> Armour: <span style={{ color: "navy" }}>{props.rigObject.familiarStats.armour}</span> Empty slots: <span style={{ color: "navy" }}>{props.rigObject.familiarStats.emptySlots}</span>
-                                </Typography>
-                                {
-                                    props.rigObject.familiar?.map((fa: string, indx: number) => {
+                    <Container>
+                        <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                            Modifications:
+                        </span>
+                        {
+                            rigObject.mods.map((m: string, i: number) => {
+                                return (
+                                    <Typography
+                                        sx={{
+                                            margin: 1
+                                        }}
+                                        key={`sm: ${i}`}
+                                    >
+                                        {m} <Visibility />
+                                    </Typography>
+                                )
+                            })
+                        }
+                    </Container>
+                    <Container>
+                        {
+                            (rigObject.driverSpecial.length > 0) ?
+                                <>
+                                    <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                        Driver special:
+                                    </span>
+                                    <Typography>
+                                        {rigObject.driverSpecial} <Visibility />
+                                    </Typography>
+                                </> : <></>
+                        }
+                        {
+                            (rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
+                                <>
+                                    <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                        Gunner:
+                                    </span>
+                                    <br />
+                                    {rigObject.gunnerSpecial} <Visibility />
+                                </> : <></>
+                        }
+                        {
+                            (rigObject.mods.filter((mod: string) => mod === 'Mine Launcher').length === 1) ?
+                                <>
+                                    <br />
+                                    <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                        Mines:
+                                    </span>
+                                    <br />
+                                    {rigObject.mines.map((mine: string, indx: number) => {
                                         return (
-                                            <Typography key={`faStuff ${indx}`}>
-                                                {fa}
+                                            <Typography key={`mine:${indx}`}>
+                                                {mine} <Visibility />
                                             </Typography>
                                         )
-                                    })
-                                }
-                            </> : <></>
-                    }
-                    {
-                        (props.rigObject.concealedWeapon.length > 0) ?
-                            <>
-                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                                    Concealed weapon:
-                                </span>
+                                    })}
+                                </> : <></>
+                        }
+                        {
+                            (rigObject.gunnerSpecial.includes('Familiar') && rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
+                                <>
+                                    <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                        Familiar:
+                                    </span>
+                                    <Typography>
+                                        Speed: <span style={{ color: "navy" }}>{rigObject.familiarStats.speed}</span> Armour: <span style={{ color: "navy" }}>{rigObject.familiarStats.armour}</span> Empty slots: <span style={{ color: "navy" }}>{rigObject.familiarStats.emptySlots}</span>
+                                    </Typography>
+                                    {
+                                        rigObject.familiar?.map((fa: string, indx: number) => {
+                                            return (
+                                                <Typography key={`faStuff ${indx}`}>
+                                                    {fa} <Visibility />
+                                                </Typography>
+                                            )
+                                        })
+                                    }
+                                </> : <></>
+                        }
+                        {
+                            (rigObject.concealedWeapon.length > 0) ?
+                                <>
+                                    <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                        Concealed weapon:
+                                    </span>
 
-                                <br />
+                                    <br />
 
-                                {props.rigObject.concealedWeapon}
+                                    {rigObject.concealedWeapon} <Visibility />
 
-                            </> : <></>
-                    }
-                    {
-                        (props.rigObject.gunnerSpecial.includes('The right tool')) ?
-                            <>
-                                <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                                    Right tool weapon:
-                                </span>
+                                </> : <></>
+                        }
+                        {
+                            (rigObject.gunnerSpecial.includes('The right tool')) ?
+                                <>
+                                    <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
+                                        Right tool weapon:
+                                    </span>
 
-                                <br />
+                                    <br />
 
-                                {props.rigObject.rightTool}
+                                    {rigObject.rightTool} <Visibility />
 
-                            </> : <></>
-                    }
-                </Container>
-            </>
-        );
+                                </> : <></>
+                        }
+                    </Container>
+                </>
+            );
+        }
     } else {
         return (<></>);
     }
-
-
 }
 
 export default MobileShowRig;

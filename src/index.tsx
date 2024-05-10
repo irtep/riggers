@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './App'
+
+import { RigProvider } from './context/RigContext'; // tänne hyvä jakaa
 
 // Add a global CSS to remove default body margin and padding
 document.body.style.margin = '0';
@@ -13,7 +15,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
+    <RigProvider>
       <App />
+    </RigProvider>
   </React.StrictMode>
 );
 

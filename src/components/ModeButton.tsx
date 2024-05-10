@@ -1,10 +1,9 @@
 import { Button } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
+import { RigContext } from '../context/RigContext';
 
 interface mDbuttonProps {
     activateWhat: 'mobile' | 'laptop';
-    device: 'mobile' | 'laptop';
-    setDevice: (value: any) => void;
 };
 
 const styles = ({
@@ -21,16 +20,17 @@ const styles = ({
 });
 
 const ModeButton: React.FC<mDbuttonProps> = (props: mDbuttonProps): React.ReactElement => {
+    const { device, setDevice } = useContext(RigContext);
+    
     return (
         <>
             <Button sx={
-                (props.device === props.activateWhat) ?
+                (device === props.activateWhat) ?
                     styles.activated :
                     styles.disabled
             }
             onClick={ () => {
-                console.log('cliked');
-                props.setDevice(props.activateWhat);
+                setDevice(props.activateWhat);
             }}
             >
                 {props.activateWhat} mode

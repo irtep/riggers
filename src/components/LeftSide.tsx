@@ -1,27 +1,36 @@
 import { Button, Checkbox, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Switch, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react';
-import { CreateProps } from './Create';
+import React, { useContext } from 'react';
 import { chassises } from '../data/chassises';
 import { Weapon, weapons } from '../data/weapons';
 import { Modification, SpecialEffect, rigModifications, weaponModifications } from '../data/modifications';
 import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../data/gunnerSpecials';
 import { familiarModifications, familiarWeapons } from '../data/familiar';
 import { Mine, mines } from '../data/mines';
-import { RigObject } from './Main';
 import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../data/driverSpecials';
+import { RigContext, RigObject } from '../context/RigContext';
 
-const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
-    const [showWeapons, setShowWeapons] = useState<boolean>(false);
-    const [showMods, setShowMods] = useState<boolean>(false);
-    const [showWeaponMods, setShowWeaponMods] = useState<boolean>(false);
-    const [showGunnerSpecials, setShowGunnerSpecials] = useState<boolean>(false);
-    const [showRightTools, setShowRightTools] = useState<boolean>(false);
-    const [showFamiliarWeapons, setShowFamiliarWeapons] = useState<boolean>(false);
-    const [showFamiliarMods, setShowFamiliarMods] = useState<boolean>(false);
-    const [showMines, setShowMines] = useState<boolean>(false);
-    const [showDriverSpecials, setShowDriverSpecials] = useState<boolean>(false);
-    const [showConcealedWeapons, setShowConcealedWeapons] = useState<boolean>(false);
-    const [msg, setMsg] = useState<string>('');
+const LeftSide: React.FC = (): React.ReactElement => {
+
+    const { rigObject,
+            setRigObject,
+            setMode,
+            saveRig,
+            overwriteRig,
+            setMsg,
+            mode,
+            msg,
+            showWeapons, setShowWeapons,
+            showMods, setShowMods,
+            showWeaponMods, setShowWeaponMods,
+            showGunnerSpecials, setShowGunnerSpecials,
+            showRightTools, setShowRightTools,
+            showFamiliarWeapons, setShowFamiliarWeapons,
+            showFamiliarMods, setShowFamiliarMods,
+            showMines, setShowMines,
+            showDriverSpecials, setShowDriverSpecials,
+            showConcealedWeapons, setShowConcealedWeapons,
+            setHovered
+     } = useContext(RigContext);
 
     interface Prices {
         slots: number;
@@ -38,9 +47,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
 
 
         if (familiar) {
-            const newSlots: number = (props.rigObject.familiarStats.emptySlots as number) - values.slots;
+            const newSlots: number = (rigObject.familiarStats.emptySlots as number) - values.slots;
 
-            props.setRigObject((prevRigObject: any) => ({
+            setRigObject((prevRigObject: any) => ({
                 ...prevRigObject,
                 familiarStats: {
                     ...prevRigObject.familiarStats,
@@ -48,9 +57,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 }
             }));
         } else {
-            const newSlots: number = (props.rigObject.emptySlots as number) - values.slots;
+            const newSlots: number = (rigObject.emptySlots as number) - values.slots;
 
-            props.setRigObject((prevRigObject: any) => ({
+            setRigObject((prevRigObject: any) => ({
                 ...prevRigObject,
                 emptySlots: newSlots,
             }));
@@ -61,10 +70,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
     const addStats = (values: Stats, familiar: boolean, negative: boolean): void => {
 
         if (familiar) {
-            let newSpeed: number = (props.rigObject.familiarStats.speed as number) + (negative ? -values.speed : values.speed);
-            let newArmour: number = (props.rigObject.familiarStats.armour as number) + (negative ? -values.armour : values.armour);
+            let newSpeed: number = (rigObject.familiarStats.speed as number) + (negative ? -values.speed : values.speed);
+            let newArmour: number = (rigObject.familiarStats.armour as number) + (negative ? -values.armour : values.armour);
 
-            props.setRigObject((prevRigObject: any) => ({
+            setRigObject((prevRigObject: any) => ({
                 ...prevRigObject,
                 familiarStats: {
                     ...prevRigObject.familiarStats,
@@ -73,12 +82,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 }
             }));
         } else {
-            let newSpeed: number = (props.rigObject.speed as number) + (negative ? -values.speed : values.speed);
-            let newArmour: number = (props.rigObject.armour as number) + (negative ? -values.armour : values.armour);
-            let newHandling: number = (props.rigObject.handlingMods as number) + (negative ? -values.handling : values.handling);
-            let newResistanceFields: number = (props.rigObject.resistanceFields as number) + (negative ? -values.resistanceFields : values.resistanceFields);
+            let newSpeed: number = (rigObject.speed as number) + (negative ? -values.speed : values.speed);
+            let newArmour: number = (rigObject.armour as number) + (negative ? -values.armour : values.armour);
+            let newHandling: number = (rigObject.handlingMods as number) + (negative ? -values.handling : values.handling);
+            let newResistanceFields: number = (rigObject.resistanceFields as number) + (negative ? -values.resistanceFields : values.resistanceFields);
 
-            props.setRigObject((prevRigObject: any) => ({
+            setRigObject((prevRigObject: any) => ({
                 ...prevRigObject,
                 speed: newSpeed,
                 armour: newArmour,
@@ -103,13 +112,13 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
         }
 
         if (isChecked) {
-            if (!props.rigObject.selectedWeapons.includes(weaponName)) {
+            if (!rigObject.selectedWeapons.includes(weaponName)) {
 
                 payPrice({ slots: weapon.costMod }, false);
 
                 addStats(statsToAdd, false, false);
 
-                props.setRigObject((prevRigObject: RigObject) => ({
+                setRigObject((prevRigObject: RigObject) => ({
                     ...prevRigObject,
                     selectedWeapons: [...prevRigObject.selectedWeapons, weaponName]
                 }));
@@ -120,7 +129,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
 
             addStats(statsToAdd, false, true);
 
-            props.setRigObject((prevRigObject: RigObject) => ({
+            setRigObject((prevRigObject: RigObject) => ({
                 ...prevRigObject,
                 selectedWeapons: prevRigObject.selectedWeapons.filter((name: string) => name !== weaponName)
             }));
@@ -139,25 +148,25 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
         }
 
         if (isChecked) {
-            if (!props.rigObject.mines.includes(mineName)) {
+            if (!rigObject.mines.includes(mineName)) {
 
-                //console.log('pRml ', props.rigObject.mines.length);
-                if (props.rigObject.mines.length > 0) {
+                //console.log('pRml ', rigObject.mines.length);
+                if (rigObject.mines.length > 0) {
                     addStats(statsToAdd, false, false);
                 }
 
-                props.setRigObject((prevRigObject: RigObject) => ({
+                setRigObject((prevRigObject: RigObject) => ({
                     ...prevRigObject,
                     mines: [...prevRigObject.mines, mineName]
                 }));
             }
         } else {
 
-            if (props.rigObject.mines.length > 1) {
+            if (rigObject.mines.length > 1) {
                 addStats(statsToAdd, false, true);
             }
 
-            props.setRigObject((prevRigObject: RigObject) => ({
+            setRigObject((prevRigObject: RigObject) => ({
                 ...prevRigObject,
                 mines: prevRigObject.mines.filter((name: string) => name !== mineName)
             }));
@@ -205,13 +214,13 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
 
         if (isChecked) {
 
-            if (!props.rigObject.familiar.includes(eqName)) {
+            if (!rigObject.familiar.includes(eqName)) {
 
                 payPrice({ slots: eq.costMod }, true);
 
                 addStats(statsToAdd, true, false);
 
-                props.setRigObject((prevRigObject: RigObject) => ({
+                setRigObject((prevRigObject: RigObject) => ({
                     ...prevRigObject,
                     familiar: [...prevRigObject.familiar, eqName]
                 }));
@@ -222,7 +231,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
 
             addStats(statsToAdd, true, true);
 
-            props.setRigObject((prevRigObject: RigObject) => ({
+            setRigObject((prevRigObject: RigObject) => ({
                 ...prevRigObject,
                 familiar: prevRigObject.familiar.filter((name: string) => name !== eqName)
             }));
@@ -273,13 +282,13 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
         }
 
         if (isChecked) {
-            if (!props.rigObject.mods.includes(modName)) {
+            if (!rigObject.mods.includes(modName)) {
                 console.log('price to pay:', mod.costMod, mod.costSpeed);
                 payPrice({ slots: mod.costMod }, false);
 
                 addStats(statsToAdd, false, false);
 
-                props.setRigObject((prevRigObject: RigObject) => ({
+                setRigObject((prevRigObject: RigObject) => ({
                     ...prevRigObject,
                     mods: [...prevRigObject.mods, modName]
                 }));
@@ -290,7 +299,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
 
             addStats(statsToAdd, false, true);
 
-            props.setRigObject((prevRigObject: RigObject) => ({
+            setRigObject((prevRigObject: RigObject) => ({
                 ...prevRigObject,
                 mods: prevRigObject.mods.filter((name: string) => name !== modName)
             }));
@@ -309,7 +318,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 <Button
                     onClick={
                         () => {
-                            props.setMode('main');
+                            setMode('main');
                         }
                     }
                 >
@@ -318,11 +327,19 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 <Button
                     onClick={() => {
                         try {
-                            props.saveRig(props.rigObject);
-                            setMsg('Rig saved to your browser!');
-                            setTimeout(() => {
-                                setMsg('');
-                            }, 2000);
+                            if (mode === 'edit') {
+                                overwriteRig(rigObject);
+                                setMsg('Rig saved to your browser!');
+                                setTimeout(() => {
+                                    setMsg('');
+                                }, 2000);
+                            } else if (mode === 'create'){
+                                saveRig(rigObject);
+                                setMsg('Rig saved to your browser!');
+                                setTimeout(() => {
+                                    setMsg('');
+                                }, 2000);
+                            }
                         }
                         catch (e) {
                             setMsg('error, while trying to save');
@@ -331,13 +348,13 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                     }
                 >
                     {
-                        (props.mode === 'create') ?
+                        (mode === 'create') ?
                             <>
                                 Save new rig
                             </> : <></>
                     }
                     {
-                        (props.mode === 'edit') ?
+                        (mode === 'edit') ?
                             <>
                                 Save changes to rig
                             </> : <></>
@@ -350,12 +367,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                 <FormControl sx={{ margin: 2, minWidth: '80%' }}>
                     <TextField
                         type="text"
-                        value={props.rigObject.name}
+                        value={rigObject.name}
                         label="Name your rig"
                         onChange={(e) => {
-                            //props.rigObject.setName(e.target.value)
-                            props.setRigObject({
-                                ...props.rigObject,
+                            //rigObject.setName(e.target.value)
+                            setRigObject({
+                                ...rigObject,
                                 name: e.target.value
                             });
                         }}
@@ -371,12 +388,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                     <Select
                         labelId="dropdown-label"
                         id="dropdown"
-                        value={props.rigObject.chassis}
+                        value={rigObject.chassis}
                         label="What game?"
                         onChange={(e) => {
-                            //props.rigObject.setChassis(e.target.value) 
-                            props.setRigObject({
-                                ...props.rigObject,
+                            //rigObject.setChassis(e.target.value) 
+                            setRigObject({
+                                ...rigObject,
                                 chassis: e.target.value
                             });
                         }}
@@ -418,7 +435,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
                     {
-                        (props.rigObject.selectedWeapons.length > 0) ?
+                        (rigObject.selectedWeapons.length > 0) ?
                             <>
                                 <br />
                                 Show weapon modifications:
@@ -432,7 +449,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             </> : <></>
                     }
                     {
-                        (props.rigObject.driverSpecial.includes('Concealed weapon')) ?
+                        (rigObject.driverSpecial.includes('Concealed weapon')) ?
                             <>
                                 <br />
                                 Show weapon concealed weapons:
@@ -446,7 +463,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             </> : <></>
                     }
                     {
-                        (props.rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
+                        (rigObject.mods.filter((mod: string) => mod === 'Gunner').length === 1) ?
                             <>
                                 <br />
                                 Show gunner specials:
@@ -460,7 +477,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             </> : <></>
                     }
                     {
-                        (props.rigObject.gunnerSpecial === 'The right tool') ?
+                        (rigObject.gunnerSpecial === 'The right tool') ?
                             <>
                                 <br />
                                 Show "right tools" :
@@ -474,7 +491,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             </> : <></>
                     }
                     {
-                        (props.rigObject.mods.includes('Mine Launcher')) ?
+                        (rigObject.mods.includes('Mine Launcher')) ?
                             <>
                                 <br />
                                 Show mines :
@@ -488,7 +505,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                             </> : <></>
                     }
                     {
-                        (props.rigObject.gunnerSpecial === 'Familiar') ?
+                        (rigObject.gunnerSpecial === 'Familiar') ?
                             <>
                                 <br />
                                 Show familiar weapons:
@@ -520,22 +537,22 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`w ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(w);
+                                                setHovered(w);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                         >
 
                                             {w.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.selectedWeapons.includes(w.name)}
+                                                checked={rigObject.selectedWeapons.includes(w.name)}
                                                 onChange={(event) => handleWeaponChange(event, w, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
                                             <Checkbox
-                                                checked={props.rigObject.selectedWeapons.includes(`${w.name}(2)`)}
+                                                checked={rigObject.selectedWeapons.includes(`${w.name}(2)`)}
                                                 onChange={(event) => handleWeaponChange(event, w, 2)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -554,17 +571,17 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`mx ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(m);
+                                                setHovered(m);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                         >
 
                                             {m.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.mods.includes(m.name)}
+                                                checked={rigObject.mods.includes(m.name)}
                                                 onChange={(event) => handleModChange(event, m, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -572,12 +589,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                 (!m.onePerRig) ?
                                                     <>
                                                         <Checkbox
-                                                            checked={props.rigObject.mods.includes(`${m.name}(2)`)}
+                                                            checked={rigObject.mods.includes(`${m.name}(2)`)}
                                                             onChange={(event) => handleModChange(event, m, 2)}
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />
                                                         <Checkbox
-                                                            checked={props.rigObject.mods.includes(`${m.name}(3)`)}
+                                                            checked={rigObject.mods.includes(`${m.name}(3)`)}
                                                             onChange={(event) => handleModChange(event, m, 3)}
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />
@@ -585,7 +602,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                             (m.name === 'Armour Plating') ?
                                                             <>
                                                                                                                     <Checkbox
-                                                            checked={props.rigObject.mods.includes(`${m.name}(4)`)}
+                                                            checked={rigObject.mods.includes(`${m.name}(4)`)}
                                                             onChange={(event) => handleModChange(event, m, 4)}
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />
@@ -611,10 +628,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`wmx ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(wm);
+                                                setHovered(wm);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                             sx={{
                                                 margin: 2,
@@ -626,12 +643,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {wm.name}
 
                                             {
-                                                props.rigObject.selectedWeapons.map((sw: string, ixx: number) => {
+                                                rigObject.selectedWeapons.map((sw: string, ixx: number) => {
                                                     return (
                                                         <>
                                                             <br />for {sw} :
                                                             <Checkbox
-                                                                checked={props.rigObject.mods.includes(`${wm.name}(${sw})`)}
+                                                                checked={rigObject.mods.includes(`${wm.name}(${sw})`)}
                                                                 onChange={(event) => handleModChange(event, wm, 0, sw)}
                                                                 inputProps={{ 'aria-label': 'controlled' }}
                                                             />
@@ -639,12 +656,12 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                                 (!wm.onePerWeapon) ?
                                                                     <>
                                                                         <Checkbox
-                                                                            checked={props.rigObject.mods.includes(`${wm.name}(2)(${sw})`)}
+                                                                            checked={rigObject.mods.includes(`${wm.name}(2)(${sw})`)}
                                                                             onChange={(event) => handleModChange(event, wm, 2, sw)}
                                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                                         />
                                                                         <Checkbox
-                                                                            checked={props.rigObject.mods.includes(`${wm.name}(3)(${sw})`)}
+                                                                            checked={rigObject.mods.includes(`${wm.name}(3)(${sw})`)}
                                                                             onChange={(event) => handleModChange(event, wm, 3, sw)}
                                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                                         />
@@ -670,10 +687,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`gWx ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(gW);
+                                                setHovered(gW);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                             sx={{
                                                 margin: 2,
@@ -685,9 +702,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {gW.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.concealedWeapon.includes(gW.name)}
-                                                onChange={() => props.setRigObject({
-                                                    ...props.rigObject, concealedWeapon: gW.name
+                                                checked={rigObject.concealedWeapon.includes(gW.name)}
+                                                onChange={() => setRigObject({
+                                                    ...rigObject, concealedWeapon: gW.name
                                                 })}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -706,10 +723,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`gsx ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(gs);
+                                                setHovered(gs);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                             sx={{
                                                 margin: 2,
@@ -721,9 +738,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {gs.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.gunnerSpecial.includes(gs.name)}
-                                                onChange={() => props.setRigObject({
-                                                    ...props.rigObject, gunnerSpecial: gs.name
+                                                checked={rigObject.gunnerSpecial.includes(gs.name)}
+                                                onChange={() => setRigObject({
+                                                    ...rigObject, gunnerSpecial: gs.name
                                                 })}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -742,10 +759,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`minex ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(driverSpecial);
+                                                setHovered(driverSpecial);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                             sx={{
                                                 margin: 2,
@@ -757,9 +774,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {driverSpecial.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.driverSpecial.includes(driverSpecial.name)}
-                                                onChange={() => props.setRigObject({
-                                                    ...props.rigObject, driverSpecial: driverSpecial.name
+                                                checked={rigObject.driverSpecial.includes(driverSpecial.name)}
+                                                onChange={() => setRigObject({
+                                                    ...rigObject, driverSpecial: driverSpecial.name
                                                 })}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -778,10 +795,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`minex ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(mine);
+                                                setHovered(mine);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                             sx={{
                                                 margin: 2,
@@ -793,7 +810,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {mine.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.mines.includes(mine.name)}
+                                                checked={rigObject.mines.includes(mine.name)}
                                                 onChange={(event) => handleMineChange(event, mine, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -812,10 +829,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`ammux ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(ammu);
+                                                setHovered(ammu);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                             sx={{
                                                 margin: 2,
@@ -827,9 +844,9 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {ammu.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.rightTool.includes(ammu.name)}
-                                                onChange={() => props.setRigObject({
-                                                    ...props.rigObject, rightTool: ammu.name
+                                                checked={rigObject.rightTool.includes(ammu.name)}
+                                                onChange={() => setRigObject({
+                                                    ...rigObject, rightTool: ammu.name
                                                 })}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -848,10 +865,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`faWex ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(faWe);
+                                                setHovered(faWe);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                             sx={{
                                                 margin: 2,
@@ -863,13 +880,13 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {faWe.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.familiar.includes(faWe.name)}
+                                                checked={rigObject.familiar.includes(faWe.name)}
                                                 onChange={(event) => handleFamiliarChange(event, faWe, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
 
                                             <Checkbox
-                                                checked={props.rigObject.familiar.includes(`${faWe.name}(2)`)}
+                                                checked={rigObject.familiar.includes(`${faWe.name}(2)`)}
                                                 onChange={(event) => handleFamiliarChange(event, faWe, 2)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -889,10 +906,10 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                         <Container
                                             key={`faMox ${i}`}
                                             onMouseEnter={() => {
-                                                props.setHovered(faMo);
+                                                setHovered(faMo);
                                             }}
                                             onMouseLeave={() => {
-                                                props.setHovered(undefined);
+                                                setHovered(undefined);
                                             }}
                                             sx={{
                                                 margin: 2,
@@ -904,7 +921,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                             {faMo.name}
 
                                             <Checkbox
-                                                checked={props.rigObject.familiar.includes(faMo.name)}
+                                                checked={rigObject.familiar.includes(faMo.name)}
                                                 onChange={(event) => handleFamiliarChange(event, faMo, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
@@ -912,7 +929,7 @@ const LeftSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement
                                                 (!faMo.onePerRig) ?
                                                     <>
                                                         <Checkbox
-                                                            checked={props.rigObject.familiar.includes(`${faMo.name}(2)`)}
+                                                            checked={rigObject.familiar.includes(`${faMo.name}(2)`)}
                                                             onChange={(event) => handleFamiliarChange(event, faMo, 2)}
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />

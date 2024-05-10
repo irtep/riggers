@@ -1,13 +1,16 @@
 import { Container, Grid, Paper } from '@mui/material';
-import React from 'react';
-import { CreateProps } from './Create';
+import React, { useContext } from 'react';
+import { RigContext } from '../context/RigContext';
 import ShowDetails from './ShowDetails';
 
-const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElement => {
+const RightSide: React.FC = (): React.ReactElement => {
+
+  const { hovered } = useContext(RigContext);
+
     return (
         <Grid item xs={6}>
             {
-                (props.hovered !== undefined && props.hovered !== '') ?
+                (hovered !== undefined && hovered !== '') ?
                     <Paper sx={{
                         padding: 2,
                         textAlign: 'center',
@@ -18,13 +21,13 @@ const RightSide: React.FC<CreateProps> = (props: CreateProps): React.ReactElemen
                         background: 'rgb(170,170,170)'
                     }}>
                         {
-                            props.hovered !== undefined ?
+                            hovered !== undefined ?
                                 <Container>
                                     <span style={{ color: 'navy' }}>
-                                        {props.hovered.name}<br /><br />
+                                        {hovered.name}<br /><br />
                                     </span>
                                     <ShowDetails
-                                        item={props.hovered}
+                                        item={hovered}
                                     />
                                 </Container> : <></>
 

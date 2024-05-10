@@ -1,18 +1,36 @@
-import { Container, Paper, Typography } from '@mui/material';
-import React from 'react';
+
+import React, { useContext } from 'react';
 import { Weapon } from '../data/weapons';
 import { Modification } from '../data/modifications';
 import { Ammunition, GunnerSpecial } from '../data/gunnerSpecials';
 import { Mine } from '../data/mines';
 import { ConcealedWeapons, DriverSpecial } from '../data/driverSpecials';
+import { RigContext } from '../context/RigContext';
+import { Button } from '@mui/material';
 
 interface ShowProps {
     item: Weapon | Modification | Mine | GunnerSpecial | Ammunition | ConcealedWeapons | DriverSpecial
 }
 
 const ShowDetails: React.FC<ShowProps> = (props: ShowProps): React.ReactElement => {
+
+    const { device, mobileDetails, setMobileDetails } = useContext(RigContext);
+
     return (
         <>
+            {
+                (device === 'mobile') ?
+                    <>
+                        <span style={{ color: 'navy' }}>
+                            {mobileDetails.name}<br /><br />
+                        </span>
+                        <Button
+                            onClick={() => { setMobileDetails({ name: '', type: '', fullDetails: '' }) }}
+                        >
+                            hide details of {mobileDetails.type}
+                        </Button></> :
+                    <></>
+            }
             {
                 (props.item.whatIsThis === 'weapon') ?
                     <>
