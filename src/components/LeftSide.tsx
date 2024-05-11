@@ -283,7 +283,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
         if (isChecked) {
             if (!rigObject.mods.includes(modName)) {
-                console.log('price to pay:', mod.costMod, mod.costSpeed);
+                
                 payPrice({ slots: mod.costMod }, false);
 
                 addStats(statsToAdd, false, false);

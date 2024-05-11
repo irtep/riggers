@@ -4,18 +4,19 @@ import { MobileDetails, RigContext } from '../context/RigContext';
 import { Visibility } from '@mui/icons-material';
 import { Weapon, weapons } from '../data/weapons';
 import ShowDetails from './ShowDetails';
+import { Modification, rigModifications, weaponModifications } from '../data/modifications';
+import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../data/driverSpecials';
+import { GunnerSpecial, gunnerSpecials } from '../data/gunnerSpecials';
+import { Mine, mines } from '../data/mines';
+import { familiarModifications, familiarWeapons } from '../data/familiar';
 
 const MobileShowRig: React.FC = (): React.ReactElement => {
 
-    const { rigObject, setMobileDetails, mobileDetails } = useContext(RigContext);
-
-    const stripParentheses = (str: string): string => {
-        const index = str.indexOf("(");
-        if (index !== -1) {
-            return str.substring(0, index);
-        }
-        return str;
-    }
+    const { rigObject,
+        setMobileDetails,
+        mobileDetails,
+        stripParentheses
+    } = useContext(RigContext);
 
     const handleDetails = (name: string, type: string): void => {
 
@@ -27,24 +28,47 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
 
         switch (type) {
             case 'weapon':
-                const getWeapon = weapons.filter( (w: Weapon) => w.name === stripParentheses(name));
+                const getWeapon = weapons.filter((w: Weapon) => w.name === stripParentheses(name));
                 fullDetails.fullDetails = getWeapon[0]
-            break;
+                break;
+            case 'modification':
+                const getMod = rigModifications.concat(weaponModifications).filter((w: Modification) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = getMod[0]
+                break;
+            case 'driverSpecial':
+                const driSpecial = driverSpecials.filter((w: DriverSpecial) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = driSpecial[0]
+                break;
+            case 'gunnerSpecial':
+                const gunnerSpecial = gunnerSpecials.filter((w: GunnerSpecial) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = gunnerSpecial[0]
+                break;
+            case 'mine':
+                const mine = mines.filter((w: Mine) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = mine[0]
+                break;
+            case 'familiarStuff':
+                const famStuff: (Weapon | Modification)[] = ([] as (Weapon | Modification)[]).concat(familiarWeapons, familiarModifications).filter((w: Weapon | Modification) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = famStuff[0];
+                break;
+            case 'concealedWeapon':
+                const concealedW = concealedWeapons.filter((w: ConcealedWeapons) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = concealedW[0]
+                break;
 
-            default: console.log('not found');
+            default: console.log('not found: ', type);
         };
 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setMobileDetails(fullDetails);
-
-        console.log('fD: ', fullDetails);
-    ;}
+    }
 
     if (rigObject) {
 
         if (mobileDetails.name !== '') {
-            return(
+            return (
                 <Container>
-                    <ShowDetails 
+                    <ShowDetails
                         item={mobileDetails.fullDetails}
                     />
                 </Container>
@@ -116,7 +140,12 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
                                         }}
                                         key={`sm: ${i}`}
                                     >
-                                        {m} <Visibility />
+                                        {m}
+                                        <Visibility
+                                            onClick={() => {
+                                                handleDetails(m, 'modification');
+                                            }}
+                                        />
                                     </Typography>
                                 )
                             })
@@ -130,7 +159,12 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
                                         Driver special:
                                     </span>
                                     <Typography>
-                                        {rigObject.driverSpecial} <Visibility />
+                                        {rigObject.driverSpecial}
+                                        <Visibility
+                                            onClick={() => {
+                                                handleDetails(rigObject.driverSpecial, 'driverSpecial');
+                                            }}
+                                        />
                                     </Typography>
                                 </> : <></>
                         }
@@ -141,7 +175,12 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
                                         Gunner:
                                     </span>
                                     <br />
-                                    {rigObject.gunnerSpecial} <Visibility />
+                                    {rigObject.gunnerSpecial}
+                                    <Visibility
+                                        onClick={() => {
+                                            handleDetails(rigObject.gunnerSpecial, 'gunnerSpecial');
+                                        }}
+                                    />
                                 </> : <></>
                         }
                         {
@@ -155,7 +194,12 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
                                     {rigObject.mines.map((mine: string, indx: number) => {
                                         return (
                                             <Typography key={`mine:${indx}`}>
-                                                {mine} <Visibility />
+                                                {mine}
+                                                <Visibility
+                                                    onClick={() => {
+                                                        handleDetails(mine, 'mine');
+                                                    }}
+                                                />
                                             </Typography>
                                         )
                                     })}
@@ -174,7 +218,12 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
                                         rigObject.familiar?.map((fa: string, indx: number) => {
                                             return (
                                                 <Typography key={`faStuff ${indx}`}>
-                                                    {fa} <Visibility />
+                                                    {fa}
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(fa, 'familiarStuff');
+                                                        }}
+                                                    />
                                                 </Typography>
                                             )
                                         })
@@ -190,7 +239,12 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
 
                                     <br />
 
-                                    {rigObject.concealedWeapon} <Visibility />
+                                    {rigObject.concealedWeapon}
+                                    <Visibility
+                                        onClick={() => {
+                                            handleDetails(rigObject.concealedWeapon, 'concealedWeapon');
+                                        }}
+                                    />
 
                                 </> : <></>
                         }
@@ -203,7 +257,12 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
 
                                     <br />
 
-                                    {rigObject.rightTool} <Visibility />
+                                    {rigObject.rightTool}
+                                    <Visibility
+                                        onClick={() => {
+                                            handleDetails(rigObject.rightTool, 'rightTool');
+                                        }}
+                                    />
 
                                 </> : <></>
                         }

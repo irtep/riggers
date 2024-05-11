@@ -1,13 +1,14 @@
 import { Container, Grid, Typography } from '@mui/material';
 import React, { useContext } from 'react';
-import { RigContext, RigObject } from '../context/RigContext';
+import { RigContext } from '../context/RigContext';
 import { Weapon, weapons } from '../data/weapons';
-import { Modification, rigModifications } from '../data/modifications';
+import { Modification, rigModifications, weaponModifications } from '../data/modifications';
 
 const LaptopShowRig: React.FC = (): React.ReactElement => {
 
     const { rigObject,
-            setHovered
+            setHovered,
+            stripParentheses
      } = useContext(RigContext);
 
     if (rigObject) {
@@ -53,7 +54,7 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
                                     <Typography
                                         onMouseEnter={() => {
                                             // find details of this weapon
-                                            const foundWeapon: Weapon[] = weapons.filter( (wep: Weapon) => wep.name === w ); 
+                                            const foundWeapon: Weapon[] = weapons.filter( (wep: Weapon) => wep.name === stripParentheses(w) ); 
                                             setHovered(foundWeapon[0]);
                                         }}
                                         onMouseLeave={() => {
@@ -81,7 +82,7 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
                                     <Typography
                                         onMouseEnter={() => {
                                             // find details of this Modification
-                                            const foundMod: Modification[] = rigModifications.filter( (modi: Modification) => modi.name === m ); 
+                                            const foundMod: Modification[] = rigModifications.concat(weaponModifications).filter( (modi: Modification) => modi.name === stripParentheses(m) ); 
                                             setHovered(foundMod[0]);
                                         }}
                                         onMouseLeave={() => {

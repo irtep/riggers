@@ -28,7 +28,7 @@ const ShowDetails: React.FC<ShowProps> = (props: ShowProps): React.ReactElement 
                             onClick={() => { setMobileDetails({ name: '', type: '', fullDetails: '' }) }}
                         >
                             hide details of {mobileDetails.type}
-                        </Button></> :
+                        </Button><br/></> :
                     <></>
             }
             {

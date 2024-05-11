@@ -98,6 +98,18 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     const [showConcealedWeapons, setShowConcealedWeapons] = useState<boolean>(false);
     const [msg, setMsg] = useState<string>('');
 
+    const stripParentheses = (str: string): string => {
+        const index = str.indexOf("(");
+        if (index !== -1) {
+            const endIndex = str.indexOf(")", index);
+            if (endIndex !== -1) {
+                return str.substring(0, index) + str.substring(endIndex + 1);
+            }
+        }
+        return str;
+    }
+    
+
     const saveRig = (rig: RigObject) => {
         // Find the maximum ID in the existing rigs
         const maxId = savedRigs.reduce((max, rig) => (rig.id > max ? rig.id : max), 0);
@@ -175,7 +187,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             showMines, setShowMines,
             showDriverSpecials, setShowDriverSpecials,
             showConcealedWeapons, setShowConcealedWeapons,
-            msg, setMsg
+            msg, setMsg,
+            stripParentheses
         }}>
             {props.children}
         </RigContext.Provider>
