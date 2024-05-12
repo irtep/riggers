@@ -17,3 +17,4 @@ Versions:
 0.2.0 mobile support version 1, bug fix for double save bug when creating new
 0.2.1 ShowDetails own component, to prepare mobile support for it
 0.3.0 Better mobile support, with feature to check details from selected items
+0.3.1 Bug fix, create rig did not work

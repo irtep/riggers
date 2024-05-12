@@ -188,7 +188,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             showDriverSpecials, setShowDriverSpecials,
             showConcealedWeapons, setShowConcealedWeapons,
             msg, setMsg,
-            stripParentheses
+            stripParentheses,
+            initialObject
         }}>
             {props.children}
         </RigContext.Provider>

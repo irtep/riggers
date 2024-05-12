@@ -47,7 +47,13 @@ const Main: React.FC = (): React.ReactElement => {
         fetchSavedRigs();
 
     }, []);
+/*
+    useEffect(() => {
 
+        console.log('rio: ', rigObject);
+
+    });
+*/
     return (
         <Container sx={{
             margin: 1,
@@ -57,6 +63,7 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'main') ?
                     <>
                         <Button onClick={() => {
+                            //console.log('k: ', initialObject);
                             setRigObject(initialObject);
                             setMode('create');
                         }}>new rig</Button>
@@ -93,7 +100,7 @@ const Main: React.FC = (): React.ReactElement => {
                                                             marginLeft: 2
                                                         }}
                                                         onClick={() => {
-                                                            console.log('clicked: ', rig);
+                                                            //console.log('clicked: ', rig);
                                                             deleteRig(rig.id);
                                                         }}
                                                     >
