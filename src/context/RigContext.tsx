@@ -80,7 +80,7 @@ export interface MobileDetails {
 
 export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement => {
 
-    const [device, setDevice] = useState<'mobile' | 'laptop'>('laptop');
+    const [device, setDevice] = useState<'mobile' | 'laptop'>('mobile');
     const [rigObject, setRigObject] = useState<RigObject>(initialObject);
     const [mode, setMode] = useState<'main' | 'create' | 'edit'>('main');
     const [hovered, setHovered] = useState<string | undefined>('');

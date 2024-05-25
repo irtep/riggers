@@ -6,7 +6,7 @@ import { Ammunition, GunnerSpecial } from '../data/gunnerSpecials';
 import { Mine } from '../data/mines';
 import { ConcealedWeapons, DriverSpecial } from '../data/driverSpecials';
 import { RigContext } from '../context/RigContext';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
 
 interface ShowProps {
     item: Weapon | Modification | Mine | GunnerSpecial | Ammunition | ConcealedWeapons | DriverSpecial
@@ -17,7 +17,7 @@ const ShowDetails: React.FC<ShowProps> = (props: ShowProps): React.ReactElement 
     const { device, mobileDetails, setMobileDetails } = useContext(RigContext);
 
     return (
-        <>
+        <Container>
             {
                 (device === 'mobile') ?
                     <>
@@ -106,7 +106,7 @@ const ShowDetails: React.FC<ShowProps> = (props: ShowProps): React.ReactElement 
                         {props.item.desc} <br /><br />
                     </> : <></>
             }
-        </>
+        </Container>
     );
 }
 

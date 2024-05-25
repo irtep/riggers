@@ -7,30 +7,34 @@ import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../data/
 import { familiarModifications, familiarWeapons } from '../data/familiar';
 import { Mine, mines } from '../data/mines';
 import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../data/driverSpecials';
-import { RigContext, RigObject } from '../context/RigContext';
+import { MobileDetails, RigContext, RigObject } from '../context/RigContext';
+import { Visibility } from '@mui/icons-material';
 
 const LeftSide: React.FC = (): React.ReactElement => {
 
     const { rigObject,
-            setRigObject,
-            setMode,
-            saveRig,
-            overwriteRig,
-            setMsg,
-            mode,
-            msg,
-            showWeapons, setShowWeapons,
-            showMods, setShowMods,
-            showWeaponMods, setShowWeaponMods,
-            showGunnerSpecials, setShowGunnerSpecials,
-            showRightTools, setShowRightTools,
-            showFamiliarWeapons, setShowFamiliarWeapons,
-            showFamiliarMods, setShowFamiliarMods,
-            showMines, setShowMines,
-            showDriverSpecials, setShowDriverSpecials,
-            showConcealedWeapons, setShowConcealedWeapons,
-            setHovered
-     } = useContext(RigContext);
+        setRigObject,
+        setMode,
+        saveRig,
+        overwriteRig,
+        setMsg,
+        mode,
+        msg,
+        device,
+        showWeapons, setShowWeapons,
+        showMods, setShowMods,
+        showWeaponMods, setShowWeaponMods,
+        showGunnerSpecials, setShowGunnerSpecials,
+        showRightTools, setShowRightTools,
+        showFamiliarWeapons, setShowFamiliarWeapons,
+        showFamiliarMods, setShowFamiliarMods,
+        showMines, setShowMines,
+        showDriverSpecials, setShowDriverSpecials,
+        showConcealedWeapons, setShowConcealedWeapons,
+        setHovered,
+        stripParentheses,
+        setMobileDetails
+    } = useContext(RigContext);
 
     interface Prices {
         slots: number;
@@ -41,6 +45,51 @@ const LeftSide: React.FC = (): React.ReactElement => {
         armour: number;
         handling: number;
         resistanceFields: number;
+    }
+
+    const handleDetails = (name: string, type: string): void => {
+
+        let fullDetails: MobileDetails = {
+            name: name,
+            type: type,
+            fullDetails: ''
+        };
+
+        switch (type) {
+            case 'weapon':
+                const getWeapon = weapons.filter((w: Weapon) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = getWeapon[0]
+                break;
+            case 'modification':
+                const getMod = rigModifications.concat(weaponModifications).filter((w: Modification) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = getMod[0]
+                break;
+            case 'driverSpecial':
+                const driSpecial = driverSpecials.filter((w: DriverSpecial) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = driSpecial[0]
+                break;
+            case 'gunnerSpecial':
+                const gunnerSpecial = gunnerSpecials.filter((w: GunnerSpecial) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = gunnerSpecial[0]
+                break;
+            case 'mine':
+                const mine = mines.filter((w: Mine) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = mine[0]
+                break;
+            case 'familiarStuff':
+                const famStuff: (Weapon | Modification)[] = ([] as (Weapon | Modification)[]).concat(familiarWeapons, familiarModifications).filter((w: Weapon | Modification) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = famStuff[0];
+                break;
+            case 'concealedWeapon':
+                const concealedW = concealedWeapons.filter((w: ConcealedWeapons) => w.name === stripParentheses(name));
+                fullDetails.fullDetails = concealedW[0]
+                break;
+
+            default: console.log('not found: ', type);
+        };
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setMobileDetails(fullDetails);
     }
 
     const payPrice = (values: Prices, familiar: boolean): void => {
@@ -150,7 +199,6 @@ const LeftSide: React.FC = (): React.ReactElement => {
         if (isChecked) {
             if (!rigObject.mines.includes(mineName)) {
 
-                //console.log('pRml ', rigObject.mines.length);
                 if (rigObject.mines.length > 0) {
                     addStats(statsToAdd, false, false);
                 }
@@ -283,7 +331,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
         if (isChecked) {
             if (!rigObject.mods.includes(modName)) {
-                
+
                 payPrice({ slots: mod.costMod }, false);
 
                 addStats(statsToAdd, false, false);
@@ -333,7 +381,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                 setTimeout(() => {
                                     setMsg('');
                                 }, 2000);
-                            } else if (mode === 'create'){
+                            } else if (mode === 'create') {
                                 saveRig(rigObject);
                                 setMsg('Rig saved to your browser!');
                                 setTimeout(() => {
@@ -361,7 +409,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
                     }
 
                 </Button>
-                
+
                 {msg}
 
                 <FormControl sx={{ margin: 2, minWidth: '80%' }}>
@@ -370,7 +418,6 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         value={rigObject.name}
                         label="Name your rig"
                         onChange={(e) => {
-                            //rigObject.setName(e.target.value)
                             setRigObject({
                                 ...rigObject,
                                 name: e.target.value
@@ -391,7 +438,6 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         value={rigObject.chassis}
                         label="What game?"
                         onChange={(e) => {
-                            //rigObject.setChassis(e.target.value) 
                             setRigObject({
                                 ...rigObject,
                                 chassis: e.target.value
@@ -408,7 +454,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                 <br />
 
-                <Typography sx={{borderBottom: " 1px solid green"}}>
+                <Typography sx={{ borderBottom: " 1px solid green" }}>
                     Show weapons:
                     <Switch
                         checked={showWeapons}
@@ -417,6 +463,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         }}
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
+                    <br/>
                     Show modifications:
                     <Switch
                         checked={showMods}
@@ -556,6 +603,18 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                 onChange={(event) => handleWeaponChange(event, w, 2)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
+
+                                            {
+                                                (device === 'mobile') ?
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(w.name, 'weapon');
+                                                        }}
+                                                    /> :
+                                                    <></>
+                                            }
+
+
                                         </Container>
                                     )
                                 })
@@ -600,14 +659,23 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                         />
                                                         {
                                                             (m.name === 'Armour Plating') ?
-                                                            <>
-                                                                                                                    <Checkbox
-                                                            checked={rigObject.mods.includes(`${m.name}(4)`)}
-                                                            onChange={(event) => handleModChange(event, m, 4)}
-                                                            inputProps={{ 'aria-label': 'controlled' }}
-                                                        />
-                                                            </>
-                                                            :<></>
+                                                                <>
+                                                                    <Checkbox
+                                                                        checked={rigObject.mods.includes(`${m.name}(4)`)}
+                                                                        onChange={(event) => handleModChange(event, m, 4)}
+                                                                        inputProps={{ 'aria-label': 'controlled' }}
+                                                                    />
+                                                                </>
+                                                                : <></>
+                                                        }
+                                                        {
+                                                            (device === 'mobile') ?
+                                                                <Visibility
+                                                                    onClick={() => {
+                                                                        handleDetails(m.name, 'modification');
+                                                                    }}
+                                                                /> :
+                                                                <></>
                                                         }
                                                     </> :
                                                     <></>
@@ -668,6 +736,15 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                                     </> :
                                                                     <></>
                                                             }
+                                                            {
+                                                                (device === 'mobile') ?
+                                                                    <Visibility
+                                                                        onClick={() => {
+                                                                            handleDetails(wm.name, 'modification');
+                                                                        }}
+                                                                    /> :
+                                                                    <></>
+                                                            }
                                                         </>
                                                     )
                                                 })
@@ -708,6 +785,15 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                 })}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
+                                            {
+                                                (device === 'mobile') ?
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(gW.name, 'concealedWeapon');
+                                                        }}
+                                                    /> :
+                                                    <></>
+                                            }
                                         </Container>
                                     )
                                 })
@@ -744,6 +830,15 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                 })}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
+                                            {
+                                                (device === 'mobile') ?
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(gs.name, 'gunnerSpecial');
+                                                        }}
+                                                    /> :
+                                                    <></>
+                                            }
                                         </Container>
                                     )
                                 })
@@ -780,6 +875,15 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                 })}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
+                                            {
+                                                (device === 'mobile') ?
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(driverSpecial.name, 'driverSpecial');
+                                                        }}
+                                                    /> :
+                                                    <></>
+                                            }
                                         </Container>
                                     )
                                 })
@@ -814,6 +918,15 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                 onChange={(event) => handleMineChange(event, mine, 0)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
+                                            {
+                                                (device === 'mobile') ?
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(mine.name, 'mine');
+                                                        }}
+                                                    /> :
+                                                    <></>
+                                            }
                                         </Container>
                                     )
                                 })
@@ -890,7 +1003,15 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                 onChange={(event) => handleFamiliarChange(event, faWe, 2)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
-
+                                            {
+                                                (device === 'mobile') ?
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(faWe.name, 'familiarStuff');
+                                                        }}
+                                                    /> :
+                                                    <></>
+                                            }
                                         </Container>
                                     )
                                 })
@@ -934,6 +1055,15 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                             inputProps={{ 'aria-label': 'controlled' }}
                                                         />
                                                     </> : <></>
+                                            }
+                                            {
+                                                (device === 'mobile') ?
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(faMo.name, 'familiarStuff');
+                                                        }}
+                                                    /> :
+                                                    <></>
                                             }
                                         </Container>
                                     )

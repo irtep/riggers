@@ -18,3 +18,4 @@ Versions:
 0.2.1 ShowDetails own component, to prepare mobile support for it
 0.3.0 Better mobile support, with feature to check details from selected items
 0.3.1 Bug fix, create rig did not work
+0.3.3 In mobile mode all have view buttons and mobile is now default mode
