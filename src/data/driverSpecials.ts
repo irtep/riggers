@@ -46,7 +46,7 @@ export const driverSpecials: DriverSpecial[] = [
         Momentum by 1 to Obscure your Rig from all non-Combat
         Weapon Attacks until the start of your next Action. If you
         move your Rig after activating this Speciality, this eﬀect
-        ends.`,
+        ends. When activating this Speciality, you may also Turn your Rig without losing any additional Momentum. `,
         whatIsThis: 'driverSpecial'
     },
     {

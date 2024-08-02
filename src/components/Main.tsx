@@ -2,6 +2,7 @@ import { Button, Container, Typography } from '@mui/material';
 import React, { useEffect, useContext } from 'react';
 import Create from './Create';
 import { RigContext, RigObject } from '../context/RigContext';
+import TestRigs from './TestRigs';
 
 const Main: React.FC = (): React.ReactElement => {
 
@@ -47,13 +48,7 @@ const Main: React.FC = (): React.ReactElement => {
         fetchSavedRigs();
 
     }, []);
-/*
-    useEffect(() => {
 
-        console.log('rio: ', rigObject);
-
-    });
-*/
     return (
         <Container sx={{
             margin: 1,
@@ -63,7 +58,6 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'main') ?
                     <>
                         <Button onClick={() => {
-                            //console.log('k: ', initialObject);
                             setRigObject(initialObject);
                             setMode('create');
                         }}>new rig</Button>
@@ -120,6 +114,13 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'create' || mode === 'edit') ?
                     <>
                         <Create/>
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'testRigs') ?
+                    <>
+                        <TestRigs/>
                     </> :
                     <></>
             }

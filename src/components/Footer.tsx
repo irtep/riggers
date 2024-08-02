@@ -1,7 +1,6 @@
 import { Container, Typography } from '@mui/material';
 import React from 'react';
 
-
 const Footer : React.FC = () : React.ReactElement => {
   return (
     <Container sx={{
@@ -10,7 +9,7 @@ const Footer : React.FC = () : React.ReactElement => {
         borderRadius: 2
     }}>
       <Typography>
-       Version: 0.3.3
+       Version: 0.3.5
       </Typography>
     </Container>
   );

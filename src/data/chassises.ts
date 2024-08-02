@@ -4,7 +4,8 @@ export const chassises: string[] = [
     'Hot rod',
     'Desert spear',
     'Bakkor miner',
-    'Human truck'
+    'Human truck',
+    'Boor'
 ];
 
 export const familiarChassises: string[] = [

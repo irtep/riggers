@@ -78,11 +78,51 @@ export interface MobileDetails {
     fullDetails: Weapon | Modification | Mine | Ammunition | GunnerSpecial | ConcealedWeapons | DriverSpecial | '';
 }
 
+export interface RigTestObject {
+    selectingPlace: boolean;
+    selectedRig: number;
+    round: number;
+    gameType: string;
+    world: string;
+    rigAmount: number;
+    map: string;
+    players: Player[];
+};
+
+export interface Player {
+    enabled: boolean;
+    points: number;
+    damage: number;
+    momentum: number;
+    charred: boolean;
+    rig?: string;
+    x?: number;
+    y?: number;
+    heading?: number;
+};
+
+const initialPlayer: Player = {
+    enabled: false,
+    points: 0,
+    damage: 0,
+    momentum: 0,
+    charred: false,
+    rig: '',
+    x: undefined,
+    y: undefined,
+    heading: 0
+};
+
+interface Coords {
+    x: number;
+    y: number;
+}
+
 export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement => {
 
     const [device, setDevice] = useState<'mobile' | 'laptop'>('mobile');
     const [rigObject, setRigObject] = useState<RigObject>(initialObject);
-    const [mode, setMode] = useState<'main' | 'create' | 'edit'>('main');
+    const [mode, setMode] = useState<'main' | 'create' | 'edit' | 'testRigs'>('main');
     const [hovered, setHovered] = useState<string | undefined>('');
     const [savedRigs, setSavedRigs] = useState<any[]>([]);
     const [mobileDetails, setMobileDetails] = useState<MobileDetails>({name : '', type: '', fullDetails: ''});
@@ -97,6 +137,18 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     const [showDriverSpecials, setShowDriverSpecials] = useState<boolean>(false);
     const [showConcealedWeapons, setShowConcealedWeapons] = useState<boolean>(false);
     const [msg, setMsg] = useState<string>('');
+    const [rigTestObject, setRigTestObject] = useState<RigTestObject>(
+        {
+            selectingPlace: false,
+            selectedRig: 0,
+            round: 0,
+            gameType: '',
+            world: '',
+            rigAmount: 0,
+            map: '',
+            players: [initialPlayer, initialPlayer]
+        }
+    );
 
     const stripParentheses = (str: string): string => {
         const index = str.indexOf("(");
@@ -189,7 +241,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             showConcealedWeapons, setShowConcealedWeapons,
             msg, setMsg,
             stripParentheses,
-            initialObject
+            initialObject,
+            rigTestObject, setRigTestObject
         }}>
             {props.children}
         </RigContext.Provider>

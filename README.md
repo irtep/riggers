@@ -19,3 +19,6 @@ Versions:
 0.3.0 Better mobile support, with feature to check details from selected items
 0.3.1 Bug fix, create rig did not work
 0.3.3 In mobile mode all have view buttons and mobile is now default mode
+0.3.4 Boor rigg chassis added
+0.3.5 Rule updates
+0.4.0 Testing platform work in process

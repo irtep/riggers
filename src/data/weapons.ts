@@ -30,7 +30,7 @@ export const weapons: Weapon[] = [
         costMod: 2,
         costSpeed: 0,
         specialties: '', 
-        primed: `ROCKBURST: This Weapon can draw a line of sight and Attack through 1 Obstacle as if it wasn't in the Arena; but if it does, do not roll for Impact Power.`,
+        primed: `ROCKBURST: This Speciality allows the Weapon to draw a line-of-sight to a target through 1 Obstacle as if the Obstacle was not in the arena. If this Speciality is activated, but it does not draw a line of sight through any Obstacle, the Attack is considered to have a Breacher 3+ effect.`,
         whatIsThis: 'weapon'
     },
     {

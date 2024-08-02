@@ -131,12 +131,7 @@ export const rigModifications: Modification[] = [
     },
     {
         name: 'Resistance Field',
-        effect: `Generates a protective barrier that shields the Rig. When a successful Impact Power roll is made,
-        the attacker must reroll 1 of their highest Impact Power dice for every Layer the targetʼs Resistance
-        Field has. Default Layers: 1.
-        In addition, any extra Damage that would be caused by a Weaponʼs Specialities or Modifications
-        is negated if the Resistance Field has 2 or more Layers.
-        MAX one per rigg`,
+        effect: `A Rig may be equipped with a Resistance Field Modification that provides it with a forcefield. A Resistance Field has 1 Layer by default. Each Layer forces the attacking Player to reroll 1 of their Impact Power dice after a successful Impact Power roll, starting with the highest dice result(s) first`,
         costMod: 1,
         costSpeed: 0,
         specialEffect: [
