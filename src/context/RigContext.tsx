@@ -131,11 +131,6 @@ const initialFamiliar: Familiar = {
     name: ''
 };
 
-interface Coords {
-    x: number;
-    y: number;
-}
-
 export interface Familiar {
     type: 'familiar';
     x: number;
@@ -144,8 +139,12 @@ export interface Familiar {
     charred: boolean;
     enabled: boolean;
     name: string;
-}
+};
 
+export interface TurnOrder {
+    pool1: number[];
+    pool2: number[];
+}
 export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement => {
 
     const [device, setDevice] = useState<'mobile' | 'laptop'>('mobile');
@@ -165,6 +164,10 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     const [showDriverSpecials, setShowDriverSpecials] = useState<boolean>(false);
     const [showConcealedWeapons, setShowConcealedWeapons] = useState<boolean>(false);
     const [msg, setMsg] = useState<string>('');
+    const [turnOrder, setTurnOrder] = useState<TurnOrder>({
+        pool1: [],
+        pool2: []
+    });
     const [rigTestObject, setRigTestObject] = useState<RigTestObject>(
         {
             primerOneCharged: false,
@@ -276,7 +279,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             msg, setMsg,
             stripParentheses,
             initialObject,
-            rigTestObject, setRigTestObject
+            rigTestObject, setRigTestObject,
+            turnOrder, setTurnOrder
         }}>
             {props.children}
         </RigContext.Provider>

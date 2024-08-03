@@ -1,14 +1,17 @@
 import { Container } from '@mui/material';
-import React, { useContext } from 'react';
-import { Player, RigContext, RigObject, RigTestObject } from '../context/RigContext';
+import React, { useContext, useState } from 'react';
+import { Player, RigContext, RigObject, RigTestObject, TurnOrder } from '../context/RigContext';
 import ShowRigInGame from './ShowRigInGame';
 import DicePool from './DicePool';
 
 const GameOptions: React.FC = (): React.ReactElement => {
+    const [revealedIndices, setRevealedIndices] = useState<number>(0);
     const {
         rigTestObject,
         setRigTestObject,
-        savedRigs
+        savedRigs,
+        turnOrder,
+        setTurnOrder
     } = useContext(RigContext);
 
     const moveRigToSelectedPlace = () => {
@@ -72,6 +75,38 @@ const GameOptions: React.FC = (): React.ReactElement => {
         }));
     };
 
+    const revealNext = () => {
+        setRevealedIndices(prevNumber => prevNumber + 1);
+    };
+
+    const shuffleArray = (array: number[]): number[] => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    };
+
+    const createTurnOrder = (numPlayers: number): TurnOrder => {
+        const players = Array.from({ length: numPlayers }, (_, i) => i + 1);
+    
+        // Shuffle the player IDs to create two random pools
+        const pool1 = shuffleArray([...players]);
+        const pool2 = shuffleArray([...players]);
+    
+        return { pool1, pool2 };
+    };
+    
+
+    const generateTurnOrder = () => {
+        const newTurnOrder = createTurnOrder(rigTestObject.rigAmount);
+        setTurnOrder(newTurnOrder);
+        setRevealedIndices(0);
+    };
+
+    const combinedPools = turnOrder.pool1.concat(turnOrder.pool2);
+    const revealedItems = combinedPools.slice(0, revealedIndices);
+
     return (
         <Container>
             <p style={{ fontSize: 12 }}>
@@ -83,8 +118,13 @@ const GameOptions: React.FC = (): React.ReactElement => {
                 <input type="checkbox" checked={rigTestObject.primerOneCharged} onChange={handlePrimerOneChange} /> 1
                 <input type="checkbox" checked={rigTestObject.primerTwoCharged} onChange={handlePrimerTwoChange} /> 2
                 <input type="checkbox" checked={rigTestObject.primerThreeCharged} onChange={handlePrimerThreeChange} /> 3
+                <button
+                    onClick={generateTurnOrder}
+                >create new turn order</button>
+                <button onClick={revealNext}>Reveal Next</button>
             </p>
-
+            
+            {revealedItems}
             <DicePool />
 
             <div>
