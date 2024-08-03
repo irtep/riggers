@@ -182,36 +182,38 @@ const TestRigs: React.FC = (): React.ReactElement => {
                 }
                 */
                 // Draw lines and distances from the selected player to all other players
-                const selectedPlayer = rigTestObject.players[rigTestObject.selectedRig - 1];
-                if (selectedPlayer.x !== undefined && selectedPlayer.y !== undefined) {
-                    for (let j = 0; j < rigTestObject.players.length; j++) {
-                        if (j === rigTestObject.selectedRig-1) continue; // Skip the selected player itself
+                if (rigTestObject.selectedRig > 0) {
+                    const selectedPlayer = rigTestObject.players[rigTestObject.selectedRig - 1];
+                    if (selectedPlayer.x !== undefined && selectedPlayer.y !== undefined) {
+                        for (let j = 0; j < rigTestObject.players.length; j++) {
+                            if (j === rigTestObject.selectedRig - 1) continue; // Skip the selected player itself
 
-                        const targetPlayer = rigTestObject.players[j];
-                        if (targetPlayer.x !== undefined && targetPlayer.y !== undefined) {
+                            const targetPlayer = rigTestObject.players[j];
+                            if (targetPlayer.x !== undefined && targetPlayer.y !== undefined) {
 
-                            if (rigTestObject.showDistances) {
-                                // Draw the line
-                                ctx.beginPath();
-                                ctx.moveTo(selectedPlayer.x, selectedPlayer.y);
-                                ctx.lineTo(targetPlayer.x, targetPlayer.y);
-                                ctx.strokeStyle = 'gray';
-                                ctx.lineWidth = 1;
-                                ctx.stroke();
+                                if (rigTestObject.showDistances) {
+                                    // Draw the line
+                                    ctx.beginPath();
+                                    ctx.moveTo(selectedPlayer.x, selectedPlayer.y);
+                                    ctx.lineTo(targetPlayer.x, targetPlayer.y);
+                                    ctx.strokeStyle = 'gray';
+                                    ctx.lineWidth = 1;
+                                    ctx.stroke();
 
-                                // Calculate and draw the distance text
-                                let distance = Math.sqrt(Math.pow(targetPlayer.x - selectedPlayer.x, 2) + Math.pow(targetPlayer.y - selectedPlayer.y, 2));
-                                if (selectedPlayer.type === 'familiar' || targetPlayer.type === 'familiar') {
-                                    distance = (distance - 41) * 0.1;
-                                } else {
-                                    distance = (distance - 50) * 0.1;
+                                    // Calculate and draw the distance text
+                                    let distance = Math.sqrt(Math.pow(targetPlayer.x - selectedPlayer.x, 2) + Math.pow(targetPlayer.y - selectedPlayer.y, 2));
+                                    if (selectedPlayer.type === 'familiar' || targetPlayer.type === 'familiar') {
+                                        distance = (distance - 41) * 0.1;
+                                    } else {
+                                        distance = (distance - 50) * 0.1;
+                                    }
+                                    const displayDistance = Math.max(distance, 0); // Ensure non-negative distance
+                                    const midX = (selectedPlayer.x + targetPlayer.x) / 2;
+                                    const midY = (selectedPlayer.y + targetPlayer.y) / 2;
+                                    ctx.font = '10px Arial';
+                                    ctx.fillStyle = 'white';
+                                    ctx.fillText(Math.round(displayDistance).toString(), midX, midY);
                                 }
-                                const displayDistance = Math.max(distance, 0); // Ensure non-negative distance
-                                const midX = (selectedPlayer.x + targetPlayer.x) / 2;
-                                const midY = (selectedPlayer.y + targetPlayer.y) / 2;
-                                ctx.font = '10px Arial';
-                                ctx.fillStyle = 'white';
-                                ctx.fillText(Math.round(displayDistance).toString(), midX, midY);
                             }
                         }
                     }
