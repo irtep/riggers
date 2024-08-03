@@ -21,7 +21,7 @@ const GameOptions: React.FC = (): React.ReactElement => {
     const moveRigByDistance = () => {
         const distance: number = 50;
         const updatedPlayers = [...rigTestObject.players];
-        const player = updatedPlayers[rigTestObject.selectedRig-1];
+        const player = updatedPlayers[rigTestObject.selectedRig - 1];
 
         if (player.x !== undefined && player.y !== undefined && player.heading !== undefined) {
             player.x += distance * Math.cos(player.heading * (Math.PI / 180));
@@ -33,7 +33,7 @@ const GameOptions: React.FC = (): React.ReactElement => {
     const reverseRig = () => {
         const distance: number = 50;
         const updatedPlayers = [...rigTestObject.players];
-        const player = updatedPlayers[rigTestObject.selectedRig-1];
+        const player = updatedPlayers[rigTestObject.selectedRig - 1];
 
         if (player.x !== undefined && player.y !== undefined && player.heading !== undefined) {
             player.x -= distance * Math.cos(player.heading * (Math.PI / 180));
@@ -44,13 +44,13 @@ const GameOptions: React.FC = (): React.ReactElement => {
 
     const turnRig = (angle: number) => {
         const updatedPlayers = [...rigTestObject.players];
-        const player = updatedPlayers[rigTestObject.selectedRig-1];
+        const player = updatedPlayers[rigTestObject.selectedRig - 1];
         if (player.heading !== undefined) {
             player.heading += angle;
             setRigTestObject({ ...rigTestObject, players: updatedPlayers });
         }
     };
-    
+
     const handlePrimerOneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRigTestObject((prevState: RigTestObject) => ({
             ...prevState,
@@ -70,7 +70,7 @@ const GameOptions: React.FC = (): React.ReactElement => {
             ...prevState,
             primerThreeCharged: event.target.checked
         }));
-    };    
+    };
 
     return (
         <Container>
@@ -86,7 +86,7 @@ const GameOptions: React.FC = (): React.ReactElement => {
             </p>
 
             <DicePool />
-            
+
             <div>
                 <button
                     onClick={() => {
@@ -96,7 +96,8 @@ const GameOptions: React.FC = (): React.ReactElement => {
                         });
                     }}
                     style={{
-                        background: 'red'
+                        color: 'white',
+                        background: 'darkRed'
                     }}
                 >select rig 1</button>
                 <button
@@ -108,15 +109,53 @@ const GameOptions: React.FC = (): React.ReactElement => {
                     }}
                     style={{
                         color: 'white',
-                        background: 'blue'
+                        background: 'navy'
                     }}
                 >select rig 2</button>
+                {
+                    rigTestObject.familiarOne.enabled ?
+                        <>
+                            <button
+                                onClick={() => {
+                                    setRigTestObject({
+                                        ...rigTestObject,
+                                        selectedRig: 3
+                                    });
+                                }}
+                                style={{
+                                    color: 'black',
+                                    background: 'red'
+                                }}
+                            >select familiar 1</button>
+                        </> : <></>
+                }
+                {
+                    rigTestObject.familiarTwo.enabled ?
+                        <>
+                            <button
+                                onClick={() => {
+                                    setRigTestObject({
+                                        ...rigTestObject,
+                                        selectedRig: 4
+                                    });
+                                }}
+                                style={{
+                                    color: 'white',
+                                    background: 'blue'
+                                }}
+                            >select familiar 2</button>
+                        </> : <></>
+                }
                 <button
-                    onClick={ () => {
+                    onClick={() => {
                         setRigTestObject({
                             ...rigTestObject,
                             showDistances: !rigTestObject.showDistances
                         });
+                    }}
+                    style={{
+                        color: 'black',
+                        background: 'yellow'
                     }}
                 >show distances</button>
             </div>
@@ -134,7 +173,7 @@ const GameOptions: React.FC = (): React.ReactElement => {
             {
                 rigTestObject.players.map((player: Player, i: number) => {
                     const findHisRig: RigObject[] = savedRigs.filter((rig: RigObject) => rig.name === player.rig);
-                    
+
                     return (
                         <Container key={`playerStats ${i}`}>
                             {

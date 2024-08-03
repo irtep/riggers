@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { RigContext, Player } from '../context/RigContext';
+import { RigContext, Player, Familiar } from '../context/RigContext';
 import TestRigMenu from './TestRigMenu';
 import { Button } from '@mui/material';
 import GameOptions from './GameOptions';
@@ -34,79 +34,7 @@ const TestRigs: React.FC = (): React.ReactElement => {
         if (canvas) {
             const ctx = canvas.getContext('2d');
             if (ctx) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-
-                // Draw players and their heading indicators
-                rigTestObject.players.forEach((player: Player, i: number) => {
-                    let fillColor: string = 'red';
-                    i === 1 ? fillColor = 'navy' : fillColor = 'red';
-
-                    if (player.x !== undefined &&
-                        player.y !== undefined &&
-                        player.heading !== undefined) {
-
-                        // Draw the main circle
-                        ctx.beginPath();
-                        ctx.arc(player.x, player.y, 25, 0, 2 * Math.PI); // Draw a 50 size circle
-                        ctx.fillStyle = fillColor; // Fill color for the circle
-                        ctx.strokeStyle = 'black';
-                        ctx.fill();
-                        ctx.stroke();
-
-                        // Draw the heading indicator
-                        const headingRadians = player.heading * (Math.PI / 180); // Convert heading to radians
-                        const indicatorX = player.x + 25 * Math.cos(headingRadians); // 25 is the radius of the circle
-                        const indicatorY = player.y + 25 * Math.sin(headingRadians);
-
-                        ctx.beginPath();
-                        ctx.arc(indicatorX, indicatorY, 3, 0, 2 * Math.PI); // Draw a small dot
-                        ctx.fillStyle = 'lightGreen'; // Fill color for the indicator
-                        ctx.fill();
-                        ctx.stroke();
-
-                        // Draw the rig text
-                        ctx.font = '10px Arial';
-                        ctx.fillStyle = 'white';
-                        ctx.fillText(rigTestObject.players[i].rig, rigTestObject.players[i].x - 20, rigTestObject.players[i].y);
-
-                        // if this is selected, then draw circle around it
-                        if (rigTestObject.selectedRig -1 === i) {
-                            ctx.beginPath();
-                            ctx.arc(player.x, player.y, 30, 0, 2 * Math.PI); // Draw a 50 size circle
-                            ctx.strokeStyle = 'cyan';
-                            ctx.stroke();
-                        }
-                    }
-                });
-
-                // Draw lines and distances between players
-                for (let i = 0; i < rigTestObject.players.length; i++) {
-                    const player1 = rigTestObject.players[i];
-                    for (let j = i + 1; j < rigTestObject.players.length; j++) {
-                        const player2 = rigTestObject.players[j];
-
-                        if (player1.x !== undefined && player1.y !== undefined &&
-                            player2.x !== undefined && player2.y !== undefined) {
-                            // Draw the line
-                            ctx.beginPath();
-                            ctx.moveTo(player1.x, player1.y);
-                            ctx.lineTo(player2.x, player2.y);
-                            ctx.strokeStyle = 'gray';
-                            ctx.lineWidth = 1;
-                            ctx.stroke();
-
-                            if (rigTestObject.showDistances) {
-                                // Calculate and draw the distance text
-                                const distance = (Math.sqrt(Math.pow(player2.x - player1.x, 2) + Math.pow(player2.y - player1.y, 2)) - 50) * 0.1;
-                                const midX = (player1.x + player2.x) / 2;
-                                const midY = (player1.y + player2.y) / 2;
-                                ctx.font = '10px Arial';
-                                ctx.fillStyle = 'white';
-                                ctx.fillText(Math.round(distance).toString(), midX, midY);
-                            }
-                        }
-                    }
-                }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 // draw primer pads
                 // charred axle
@@ -171,6 +99,123 @@ const TestRigs: React.FC = (): React.ReactElement => {
                     ctx.fillStyle = 'white';
                     ctx.fillText('obstacle', 158, 365);
                 }
+
+                // Draw players and their heading indicators
+                rigTestObject.players.forEach((player: Player | Familiar, i: number) => {
+                    let fillColor: string = 'darkRed';
+                    if (i === 1) { fillColor = 'navy' }
+                    if (i === 2) { fillColor = 'red' }
+                    if (i === 3) { fillColor = 'blue' }
+
+                    if (player.x !== undefined &&
+                        player.y !== undefined &&
+                        player.heading !== undefined) {
+                        let baseSize: number = 25;
+                        if (player.type === 'familiar') { baseSize = 16 }
+
+                        // Draw the main circle
+                        ctx.beginPath();
+                        ctx.arc(player.x, player.y, baseSize, 0, 2 * Math.PI); // Draw a 50 size circle
+                        ctx.fillStyle = fillColor; // Fill color for the circle
+                        ctx.strokeStyle = 'black';
+                        ctx.fill();
+                        ctx.stroke();
+
+                        // Draw the heading indicator
+                        const headingRadians = player.heading * (Math.PI / 180); // Convert heading to radians
+                        const indicatorX = player.x + baseSize * Math.cos(headingRadians); // baseSize is the radius of the circle
+                        const indicatorY = player.y + baseSize * Math.sin(headingRadians);
+
+                        ctx.beginPath();
+                        ctx.arc(indicatorX, indicatorY, 3, 0, 2 * Math.PI); // Draw a small dot
+                        ctx.fillStyle = 'lightGreen'; // Fill color for the indicator
+                        ctx.fill();
+                        ctx.stroke();
+
+                        // Draw the rig text
+                        ctx.font = '10px Arial';
+                        ctx.fillStyle = 'white';
+                        if (player.type === 'player') {
+                            ctx.fillText(rigTestObject.players[i].rig, rigTestObject.players[i].x - 20, rigTestObject.players[i].y);
+                        } else {
+                            ctx.fillText(rigTestObject.players[i].name, rigTestObject.players[i].x - 20, rigTestObject.players[i].y);
+                        }
+
+                        // if this is selected, then draw circle around it
+                        if (rigTestObject.selectedRig - 1 === i) {
+                            ctx.beginPath();
+                            ctx.arc(player.x, player.y, 30, 0, 2 * Math.PI); // Draw a 50 size circle
+                            ctx.strokeStyle = 'cyan';
+                            ctx.stroke();
+                        }
+                    }
+                });
+
+                // Draw lines and distances between players
+                /*
+                for (let i = 0; i < rigTestObject.players.length; i++) {
+                    const player1 = rigTestObject.players[i];
+                    for (let j = i + 1; j < rigTestObject.players.length; j++) {
+                        const player2 = rigTestObject.players[j];
+
+                        if (player1.x !== undefined && player1.y !== undefined &&
+                            player2.x !== undefined && player2.y !== undefined) {
+
+                            if (rigTestObject.showDistances) {
+                                // Draw the line
+                                ctx.beginPath();
+                                ctx.moveTo(player1.x, player1.y);
+                                ctx.lineTo(player2.x, player2.y);
+                                ctx.strokeStyle = 'gray';
+                                ctx.lineWidth = 1;
+                                ctx.stroke();
+                                // Calculate and draw the distance text
+                                const distance = (Math.sqrt(Math.pow(player2.x - player1.x, 2) + Math.pow(player2.y - player1.y, 2)) - 50) * 0.1;
+                                const midX = (player1.x + player2.x) / 2;
+                                const midY = (player1.y + player2.y) / 2;
+                                ctx.font = '10px Arial';
+                                ctx.fillStyle = 'white';
+                                ctx.fillText(Math.round(distance).toString(), midX, midY);
+                            }
+                        }
+                    }
+                }
+                */
+                // Draw lines and distances from the selected player to all other players
+                const selectedPlayer = rigTestObject.players[rigTestObject.selectedRig - 1];
+                if (selectedPlayer.x !== undefined && selectedPlayer.y !== undefined) {
+                    for (let j = 0; j < rigTestObject.players.length; j++) {
+                        if (j === rigTestObject.selectedRig-1) continue; // Skip the selected player itself
+
+                        const targetPlayer = rigTestObject.players[j];
+                        if (targetPlayer.x !== undefined && targetPlayer.y !== undefined) {
+
+                            if (rigTestObject.showDistances) {
+                                // Draw the line
+                                ctx.beginPath();
+                                ctx.moveTo(selectedPlayer.x, selectedPlayer.y);
+                                ctx.lineTo(targetPlayer.x, targetPlayer.y);
+                                ctx.strokeStyle = 'gray';
+                                ctx.lineWidth = 1;
+                                ctx.stroke();
+
+                                // Calculate and draw the distance text
+                                let distance = Math.sqrt(Math.pow(targetPlayer.x - selectedPlayer.x, 2) + Math.pow(targetPlayer.y - selectedPlayer.y, 2));
+                                if (selectedPlayer.type === 'familiar' || targetPlayer.type === 'familiar') {
+                                    distance = (distance - 41) * 0.1;
+                                } else {
+                                    distance = (distance - 50) * 0.1;
+                                }
+                                const displayDistance = Math.max(distance, 0); // Ensure non-negative distance
+                                const midX = (selectedPlayer.x + targetPlayer.x) / 2;
+                                const midY = (selectedPlayer.y + targetPlayer.y) / 2;
+                                ctx.font = '10px Arial';
+                                ctx.fillStyle = 'white';
+                                ctx.fillText(Math.round(displayDistance).toString(), midX, midY);
+                            }
+                        }
+                    }
+                }
             }
         }
     };
@@ -197,8 +242,6 @@ const TestRigs: React.FC = (): React.ReactElement => {
                         selectingPlace: false,
                         players: updatedPlayers
                     });
-                } else {
-                    console.log('no: ', rigTestObject.selectingPlace, rigTestObject.selectedRig);
                 }
             }
         };

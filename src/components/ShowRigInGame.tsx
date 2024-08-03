@@ -1,13 +1,7 @@
 
 import React, { useContext } from 'react';
-import { MobileDetails, RigContext, RigObject } from '../context/RigContext';
-import { Weapon, weapons } from '../data/weapons';
+import { RigContext, RigObject } from '../context/RigContext';
 import ShowDetails from './ShowDetails';
-import { Modification, rigModifications, weaponModifications } from '../data/modifications';
-import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../data/driverSpecials';
-import { GunnerSpecial, gunnerSpecials } from '../data/gunnerSpecials';
-import { Mine, mines } from '../data/mines';
-import { familiarModifications, familiarWeapons } from '../data/familiar';
 
 interface Props {
     selectedRig: RigObject
@@ -15,56 +9,11 @@ interface Props {
 
 const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
 
-    const { rigObject,
-        setMobileDetails,
-        mobileDetails,
-        stripParentheses
+    const {
+        rigTestObject,
+        setRigTestObject,
+        mobileDetails
     } = useContext(RigContext);
-
-    const handleDetails = (name: string, type: string): void => {
-
-        let fullDetails: MobileDetails = {
-            name: name,
-            type: type,
-            fullDetails: ''
-        };
-
-        switch (type) {
-            case 'weapon':
-                const getWeapon = weapons.filter((w: Weapon) => w.name === stripParentheses(name));
-                fullDetails.fullDetails = getWeapon[0]
-                break;
-            case 'modification':
-                const getMod = rigModifications.concat(weaponModifications).filter((w: Modification) => w.name === stripParentheses(name));
-                fullDetails.fullDetails = getMod[0]
-                break;
-            case 'driverSpecial':
-                const driSpecial = driverSpecials.filter((w: DriverSpecial) => w.name === stripParentheses(name));
-                fullDetails.fullDetails = driSpecial[0]
-                break;
-            case 'gunnerSpecial':
-                const gunnerSpecial = gunnerSpecials.filter((w: GunnerSpecial) => w.name === stripParentheses(name));
-                fullDetails.fullDetails = gunnerSpecial[0]
-                break;
-            case 'mine':
-                const mine = mines.filter((w: Mine) => w.name === stripParentheses(name));
-                fullDetails.fullDetails = mine[0]
-                break;
-            case 'familiarStuff':
-                const famStuff: (Weapon | Modification)[] = ([] as (Weapon | Modification)[]).concat(familiarWeapons, familiarModifications).filter((w: Weapon | Modification) => w.name === stripParentheses(name));
-                fullDetails.fullDetails = famStuff[0];
-                break;
-            case 'concealedWeapon':
-                const concealedW = concealedWeapons.filter((w: ConcealedWeapons) => w.name === stripParentheses(name));
-                fullDetails.fullDetails = concealedW[0]
-                break;
-
-            default: console.log('not found: ', type);
-        };
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setMobileDetails(fullDetails);
-    }
 
     if (props.selectedRig) {
 
@@ -86,11 +35,11 @@ const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
                             {props.selectedRig.name}<br />
                         </p>
                         <div>
-                            Damage: <input type="number" style={{width: 35}}/>
-                            Momentum: <input type="number" style={{width: 35}} />
-                            flares used: <input type="checkbox"/><input type="checkbox"/><input type="checkbox"/><input type="checkbox"/><br/>
-                            driver special used: r1 <input type="checkbox"/> r2<input type="checkbox"/>r3<input type="checkbox"/> 
-                            gunner special used: r1 <input type="checkbox"/> r2<input type="checkbox"/>r3<input type="checkbox"/><br/>
+                            Damage: <input type="number" style={{ width: 35 }} />
+                            Momentum: <input type="number" style={{ width: 35 }} />
+                            flares used: <input type="checkbox" /><input type="checkbox" /><input type="checkbox" /><input type="checkbox" /><br />
+                            driver special used: r1 <input type="checkbox" /> r2<input type="checkbox" />r3<input type="checkbox" />
+                            gunner special used: r1 <input type="checkbox" /> r2<input type="checkbox" />r3<input type="checkbox" /><br />
                         </div>
                         <p style={{ margin: 1 }}>
                             Speed: <span style={{ color: "darkRed", margin: 2 }}>{props.selectedRig.realSpeed}</span>
@@ -116,21 +65,21 @@ const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
                                     )
                                 })
                             }
-                                                    {
-                            props.selectedRig.mods.map((m: string, i: number) => {
-                                if (!m.includes('Armour Plating') &&
-                                    !m.includes('Resistance Field')) {
-                                    return (
-                                        <span
-                                            key={`sm: ${i}`}
-                                            style={{ margin: 1 }}
-                                        >
-                                            {m}.
-                                        </span>
-                                    )
-                                }
-                            })
-                        }
+                            {
+                                props.selectedRig.mods.map((m: string, i: number) => {
+                                    if (!m.includes('Armour Plating') &&
+                                        !m.includes('Resistance Field')) {
+                                        return (
+                                            <span
+                                                key={`sm: ${i}`}
+                                                style={{ margin: 1 }}
+                                            >
+                                                {m}.
+                                            </span>
+                                        )
+                                    }
+                                })
+                            }
                         </p>
                     </div>
 
@@ -175,8 +124,63 @@ const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
                                         Familiar:
                                     </div>
                                     <div>
-                                        Damage: <input type="number" style={{width: 35}} />
-                                        Momentum: <input type="number" style={{width: 35}} />
+                                        Damage: <input type="number" style={{ width: 35 }} />
+                                        Momentum: <input type="number" style={{ width: 35 }} />
+                                        {
+                                            (!rigTestObject.familiarOne.enabled || !rigTestObject.familiarTwo.enabled) ?
+                                                <>
+                                                    <button
+                                                        onClick={() => {
+                                                            const updatedPlayers = [...rigTestObject.players];
+
+                                                            if (rigTestObject.familiarOne.enabled &&
+                                                                !rigTestObject.familiarTwo.enabled
+                                                            ) {
+                                                                updatedPlayers.push({
+                                                                    type: 'familiar',
+                                                                    x: 0,
+                                                                    y: 0,
+                                                                    heading: 0,
+                                                                    charred: false,
+                                                                    enabled: true,
+                                                                    name: 'familiar 2'
+                                                                });
+                                                                setRigTestObject({
+                                                                    ...rigTestObject,
+                                                                    players: updatedPlayers,
+                                                                    familiarTwo: {
+                                                                        ...rigTestObject.familiarTwo,
+                                                                        enabled: true,
+                                                                        name: 'familiar 2'
+                                                                    }
+                                                                });
+                                                            } else if (
+                                                                !rigTestObject.familiarOne.enabled
+                                                            ) {
+                                                                updatedPlayers.push({
+                                                                    type: 'familiar',
+                                                                    x: 0,
+                                                                    y: 0,
+                                                                    heading: 0,
+                                                                    charred: false,
+                                                                    enabled: true,
+                                                                    name: 'familiar 1'
+                                                                });
+                                                                setRigTestObject({
+                                                                    ...rigTestObject,
+                                                                    players: updatedPlayers,
+                                                                    familiarOne: {
+                                                                        ...rigTestObject.familiarTwo,
+                                                                        enabled: true,
+                                                                        name: 'familiar 1'
+                                                                    }
+                                                                });
+                                                            }
+                                                        }}
+                                                    >add familiar to game</button>
+                                                </> : <></>
+                                        }
+
                                     </div>
                                     <span>
                                         Speed: <span style={{ color: "darkRed" }}>{props.selectedRig.familiarStats.speed}</span> Armour: <span style={{ color: "darkRed" }}>{props.selectedRig.familiarStats.armour}</span>.

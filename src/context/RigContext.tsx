@@ -90,10 +90,13 @@ export interface RigTestObject {
     world: string;
     rigAmount: number;
     map: string;
-    players: Player[];
+    players: (Player | Familiar)[];
+    familiarOne: Familiar;
+    familiarTwo: Familiar;
 };
 
 export interface Player {
+    type: 'player';
     enabled: boolean;
     points: number;
     damage: number;
@@ -106,6 +109,7 @@ export interface Player {
 };
 
 const initialPlayer: Player = {
+    type: 'player',
     enabled: false,
     points: 0,
     damage: 0,
@@ -117,9 +121,29 @@ const initialPlayer: Player = {
     heading: 0
 };
 
+const initialFamiliar: Familiar = {
+    type: 'familiar',
+    x: 0,
+    y: 0,
+    heading: 0,
+    charred: false,
+    enabled: false,
+    name: ''
+};
+
 interface Coords {
     x: number;
     y: number;
+}
+
+export interface Familiar {
+    type: 'familiar';
+    x: number;
+    y: number;
+    heading: number;
+    charred: boolean;
+    enabled: boolean;
+    name: string;
 }
 
 export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement => {
@@ -154,7 +178,9 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             world: '',
             rigAmount: 0,
             map: '',
-            players: [initialPlayer, initialPlayer]
+            players: [initialPlayer, initialPlayer],
+            familiarOne: initialFamiliar,
+            familiarTwo: initialFamiliar
         }
     );
 
