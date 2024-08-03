@@ -37,6 +37,8 @@ const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
                         <div>
                             Damage: <input type="number" style={{ width: 35 }} />
                             Momentum: <input type="number" style={{ width: 35 }} />
+                            Points gained: <input type="number" style={{ width: 150 }} />
+                            <input type="checkbox" />underdog<input type="checkbox" /><br />
                             flares used: <input type="checkbox" /><input type="checkbox" /><input type="checkbox" /><input type="checkbox" /><br />
                             driver special used: r1 <input type="checkbox" /> r2<input type="checkbox" />r3<input type="checkbox" />
                             gunner special used: r1 <input type="checkbox" /> r2<input type="checkbox" />r3<input type="checkbox" /><br />
