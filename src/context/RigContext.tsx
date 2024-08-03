@@ -79,6 +79,10 @@ export interface MobileDetails {
 }
 
 export interface RigTestObject {
+    primerOneCharged: boolean;
+    primerTwoCharged: boolean;
+    primerThreeCharged: boolean;
+    showDistances: boolean;
     selectingPlace: boolean;
     selectedRig: number;
     round: number;
@@ -139,6 +143,10 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     const [msg, setMsg] = useState<string>('');
     const [rigTestObject, setRigTestObject] = useState<RigTestObject>(
         {
+            primerOneCharged: false,
+            primerTwoCharged: false,
+            primerThreeCharged: false,
+            showDistances: false,
             selectingPlace: false,
             selectedRig: 0,
             round: 0,

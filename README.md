@@ -22,3 +22,4 @@ Versions:
 0.3.4 Boor rigg chassis added
 0.3.5 Rule updates
 0.4.0 Testing platform work in process
+0.4.1 First version of test platform ready

@@ -7,8 +7,7 @@ export interface RigTestConstants {
 
 export const rigTestConstants: RigTestConstants = {
     gameTypes: [
-        'charred axle',
-        'proving grounds'
+        'charred axle'
     ],
     worlds: [
         'none',
