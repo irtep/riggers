@@ -4,7 +4,8 @@ import { RigContext, RigObject } from '../context/RigContext';
 import ShowDetails from './ShowDetails';
 
 interface Props {
-    selectedRig: RigObject
+    selectedRig: RigObject;
+    index: number;
 }
 
 const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
@@ -16,7 +17,19 @@ const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
     } = useContext(RigContext);
 
     if (props.selectedRig) {
+        let colors = {
+            background: 'darkRed',
+            color: 'white'
+        }
 
+        if (props.index > 0) {
+            colors.background = 'navy';
+            colors.color = 'white';
+        }
+
+        /* this does not do anything... 
+            but could be usefull later on...
+        */
         if (mobileDetails.name !== '') {
             return (
                 <div style={{ margin: 1, fontSize: 12 }}>
@@ -29,18 +42,18 @@ const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
             return (
                 <>
                     <div style={{ margin: 1, fontSize: 12 }}>
-                        <p style={{
-                            background: "black", color: "orange", fontWeight: "strong", margin: 0, padding: 1
-                        }}>
+                        <p style={colors}>
                             {props.selectedRig.name}<br />
                         </p>
                         <div>
                             Damage: <input type="number" style={{ width: 35 }} />
                             Momentum: <input type="number" style={{ width: 35 }} />
                             Points gained: <input type="number" style={{ width: 150 }} />
-                            <input type="checkbox" />underdog<input type="checkbox" /><br />
+                            <input type="checkbox" />underdog<input type="checkbox" />
+                            Primers: <input type="number" style={{ width: 35, background: 'cyan' }} />
+                            <br />
                             flares used: <input type="checkbox" /><input type="checkbox" /><input type="checkbox" /><input type="checkbox" />
-                            <span style={{color: "darkRed"}}> obscured: <input type="checkbox" /></span>
+                            <span style={{ color: "darkRed" }}> obscured: <input type="checkbox" /></span>
                             <br />
                             driver special used: r1 <input type="checkbox" /> r2<input type="checkbox" />r3<input type="checkbox" />
                             gunner special used: r1 <input type="checkbox" /> r2<input type="checkbox" />r3<input type="checkbox" />

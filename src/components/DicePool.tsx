@@ -30,6 +30,7 @@ const DicePool: React.FC = () => {
                 </button >
             </div>
             <div>
+                {`dice results: `}
                 {randomNumbers.map((number, index) => (
                     <span key={index} style={{
                         background: "darkRed", 

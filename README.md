@@ -26,3 +26,4 @@ Versions:
 0.4.2 Familiars added to test platform
 0.4.3 Added turn calculator to test platform
 0.4.4 map 2 to test and obscured tick box
+0.4.5 primed tick + small facelift

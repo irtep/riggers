@@ -118,13 +118,17 @@ const GameOptions: React.FC = (): React.ReactElement => {
                 <input type="checkbox" checked={rigTestObject.primerOneCharged} onChange={handlePrimerOneChange} /> 1
                 <input type="checkbox" checked={rigTestObject.primerTwoCharged} onChange={handlePrimerTwoChange} /> 2
                 <input type="checkbox" checked={rigTestObject.primerThreeCharged} onChange={handlePrimerThreeChange} /> 3
+                <br/>
                 <button
                     onClick={generateTurnOrder}
-                >create new turn order</button>
-                <button onClick={revealNext}>Reveal Next</button>
+                >generate new turn order</button>
+                <button onClick={revealNext}>Reveal next turn token</button>
             </p>
             
+            {`turn sequence: `}
+
             {revealedItems}
+            
             <DicePool />
 
             <div>
@@ -221,6 +225,7 @@ const GameOptions: React.FC = (): React.ReactElement => {
                                     <>
                                         <ShowRigInGame
                                             selectedRig={findHisRig[0]}
+                                            index={i}
                                         />
                                     </> : <></>
                             }
