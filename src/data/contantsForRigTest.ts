@@ -21,6 +21,7 @@ export const rigTestConstants: RigTestConstants = {
         2
     ],
     maps: [
-        'test 1'
+        'test 1',
+        'test 2'
     ]
 };

@@ -77,9 +77,11 @@ const TestRigs: React.FC = (): React.ReactElement => {
                 }
 
                 // obstacles
-                if (rigTestObject.map === 'test 1') {
+                if (rigTestObject.map === 'test 1' ||
+                    rigTestObject.map === 'test 2'
+                ) {
                     ctx.beginPath();
-                    ctx.rect(155, 155, 50, 50);
+                    ctx.rect(155, 170, 50, 50);
                     ctx.fillStyle = 'black';
                     ctx.fill();
                     ctx.fillStyle = 'white';
@@ -99,6 +101,35 @@ const TestRigs: React.FC = (): React.ReactElement => {
                     ctx.fillStyle = 'white';
                     ctx.fillText('obstacle', 158, 365);
                 }
+                if (rigTestObject.map === 'test 2') {
+                    ctx.beginPath();
+                    ctx.rect(180, 10, 10, 80);
+                    ctx.fillStyle = 'black';
+                    ctx.fill();
+                    ctx.fillStyle = 'white';
+                    ctx.fillText('obstacle', 158, 365);
+
+                    ctx.beginPath();
+                    ctx.rect(300, 100, 10, 100);
+                    ctx.fillStyle = 'black';
+                    ctx.fill();
+                    ctx.fillStyle = 'white';
+                    ctx.fillText('obstacle', 158, 365);
+
+                    ctx.beginPath();
+                    ctx.rect(295, 380, 100, 10);
+                    ctx.fillStyle = 'black';
+                    ctx.fill();
+                    ctx.fillStyle = 'white';
+                    ctx.fillText('obstacle', 158, 365);
+
+                    ctx.beginPath();
+                    ctx.rect(120, 60, 80, 10);
+                    ctx.fillStyle = 'black';
+                    ctx.fill();
+                    ctx.fillStyle = 'white';
+                    ctx.fillText('obstacle', 158, 365);
+                };
 
                 // Draw players and their heading indicators
                 rigTestObject.players.forEach((player: Player | Familiar, i: number) => {
@@ -151,36 +182,6 @@ const TestRigs: React.FC = (): React.ReactElement => {
                     }
                 });
 
-                // Draw lines and distances between players
-                /*
-                for (let i = 0; i < rigTestObject.players.length; i++) {
-                    const player1 = rigTestObject.players[i];
-                    for (let j = i + 1; j < rigTestObject.players.length; j++) {
-                        const player2 = rigTestObject.players[j];
-
-                        if (player1.x !== undefined && player1.y !== undefined &&
-                            player2.x !== undefined && player2.y !== undefined) {
-
-                            if (rigTestObject.showDistances) {
-                                // Draw the line
-                                ctx.beginPath();
-                                ctx.moveTo(player1.x, player1.y);
-                                ctx.lineTo(player2.x, player2.y);
-                                ctx.strokeStyle = 'gray';
-                                ctx.lineWidth = 1;
-                                ctx.stroke();
-                                // Calculate and draw the distance text
-                                const distance = (Math.sqrt(Math.pow(player2.x - player1.x, 2) + Math.pow(player2.y - player1.y, 2)) - 50) * 0.1;
-                                const midX = (player1.x + player2.x) / 2;
-                                const midY = (player1.y + player2.y) / 2;
-                                ctx.font = '10px Arial';
-                                ctx.fillStyle = 'white';
-                                ctx.fillText(Math.round(distance).toString(), midX, midY);
-                            }
-                        }
-                    }
-                }
-                */
                 // Draw lines and distances from the selected player to all other players
                 if (rigTestObject.selectedRig > 0) {
                     const selectedPlayer = rigTestObject.players[rigTestObject.selectedRig - 1];

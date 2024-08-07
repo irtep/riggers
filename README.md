@@ -25,3 +25,4 @@ Versions:
 0.4.1 First version of test platform ready
 0.4.2 Familiars added to test platform
 0.4.3 Added turn calculator to test platform
+0.4.4 map 2 to test and obscured tick box
