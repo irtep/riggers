@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import React, { useContext, useState } from 'react';
-import { Player, RigContext, RigObject, RigTestObject, TurnOrder } from '../context/RigContext';
+import { Player, RigContext, RigObject, RigTestObject, TurnOrder } from '../../context/RigContext';
 import ShowRigInGame from './ShowRigInGame';
 import DicePool from './DicePool';
 

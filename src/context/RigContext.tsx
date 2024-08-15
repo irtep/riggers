@@ -149,7 +149,14 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
     const [device, setDevice] = useState<'mobile' | 'laptop'>('mobile');
     const [rigObject, setRigObject] = useState<RigObject>(initialObject);
-    const [mode, setMode] = useState<'main' | 'create' | 'edit' | 'testRigs'>('main');
+    const [mode, setMode] = useState<
+        'main' | 
+        'create' | 
+        'edit' | 
+        'testRigs' | 
+        'lore' | 
+        'rules'
+        >('main');
     const [hovered, setHovered] = useState<string | undefined>('');
     const [savedRigs, setSavedRigs] = useState<any[]>([]);
     const [mobileDetails, setMobileDetails] = useState<MobileDetails>({name : '', type: '', fullDetails: ''});

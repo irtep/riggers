@@ -1,7 +1,7 @@
 import { Button, Container, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React, { useContext, useEffect } from 'react';
-import { rigTestConstants } from '../data/contantsForRigTest';
-import { RigContext, RigObject } from '../context/RigContext';
+import { rigTestConstants } from '../../data/contantsForRigTest';
+import { RigContext, RigObject } from '../../context/RigContext';
 
 const TestRigMenu: React.FC = (): React.ReactElement => {
     const {

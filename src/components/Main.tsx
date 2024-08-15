@@ -2,7 +2,9 @@ import { Button, Container, Typography } from '@mui/material';
 import React, { useEffect, useContext } from 'react';
 import Create from './Create';
 import { RigContext, RigObject } from '../context/RigContext';
-import TestRigs from './TestRigs';
+import TestRigs from './rigTestComponents/TestRigs';
+import Lore from './Lore';
+import RuleIndex from './RuleIndex';
 
 const Main: React.FC = (): React.ReactElement => {
 
@@ -121,6 +123,20 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'testRigs') ?
                     <>
                         <TestRigs/>
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'rules') ?
+                    <>
+                        <RuleIndex/>
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'lore') ?
+                    <>
+                        <Lore/>
                     </> :
                     <></>
             }

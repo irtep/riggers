@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { RigContext, Player, Familiar } from '../context/RigContext';
+import { RigContext, Player, Familiar } from '../../context/RigContext';
 import TestRigMenu from './TestRigMenu';
 import { Button } from '@mui/material';
 import GameOptions from './GameOptions';

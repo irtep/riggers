@@ -52,7 +52,7 @@ export const weapons: Weapon[] = [
         costMod: 1,
         costSpeed: 0,
         specialties: '', 
-        primed: 'BREACHER (3+)',
+        primed: 'BREACHER (3+), if 3+ hits, then 4+ after scores another damage',
         whatIsThis: 'weapon'
     },
     {

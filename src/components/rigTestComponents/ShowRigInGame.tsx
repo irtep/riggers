@@ -1,7 +1,7 @@
 
 import React, { useContext } from 'react';
-import { RigContext, RigObject } from '../context/RigContext';
-import ShowDetails from './ShowDetails';
+import { RigContext, RigObject } from '../../context/RigContext';
+import ShowDetails from '../ShowDetails';
 
 interface Props {
     selectedRig: RigObject;
