@@ -28,3 +28,4 @@ Versions:
 0.4.4 map 2 to test and obscured tick box
 0.4.5 primed tick + small facelift
 0.4.6 lore and rules modes added
+0.4.7. amorcitos 1 story added
