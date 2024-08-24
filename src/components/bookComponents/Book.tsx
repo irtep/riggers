@@ -36,7 +36,10 @@ const Book: React.FC<BookType> = (props: BookType): React.ReactElement => {
             <Container sx={{
                 color: 'rgb(180,180,180)'
             }}>
-                <Typography variant="h4">
+                <Typography
+                 variant="h4"
+                 sx={{color: "orange"}}
+                 >
                     {props.title}
                 </Typography>
                 {
@@ -55,7 +58,10 @@ const Book: React.FC<BookType> = (props: BookType): React.ReactElement => {
                                     p.subTitle ?
                                     <Typography 
                                         variant="h5"
-                                        sx={{margin: 2}}
+                                        sx={{
+                                            margin: 2,
+                                            color: "gold"
+                                        }}
                                     >
                                         {p.subTitle}
                                     </Typography> :

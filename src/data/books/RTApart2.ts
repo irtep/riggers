@@ -5,7 +5,7 @@ export const RTApart2: BookType = {
     title: 'Racing Team Amorcitos part II',
     paragraphs: [
         {
-            subTitle: `Spoils of victory`,
+            subTitle: `Spoils of victory and Bad news`,
             strings: `
                 While we still were celebrating our victory in our rig, we got a call to our comms system from Controller Folg. "That was a hell of a battle. You will get a bonus for this. Lets meet out side the area, so i can sort this out. They will open the way out of the arena now and point you to your pit. Wait me there. Folg out."
                 `
@@ -46,11 +46,12 @@ export const RTApart2: BookType = {
         {
             subTitle: `N1 Base`,
             strings: `
-x                `
+            We considered the pit area quite safe, so we decided to sleep there in our rigs. After day full of of adrenaline and devastating news we were so drained of energy, that I think we all slept very well. After the sun came up we waked up, ate breakfasts from our supplies and started to drive in rainy weathers towards N1's location. Arle drove the Bullterrier, Annika at gunners seat and I drove the all-terrain roller, that we named "Leprechaun" due its green point job."
+            `
         },
         {
             subTitle: ``,
-            strings: `
+            strings: `It took a while to figure out leprechauns controls. Luckily Annika had a nice tool, that she had bought years ago, but this was probably the first time she used it. It was a hand held console that scanned texts in different languages, translated them to english and then printed out stickers. So now leprechauns drivers console was full of stickers saying what which text said. It had no steering wheel, but too joystick to control each one of the tracks and weapons. I figured out quite fastly what does what, and what means what in digital console. I gotta confess, that those funny stickers from Annika helped a lot.
 x                `
         },
         {
