@@ -2,7 +2,7 @@ import { BookType } from "../../components/bookComponents/Book";
 
 export const racingTeamAmorcitos: BookType = {
 
-    title: 'Racing Team Amorcitos I',
+    title: 'Racing Team Amorcitos part I',
     paragraphs: [
         {
             subTitle: `Meet the family`,

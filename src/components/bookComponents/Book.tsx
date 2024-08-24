@@ -42,7 +42,10 @@ const Book: React.FC<BookType> = (props: BookType): React.ReactElement => {
                 {
                     props.paragraphs.map((p: Paragraph, i: number) => {
                         return (
-                            <Container key={`book para: ${i}`}>
+                            <Container 
+                              key={`book para: ${i}`}
+                              sx={{margin: 1}}
+                              >
                                 { /** image here */
                                     p.image ?
                                     <></> :
