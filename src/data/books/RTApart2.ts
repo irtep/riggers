@@ -2,7 +2,7 @@ import { BookType } from "../../components/bookComponents/Book";
 
 export const RTApart2: BookType = {
 
-    title: 'Racing Team Amorcitos part II',
+    title: 'Proving Grounds. (Amorcitos part II)',
     paragraphs: [
         {
             subTitle: `Spoils of victory and Bad news`,
@@ -51,13 +51,14 @@ export const RTApart2: BookType = {
         },
         {
             subTitle: ``,
-            strings: `It took a while to figure out leprechauns controls. Luckily Annika had a nice tool, that she had bought years ago, but this was probably the first time she used it. It was a hand held console that scanned texts in different languages, translated them to english and then printed out stickers. So now leprechauns drivers console was full of stickers saying what which text said. It had no steering wheel, but too joystick to control each one of the tracks and weapons. I figured out quite fastly what does what, and what means what in digital console. I gotta confess, that those funny stickers from Annika helped a lot.
+            strings: `It took a while to figure out Leprechauns controls. Luckily Annika had a nice tool, that she had bought years ago, but this was probably the first time she used it. It was a hand held console that scanned texts in different languages, translated them to english and then printed out stickers. So now leprechauns drivers console was full of stickers saying what which text said. It had no steering wheel, but too joystick to control each one of the tracks and weapons. I figured out quite fastly what does what, and what means what in digital console. I gotta confess, that those funny stickers from Annika helped a lot.
 x                `
         },
         {
             subTitle: ``,
-            strings: `
-x                `
+            strings: `After few hours drive, we finally saw our destination, or what it was left of it. The N1 base was a relatively small science base. Planned at this stage for a crew of 20, that was suppose to research essence, climate, local animals and vegetation. It was about 500 x 500 meters area, in north and west it ended in very steep mountain range, other sides were surrounded by about 4 meter high, strong steel wire fence. Behind the fence there were automated sentry posts, that looked inactive. The perimeter fence seemed intact, but after that there was a sorry sight. East side of the base was pretty much completely destroyed, There was a huge, maybe 100 meter radius wide crater of a big explosion. It seems, that the explosion disintigrated the science station, comms and hq building and living barracks. Also, the mine entrance at south end of the mountains looked badly collapsed.
+            The west side looked bit better. It seemed, that dome like, about 100x50m garage/workshop was almost intact, also behind two destroyed warehouses, there was still one warehouse and power station in quite good condition.
+            `
         }
     ]
 };
