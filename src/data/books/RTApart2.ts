@@ -75,6 +75,71 @@ x                `
             subTitle: ``,
             strings: `The garage had survived the blast well. The distance from the blast and situated behind the living barracks had protected it. It was low dome like building, that did not have windows. It had a big enough gate to drive most of the vehicles through, inside the there was a well equipped workshop, that had about everything you would need for mining operations and surviving. in the center, there was a wide ramp, that continued gently to downwards to garage part. In garage part we found everything you can dream of to maintenance and fix rigs. But not only that, we found two rigs. One was Bakkor Miner, probably meant for mining operations and one Desert Spear, probably meant for fast travelling around Nii'vaat.
                 `
+        },
+        {
+            subTitle: ``,
+            strings: `After the exhausting day, we drove our rigs to garage and set upped some kind of field bedrooms to the workshop and went to sleep. We decided to decide what we want to do with our lives tomorrow. It seems that dogs adopted us as they slept with us inside the workshop.
+
+                `
+        },
+        {
+            subTitle: `Plans and Ideas`,
+            strings: `
+            We analized our situation. First where do we want to be? We figured out, that this was the best place to be right now for us. If ever The crew of Outreach would try to find us (or anyone else from the Outreach), they would try to do it from here. Also we had good amount of supplies and machines at disponible and security was probably better, except, maybe at starports.
+                `
+        },
+        {
+            subTitle: ``,
+            strings: `
+            However, starports would be good option as well. As by now the martial law has been terminated, we would be probably free to move out and inside from those. Our security situation at N1 was quite fine. Perimeter was protected by mountains in north and east and fence and sentry towers in other side. It worked so, that if somebody climbed or broke the steel wired wall, sentry towers would fire them. They had double blasters, that were set to extra high energy input, so they hit equally as primed twin-blasters of a charred axle rig. If some raider team had power to overcome that, we had also 4 rigs (however only 3 drivers), that we could ride to combat those raiders. So, while we all were at the base, we were protected against some raider bands, but we knew, that in Nii'vaat are some bigger organizations, that could outgun as, and quite easily too.   
+            So if we stayed, the one thing we needed is to upgrade the security of the base.
+            `
+        },
+        {
+            subTitle: ``,
+            strings: `
+            We had pretty good supply of trade reputation as we just one some in charred axle, and we had bases, quite good trade reputation in our hands. We thought, that nobody probably will ever ask us, what we did with that money, and if they did, that would be just a happy day anyways, as there would be some organized Outreach administration again. Also, we were sure, that it would be understandable, that we used those to survive and care the base.
+            `
+        },
+        {
+            subTitle: ``,
+            strings: `
+            But anyways, those trade reputations would run eventually out, and we just did not want to be here twiddling our thumbs. We decided, that we would try to be charred axle professionals. We had a good military training, 4 rigs, and excellent workshop. The workshop had fine intermoon communication systems, so we contacted Controller Folg, and said that we would like to participate again in some event. Also, as we had only one rig with crystalline cocoon, we ordered 3 more cocoons, to add them to Bullterrier, miner that we christened to Amazonas and to desert spear, that we christened to Dragon Slayer. 
+            `
+        },
+        {
+            subTitle: `At Fornax Theta, pit area of charred axle arena`,
+            strings: `
+            I was sitting at Leprechauns driver seat. Wearing my navy blue driver overalls. Drivers visored helmet in head. We had hatch open and Arle was not yet at his gunners seat. He was making final adjusts to our monoroller battle familiar.
+            `
+        },
+        {
+            subTitle: ``,
+            strings: `
+            **OK, turn on the engines**, i heard in my helmets comms. That was Annika. We were doing last minute systems and comms tests. "Copy that, HQ", i said and turned a switch to up position in panel, left hand side of me. BURUMMMmmmmmm bum bum bum bum bum.... **Ok, engine one sounds and looks good, next.**
+            Next switch: waka waka waka...BURUMMMMMMMmmm bum bum bum bum bum.... ** Hmm... looks good, nothing to worry about, even if started slow... the final one, please, bonbon **. BURUUUMMMMMMMMMmmmmm... **Great! All look good. Lets keep em running, to warm them up. Arle, you better climb to your seat too. The battle starts soon.**. 
+            `
+        },
+        {
+            subTitle: ``,
+            strings: `
+            Our custom All-terrain roller had three engines, one for each "wheel", located just outside our protective cocoon and one at the bottom of the rig, that would take over the job, if one or both of those motors would break up. We had modificated a lot the controls. We had replaced original taraporian consoles with human consoles, that we made in our workshop.
+            Also, we switched the original joystick based driving and fire controls to driving wheel, that i was better accustomed to. We switched the drivers seat bit left and installed gunners seat and console next to it. I would drive and Arle would be a gunner. Annika would be the tank leader, but she would
+            direct us outside the arena, watching from live stream and communicating with us in open crypted radio channel. We had armed the Leprechaun with class 9 armour plates, heavy variant rattler, double micro rocket pod and Arle would control a monoroller combat familiar, that had mawler appendages and some extra armour. We were able to boost its armour to class 9, so it was a tough nut to chew.
+            `
+        },
+        {
+            subTitle: ``,
+            strings: `
+            *** PFFFSZZTTT... Leprechaun. Your turn. Drive to starting grid ***
+            `
+        },
+        {
+            subTitle: ``,
+            strings: `
+            We closed the hatch, revved some motors BRRRRRRRRRR to get some adreline pump, and started to roll towards the arena gates. Annika gave us some last minutes reminders: 
+            ** Ok, boys this is it. Lets do it. Remember avoid arena edges at all cost. Also, there is only one primer pad, that is in center of the arena. It should be charged, like always, so visit that often, before you fire. Try to score favor early, as in proving grounds event we get extra attacks available in this event from those. Good Luck, AND LISTEN TO ME ALL THE TIMES.**
+            `
         }
     ]
 };
