@@ -59,6 +59,22 @@ x                `
             strings: `After few hours drive, we finally saw our destination, or what it was left of it. The N1 base was a relatively small science base. Planned at this stage for a crew of 20, that was suppose to research essence, climate, local animals and vegetation. It was about 500 x 500 meters area, in north and west it ended in very steep mountain range, other sides were surrounded by about 4 meter high, strong steel wire fence. Behind the fence there were automated sentry posts, that looked inactive. The perimeter fence seemed intact, but after that there was a sorry sight. East side of the base was pretty much completely destroyed, There was a huge, maybe 100 meter radius wide crater of a big explosion. It seems, that the explosion disintigrated the science station, comms and hq building and living barracks. Also, the mine entrance at south end of the mountains looked badly collapsed.
             The west side looked bit better. It seemed, that dome like, about 100x50m garage/workshop was almost intact, also behind two destroyed warehouses, there was still one warehouse and power station in quite good condition.
             `
+        },
+        {
+            subTitle: ``,
+            strings: `Even if the base was out of power, backup power of the gate was online and we were in luck, as Arle's personal access code (PAC) let us in. We locked the gate behind us and slowly drove our rigs to base... the destruction left us speakless. When the first shock went off, we stopped our rigs and started a desperate search of survivors and to check the status of the base.
+            `
+        },
+        {
+            subTitle: ``,
+            strings: `Only survivors we found were a group of three dogs. The biggest dog was white sturdy male dog, we named Pontus, then there was midsized brown that got name Queen and one yellowish brown, bit bigger than Queen, but probably its son, that got name Yaco. They must have been near the western fence to survive a blast that big. They seemed to be happy hungry, but other than that ok. We fed them and gave them water. What made our desperate job easier was, that we did not have to do any graveyard work, as it seems, that humans had been in work at that time in office, research labs or in living barracks.
+            We found out, that the warehouse, that have been far away enough to survive the blast had some weaponry, spare parts and food rations. Lucky us. Power plant seemed to have about every fuse broken, along with some other parts, but with fuses, spareparts and some engineering magic from Annika, we were able to restore the power of the base. The base meaning now the garage/workshop and automated perimeter defences.
+            `
+        },
+        {
+            subTitle: ``,
+            strings: `The garage had survived the blast well. The distance from the blast and situated behind the living barracks had protected it. It was low dome like building, that did not have windows. It had a big enough gate to drive most of the vehicles through, inside the there was a well equipped workshop, that had about everything you would need for mining operations and surviving. in the center, there was a wide ramp, that continued gently to downwards to garage part. In garage part we found everything you can dream of to maintenance and fix rigs. But not only that, we found two rigs. One was Bakkor Miner, probably meant for mining operations and one Desert Spear, probably meant for fast travelling around Nii'vaat.
+                `
         }
     ]
 };
