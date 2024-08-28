@@ -10,6 +10,7 @@ export interface BookImage {
 export interface Paragraph {
     image?: BookImage;
     subTitle?: string;
+    locationStr?: string;
     strings: string;
 };
 
@@ -64,6 +65,19 @@ const Book: React.FC<BookType> = (props: BookType): React.ReactElement => {
                                         }}
                                     >
                                         {p.subTitle}
+                                    </Typography> :
+                                    <></>
+                                }
+                                                                {
+                                    p.locationStr ?
+                                    <Typography 
+                                        variant="h6"
+                                        sx={{
+                                            margin: 2,
+                                            color: "yellow"
+                                        }}
+                                    >
+                                        {p.locationStr}
                                     </Typography> :
                                     <></>
                                 }

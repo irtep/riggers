@@ -108,7 +108,8 @@ x                `
             `
         },
         {
-            subTitle: `At Fornax Theta, pit area of charred axle arena`,
+            subTitle: `Proving Grounds, 6 months later`,
+            locationStr: `Pit area of charred axle arena, Fornax Theta, `,
             strings: `
             I was sitting at Leprechauns driver seat. Wearing my navy blue driver overalls. Drivers visored helmet in head. We had hatch open and Arle was not yet at his gunners seat. He was making final adjusts to our monoroller battle familiar.
             `
@@ -125,7 +126,7 @@ x                `
             strings: `
             Our custom All-terrain roller had three engines, one for each "wheel", located just outside our protective cocoon and one at the bottom of the rig, that would take over the job, if one or both of those motors would break up. We had modificated a lot the controls. We had replaced original taraporian consoles with human consoles, that we made in our workshop.
             Also, we switched the original joystick based driving and fire controls to driving wheel, that i was better accustomed to. We switched the drivers seat bit left and installed gunners seat and console next to it. I would drive and Arle would be a gunner. Annika would be the tank leader, but she would
-            direct us outside the arena, watching from live stream and communicating with us in open crypted radio channel. We had armed the Leprechaun with class 9 armour plates, heavy variant rattler, double micro rocket pod and Arle would control a monoroller combat familiar, that had mawler appendages and some extra armour. We were able to boost its armour to class 9, so it was a tough nut to chew.
+            direct us outside the arena, watching from live stream and communicating with us in open crypted radio channel. We had armed the Leprechaun with class 9 armour plates, heavy variant rattler, double micro rocket pod and Arle would control a monoroller combat familiar, that had mawler appendages, bit extra amour and pack of missiles. We were able to boost its armour to class 7, but we were bit worries how it would survive.
             `
         },
         {
@@ -137,8 +138,104 @@ x                `
         {
             subTitle: ``,
             strings: `
-            We closed the hatch, revved some motors BRRRRRRRRRR to get some adreline pump, and started to roll towards the arena gates. Annika gave us some last minutes reminders: 
-            ** Ok, boys this is it. Lets do it. Remember avoid arena edges at all cost. Also, there is only one primer pad, that is in center of the arena. It should be charged, like always, so visit that often, before you fire. Try to score favor early, as in proving grounds event we get extra attacks available in this event from those. Good Luck, AND LISTEN TO ME ALL THE TIMES.**
+            We closed the hatch, revved some motors BRRRRRRRRRR to get some adreline to our veins, and started to roll towards the arena gates. Annika gave us some last minutes reminders: 
+            ** Ok, boys this is it. Lets do it. Remember to avoid arena edges at all cost, unless i order otherwise. Also, there is only one primer pad, that is in center of the arena. It should be charged, like always, so visit that often, before you fire. Try to score favor early, as in proving grounds event we get extra attacks available in this event from those. Good Luck, AND LISTEN TO ME ALL THE TIMES.**
+            `
+        },
+        {
+            subTitle: `The Charred Pit`,
+            locationStr: `Around 100 kilometers from N1 base, Junctions Town, Nii'vaat`,
+            strings: `
+            There was a middle aged human male walking on streets of Junctions Town. He was about average height, clearly above average weight and all of that wasn't muscle. He was wearing a rain black coat, as it was lightly raining, that is quite common in these parts of Nii'vaat. He had long brown hair in ponytail. Small black, white and gold colored cat was following him.
+            This part of the town was something that translated The trough, and it had a bit bad reputation and to get a bad reputation in Nii'vaat wasn't that easy. But this man walked calmly around, and it was not just, that being charismatic and armed, and he was charismatic and armed, but it seems, that he was here often, and known to locals.
+            Also it seems, that the cat known as Lydia, even if quite small, had some reputation here, as local feral rodents and mammals left it alone.
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            The man and his cat entered public house named The Charred Pit. It was a charred axle themed pub, where most of the humans of the town liked to watch events.
+            There was around fifteen persons watching the big screen, where was a charred axle event from Fornax Theta being broadcasted. The man took a seat on a table, Lydia seat on the shoulder of Ollie and owner, fierce young human female named Nena appeared. "Good to see you Lydia, and you too Ollie. I take that Lydia takes some dead rodent and you a big ale?".
+            Ollie did not pay here for his drinks. There was a time when some assholes of some or whatever team fans were watching the event in their leather pants. One of those guys lost his wallet and whole bunch of around 20 guys started to break places.
+            Ollie joined Nena in defence of the pub, against around 20 furious idiots. Fighting bravely, but taking hits. Nena never forgot that, so Ollie drinked and ate free here.
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            Ollie took a deep sip of his ale and turned his attention to screen, as the battle was about to start. He put his automatic translation device on the table, that clicked few times to calibrate and started to translate the broadcast from the screen.
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            There was two ainashian at the studio.
+            "...that's right Zim, but now we will have an intresting battle as well. This battle is live match, broadcasted from Fornax Theta. We have Proving Grounds rules, and teams look very intresting. Isn't that right?"
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            "Indeed they do Macks. We have a three rig fight. There is a one seasoned veteran The Dust, with his same named truck rig. He is over 20 battles veteran. And two rigs that are there in arena with him are rookie rig teams, who have fought just in some local small events, but in their battles they made quite an impressions, so they got invitation to this Winter War at Fornax event.
+            Also, to add one spice to mix. Valoras has said, that winner of this match will go on to qualifier play-off series, where they can fight for a place in the Final of this season. 
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            "So we all know The Dust. His dark truck is well armoured, maybe missiles are the weak point of that, so he might want to avoid edges, unless he wants some meteor cannon hits. Main weapon is an Astro Driver, supported by set of blasters. The Dusk is a clear favourite to take this one, but in three rig event anything can happen. It's not only about the skill and experience. 
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            "Ok, then the underdogs. Everybody loves underdogs, do they?", "Indeed they do!". "We have rig here names Orchid Fire. Origin unknown, driver is a person called Orchid, and he has a robot gunner. What do you know about this rigger?"
+            "Not much really! I just know, that she might be a female, so i call her that and she appeared to events bit after the Rupture, so probably from Outreach originally as many new skilled human rookie riggers nowaday, and she has ripped apart competition in Thynakian local events. And here she is now. 
+            Her rig is Hot rod with huge energy gun supported with blasters. It is said, that if she sees you shooting, it is very hard to hit her.
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            "Intresting. What about that Leprechaun rig?"
+            "It is kind of a family business, you know, it is driven by "Caped" Pete Reincman and gunner is Arle Reincman. Team boss is Annika Reincman. They haven't really talked about their past, but everybody assumes, that they are former Outreach crew.
+            They drive all-terrain roller, with heavy variant rattler, micro pod missiles and monoroller combat familiar, that has strong combat weapon and missile pack."
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            "What's with these mystery humans, that don't tell where they are from and background? Are they hiding something?"
+            "I don't know, but not all rigger humans from Outreach are like that, for example, take that crazy old general Volkov who is smashing through opponents and one of the favourites to reach the Big Final."
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            That got an attention from Ollie. He raised his eyebrow and said to Lydia "Reincman family... intresting.". Nena heard that and asked "You know them?". "Yeah, actually I do, they are good folk, you would like them. However they might be too pussies, to come to this part of town". "Hah!" said Nena.
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            Rigs rolled to starting grid. *DRIVE*, audience at the pub started to cheer and Ollie and Nena got cheered up by the atmosphere too. Lydia could not have cared less.
+            `
+        },
+        {
+            subTitle: ``,
+            locationStr: ``,
+            strings: `
+            "Excellent start by the Leprechaun, he is clearly ahead of others and will definately cast the first primer charge. Other rigs seems to see that, and Orchid Fire steers to left and The Dusk to right.
             `
         }
     ]
