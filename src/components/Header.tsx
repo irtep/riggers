@@ -1,6 +1,7 @@
 import { Button, Container, Typography } from '@mui/material';
 import React, { useContext } from 'react';
 import ModeButton from './ModeButton';
+import Links from './Links';
 import { RigContext } from '../context/RigContext';
 
 const Header: React.FC = (): React.ReactElement => {
@@ -11,7 +12,7 @@ const Header: React.FC = (): React.ReactElement => {
             background: "rgb(80,80,80)",
             color: "orange",
             borderRadius: 2
-        }}>
+        }}> 
             {
                 mode === 'testRigs' ?
                     <>
@@ -27,6 +28,7 @@ const Header: React.FC = (): React.ReactElement => {
                                 <>
                                     <ModeButton activateWhat='mobile' />
                                     <ModeButton activateWhat='laptop' />
+                                    <Links/>
                                     <Typography align='center'>* R  I  G _ G  A  R  A  G  E *</Typography>
                                 </>
                             ) : (
@@ -34,17 +36,21 @@ const Header: React.FC = (): React.ReactElement => {
                                     <ModeButton activateWhat='mobile' />
                                     <ModeButton activateWhat='laptop' />
                                     <Button
+                                        sx={{
+                                            color: 'black',
+                                            background: 'darkRed'
+                                        }}
                                         onClick={() => {
                                             setMode('testRigs');
                                         }}
                                     >Test rigs</Button>
+                                    <Links/>
                                     <Typography variant="h3" align='center' sx={{ 'padding': 3 }}>* Rig Garage *</Typography>
                                 </>
                             )
                         }
                     </>
             }
-
         </Container>
     );
 }

@@ -1,11 +1,7 @@
-import { Button, Container, Typography } from '@mui/material';
-import React, { useContext } from 'react';
-import { RigContext } from '../context/RigContext';
+import { Container, Typography } from '@mui/material';
+import React from 'react';
 
 const Footer: React.FC = (): React.ReactElement => {
-  const {
-    setMode
-  } = useContext(RigContext);
 
   return (
     <Container sx={{
@@ -14,16 +10,8 @@ const Footer: React.FC = (): React.ReactElement => {
       borderRadius: 2
     }}>
       <Typography>
-        Version: 0.4.7
+        Version: 0.4.8
       </Typography>
-      <Button 
-        sx={{ color: 'rgb(180,180,180)' }}
-        onClick={ () => { setMode('rules'); }}
-        >rules</Button>
-      <Button 
-        sx={{ color: 'rgb(180,180,180)' }}
-        onClick={ () => { setMode('lore'); }}
-        >lore</Button>
     </Container>
   );
 }
