@@ -29,4 +29,6 @@ Versions:
 0.4.5 primed tick + small facelift
 0.4.6 lore and rules modes added
 0.4.7. amorcitos 1 story added
-0.4.8. link to official site and amorcitas 2 story added 
+0.4.8. link to official site and amorcitas 2 story added
+0.4.9. stories fixed to match the timeline
+0.4.10 typing errors fixed

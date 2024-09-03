@@ -2,48 +2,50 @@ import { BookType } from "../../components/bookComponents/Book";
 
 export const racingTeamAmorcitos: BookType = {
 
-    title: `Racing Team Amorcitos`,
+    title: `Racing Team Amorcitos (by C.P. Reincman)`,
     paragraphs: [
         {
             subTitle: `Meet the family`,
             strings: `
                 If you are Charred Axle rigger or a fan, you might know our teams name the Amorcitos. Its spanish (one of the most common languages in earth) and translated to english maybe like "dear ones", or something like that. We have been calling ourselves "Amorcitos" quite while now. It started when we were still living in earth, it used to be a name of our internet router and the name kind of sticked on us.
 
-                But who are we? Or as I want to start the story from the beginning, I will tell you who were at that point, when the story started. I am Peter Reincman, sometimes called as Caped Pete, Pete or even Bonbon (only my wife calls me that). I was about 40 at the time that mission started (not calculating years in Suspended Animation in Outreach). Medium height, balding north european looking man. I was a sergeant at Outreach's military forces. Specialized in combat vehicle driving.
-                My wife Annika was dazzlingly beautiful south american. I called her Amorcita, our son Mama and everyone else Lieutenant Reincman or Adri. She was an excellent mechanic, engineer and strategist/tactician. And I should mention, that she cooks excellent peruvian dishes too. Well, I could write pages about her, but lets keep the story going. The third member of Amorcitos is our son, Corporal Arle Reincman, around 20 years old at that time. Vetenary. He has been an excellent help to the mission, while studying animals in Tarapor and the best gunner i've seen. Also as unit we three formed a solid combat vehicle crew.
+                But who are we? Or as I want to start the story from the beginning, well, not exactly the beginning, but from where things started to get intresting. I am Peter Reincman, sometimes called as Caped Pete, Pete or even Bonbon (only my wife calls me that). I was about 35 at the time when the rupture happened, (not calculating years in Suspended Animation in Outreach). Medium height, balding north european looking man. I used to be at Outreach's military forces. Specialized in combat vehicle driving.
+                My wife Annika was dazzlingly beautiful south american. I called her Amorcita, our son Mama and everyone else Lieutenant Reincman or Adri. She was an excellent mechanic, engineer and strategist/tactician. And I should mention, that she cooks excellent peruvian dishes too. Well, I could write pages about her, but lets keep the story going. The third member of Amorcitos is our son, Corporal Arle Reincman, around 20 years old at that time. Vetenary and the best gunner i've seen. Also as unit we three formed a solid combat vehicle crew.
                 OK, now you know something about us, so let the story really begin.
                 `
         },
         {
-            subTitle: `The Mission`,
+            subTitle: `The Big Disaster`,
             strings: `
-                After about 17 years having based on Outreach, Arle got a transfer to Nii'vaat. There was a small human colony, that had a need of a veterinary and Arle was sent. As parents, we were asked if we wanted to escort him there, and of course we accepted.
-                We got one of the cutter class shuttles, good storage of equipment and one of the rover vehicles, that was called Hot Rod's as they looked like some classic old earth hot rod car. We named the hot rod as Bullterrier, as its paint work, white, with red in front and blue and cyan back, slightly maybe resembled that kind of dog.
+                After about 17 years having based on Outreach, Arle got a transfer to Nii'vaat. However, while we traveled there, the rupture happened and the Outreach and the base where we were suppose to work, were destroyed.
+                We got one of the cutter class shuttles, good storage of equipment and one of the rover vehicles, that was called Hot Rod's as they looked like some classic old earth hot rod car. We named the hot rod as Bullterrier, as its paint work, white, with red in front and blue and cyan back, slightly maybe resembled that kind of dog. With those resources we started a small courier business, transporting goods and persons between planets with our cutter and inside Nii'vat with our hot rod.
                 `
         },
         {
-            subTitle: `The Disaster`,
+            subTitle: `The Smaller Disaster`,
             strings: `
-                The journey to Nii'vaat was estimated with current planetary positions to take about 14 days. The estimation were accurate. The disaster stuck, when we had only three days of travel left...
+                Most of the time we worked for a human base in Nii'vaat, that was called N1 base. It used to be one of the Oureach missions, before the rupture, but after the rupture the crew of the base continued to do their mining and research operations, on their own account. Sometimes they needed something from somewhere or vice versa, and usually they hired us to do the job.
+                This time they needed some stuff from Ainash and we were happy to get it for them. 
+                The journey to Nii'vaat was estimated with current planetary positions to take about 14 days. The estimation were accurate. The disaster stuck, when we had only three days of our round trip.
                 `
         },
         {
             subTitle: ``,
             strings: `
-            'Bonbon.', Annika said. 'Yeah?', i replied, from drivers seat. 'I lost contact to Outreach, and many other ports and beacons. I think something has happened.'
-            'Weird, all systems seem to work in our end... i run analyze just in case. Could you contact the N1 base and ask what is going on?'. N1 was the base we were suppose to make our landing. It was a human controlled starport and research station at Nii'vaat, were Arle was suppose to start his work.
+            'Bonbon.', Annika said. 'Yeah?', i replied, from drivers seat. 'I lost contact to N1, and many other ports and beacons. I think something has happened.'
+            'Weird, all systems seem to work in our end... i run analyze just in case.'
             `
         },
         {
             subTitle: ``,
             strings: `
-            'Lost contact to that station too... I try the Grey Sky station (we use usually translated name of alien stations, names, etc.), that's Union held station, i seem to have connection to there.', said Annika.
+            'Looks like our sensors are fine. I try the Grey Sky station (we use usually translated name of alien stations, names, etc.), that's Union held station, i seem to have connection to there.', said Annika.
             `
         },
         {
             subTitle: ``,
             strings: `
-            After about 30 minutes wait, she got contact there. However, we did not get any wiser, as they have lost same connections as us, and did not have any clue what has happened...
+            After about 30 minutes wait, she got contact there. However, we did not get any wiser, as they have lost same connections as us, and did not have any clue what has happened, or they did'nt want to tell. 
             Anyways, we got a permission to land to Grey Sky station and there we went.
             `
         },
@@ -51,7 +53,7 @@ export const racingTeamAmorcitos: BookType = {
             subTitle: `Grey Sky station, Nii'vaat`,
             strings: `
             The Grey Sky station was quite big spaceport, that Union had in Nii'vaat. It was a busy port with few thousand persons living and working there. Architecht was mostly domes or dome like structures to counter local weather phenoms. We arrived at I guess you could say in summerlike season as the weather was bit hot, windy and cloudy.
-            We were about a week at the station waiting news or orders from human colonies, but we did not get any. There was lots of Union's Military movement at the port, mostly Union's units coming in and leaving to some direction. There was even rumours, that one of the Keepers have been seen around, but we could not confirm if that was true or not. Also officers had their mounths shut, but something big was clearly going on.
+            Sometime after the landing, we heard that there has been quite large almost moonwide sprite invasion, one of the biggest after the rupture. The martial law was declared. There was lots of Union's Military movement at the port, mostly Union's units coming in and leaving to some direction. There was even rumours, that one of the Keepers have been seen around, but we could not confirm if that was true or not. Also officers had their mounths shut, but something big was clearly going on.
             `
         },
         {
@@ -88,7 +90,7 @@ export const racingTeamAmorcitos: BookType = {
         {
             subTitle: ``,
             strings: `
-            We talked a quite a bit. Mostly about our combat skills and experience and about what is Hukk Industries and what it does. The thing was, that as we had a formidable looking rig in our disposal, he needed us to take him to Hukk site, that he has lost contact to and the carrot to us was, that he said, that he would be able to get us permission to travel outside the spaceport, so we had a change to go take a look what happened to N1 colony. Also, as a sugar on top, he offered us quite generous sum of trade reputation, that was welcomed addition, as we indeed were running out of our trade reputations.
+            We talked a quite a bit. Mostly about our combat skills and experience and about local topics, like charred axle, hukk, sprites etc. The thing was, that as we had a formidable looking rig in our disposal, he needed us to take him to Hukk site, that he has lost contact to and the carrot to us was, that he said, that he would be able to get us permission to travel outside the spaceport, so we had a change to go take a look what happened to N1 colony. Also, as a sugar on top, he offered us quite generous sum of trade reputation, that was welcomed addition, as we indeed were running out of our trade reputation.
             `
         },
         {
@@ -142,7 +144,7 @@ export const racingTeamAmorcitos: BookType = {
         {
             subTitle: ``,
             strings: `
-            This was starting to be too much here to bear... Uncertainess of Outreach and N1 destination, frustrating wait and now this... atmosphere was getting heated. I think Folg noticed this and this was the first time we saw them showing some emotions. They said 'Hey! What the hell you expected? This is not some sugar coated luxury ship you float in space, pretending you are better than rest and everything is flowers and laugh! You came Nii'vaat and this is how Nii'vaat works! Rules are different here. If you are stupid, you get get treated like a stupid. You fight or die. You win and get rich or you lose and you fucking die!'
+            This was starting to be too much here to bear... Uncertainess of N1's destiny, frustrating wait and now this... atmosphere was getting heated. I think Folg noticed this and this was the first time we saw them showing some emotions. They said 'Hey! What the hell you expected? This is not some sugar coated luxury ship you float in space, pretending you are better than rest and everything is flowers and laugh! You came Nii'vaat and this is how Nii'vaat works! Rules are different here. If you are stupid, you get get treated like a stupid. You fight or die. You win and get rich or you lose and you fucking die!'
             `
         },
         {

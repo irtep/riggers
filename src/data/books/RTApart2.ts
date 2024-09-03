@@ -2,7 +2,7 @@ import { BookType } from "../../components/bookComponents/Book";
 
 export const RTApart2: BookType = {
 
-    title: 'Proving Grounds. (Amorcitos part II)',
+    title: 'Proving Grounds. (Amorcitos part II, by C.P. Reincman)',
     paragraphs: [
         {
             subTitle: `Spoils of victory and Bad news`,
@@ -35,7 +35,7 @@ export const RTApart2: BookType = {
             strings: `
             He stepped out of his with some kind of laptop computer and two big bakkor bodyguards with nasty looking combat shotguns. He opened the laptop to work table in room and said. "Ok folks, first i need a name of your team." My head felt empty so I said same name that our car racing team in old earth had "Racing Team Amorcitos".
             "Heh, I like that. Very original." Said Folg and worked few minutes with his computer. "Alright, now I have your charred axle team registered and ranking points you earned credited. Also, your team has now an account of trade reputation and reputation you won today are credited there. I sent ID and keys to your rigs communications system. Also there are my details, if you want another match, you just contact me."
-            I said "OK, thanks I guess. So we are done here?". "Just one thing", he said "There was a special news feed today, that says, that Outreach is destroyed. There was same kind of explosion, that in many other places around star system. I asked from Hukk too, were I work, but they don't know anything more than in official news feeds. Im sorry for your losses. Feel free to use these tools for repairs as long as you like, but don't steal anything. Good bye."
+            I said "OK, thanks I guess. So we are done here?". "Just one thing", he said "There was a special news feed today, that says, that N1 is destroyed. There was some kind of strong explosion, probably some accident happened, when sprites attacked, or it was somekind of last resort defensive maneuver. I asked from Hukk too, were I work, but they don't know anything more than in official news feeds. Im sorry for your losses. Feel free to use these tools for repairs as long as you like, but don't steal anything. Good bye."
             Then he packed his laptop and left with his bodyguards with his noisy rig.
                `
         },
@@ -63,7 +63,7 @@ export const RTApart2: BookType = {
         },
         {
             subTitle: ``,
-            strings: `Even if the base was out of power, backup power of the gate was online and we were in luck, as Arle's personal access code (PAC) let us in. We locked the gate behind us and slowly drove our rigs to base... the destruction left us speakless. When the first shock went off, we stopped our rigs and started a desperate search of survivors and to check the status of the base.
+            strings: `Even if the base was out of power, backup power of the gate was online and as we were very often working for base, and they were expecting us, they had programmed the gate to open for us. We locked the gate behind us and slowly drove our rigs to base... the destruction left us speakless. When the first shock went off, we stopped our rigs and started a desperate search of survivors and to check the status of the base.
             `
         },
         {
@@ -86,20 +86,20 @@ export const RTApart2: BookType = {
         {
             subTitle: `Plans and Ideas`,
             strings: `
-            We analized our situation. First where do we want to be? We figured out, that this was the best place to be right now for us. If ever The crew of Outreach would try to find us, they would try to do it from here. Also we had good amount of supplies and machines at disponible and security was probably better than anywhere else in Nii'vaat, except, in starports.
+            We analized our situation. First where do we want to be? We figured out, that this was the best place to be right now for us. If ever some ex-crew of Outreach would try to other ex-crew members, they would try to do it from here. Also we had good amount of supplies and machines at disponible and security was probably better than anywhere else in Nii'vaat, except, in starports. Our temporary base before that, was a rented hangar, that was quite expensive, now we got stop that rent.
                 `
         },
         {
             subTitle: ``,
             strings: `
-            However, starports would be good option as well. As by now the martial law has been terminated, we would be probably free to move out and inside from those. Our security situation at N1 was quite fine. Perimeter was protected by mountains in north and east and fence and sentry towers in other side. It worked so, that if somebody climbed or broke the steel wired wall, sentry towers would fire them, if it passed certain size and sentries did not recognize it to one of us. Sentry posts had double blasters, that were set to extra high energy input, so they hit equally as primed twin-blasters of a charred axle rig. If some raider team had power to overcome that, we had also 4 rigs (however only 3 drivers), that we could ride to combat those raiders. So, while we all were at the base, we were protected against some raider bands, but we knew, that in Nii'vaat are some bigger organizations, that could outgun as, and quite easily too.   
+            However, starports would be good option as well. As by now the martial law has been terminated, we would be probably free to move out and inside from those. Our security situation at N1 was quite fine. Perimeter was protected by mountains in north and east and fence and sentry towers in other side. It worked so, that if somebody climbed or broke the steel wired wall, sentry towers would fire them, if it passed certain size and sentries did not recognize it to one of us. Sentry posts had double blasters, that were set to extra high energy input, so they hit equally as primed twin-blasters of a charred axle rig. If some raider team had power to overcome that, we had also 4 rigs (however only 3 drivers), that we could ride to combat those raiders. So, while we all were at the base, we were protected against some raider bands, but we knew, that in Nii'vaat are some bigger organizations, that could outgun as, and quite easily too. Also, sprites could always come back, but we thought that it could happen anywhere anyways.
             So if we stayed, the one thing we needed is to upgrade the security of the base.
             `
         },
         {
             subTitle: ``,
             strings: `
-            We had pretty good supply of trade reputation as we just got some in charred axle, and we had bases, quite good trade reputation in our hands (Arle had codes for that as assigned crew member). We thought, that nobody probably will ever ask us, what we did with that money, and if they did, that would be just a happy day anyways, as there would be some organized Outreach administration again. Also, we were sure, that it would be understandable, that we used those to survive and care the base.
+            We had some trade reputation as we just won some in charred axle, and we had bases supplies, that we could trade to something else, if needed. We thought, that nobody probably will ever ask us, what we did with stuff of the base, and if they did, that would be just a happy day anyways, as there would be some organized Outreach administration again. Also, we were sure, that it would be understandable, that we used those to survive and care the base.
             `
         },
         {
