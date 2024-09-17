@@ -1,15 +1,33 @@
 import { Container, Grid, Typography } from '@mui/material';
-import React, { useContext } from 'react';
-import { RigContext } from '../context/RigContext';
-import { Weapon, weapons } from '../data/weapons';
-import { Modification, rigModifications, weaponModifications } from '../data/modifications';
+import React, { useContext, useEffect, useState } from 'react';
+import { RigContext } from '../../context/RigContext';
+import { Weapon, weapons } from '../../data/weapons';
+import { Modification, rigModifications, weaponModifications } from '../../data/modifications';
+import { Chassis, chassises } from '../../data/chassises';
 
 const LaptopShowRig: React.FC = (): React.ReactElement => {
+
+    const [matchingChassis, setMatchingChassis] = useState<Chassis>({
+        name: '',
+        specials: '',
+        desc: ''
+    });
 
     const { rigObject,
             setHovered,
             stripParentheses
      } = useContext(RigContext);
+
+    useEffect( () => {
+        if (rigObject.chassis !== matchingChassis.name) {
+            const matchedChassis = chassises.find(chassis => chassis.name === rigObject.chassis);
+
+            if (matchedChassis) {
+                setMatchingChassis(matchedChassis);
+            }
+            
+        }
+    }, [rigObject]);
 
     if (rigObject) {
         return (
@@ -23,6 +41,9 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
                         </Typography>
                         <Typography>
                             Chassis: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.chassis}</span><br />
+                        </Typography>
+                        <Typography>
+                            Chassis special: <span style={{ color: "rgb(57,255,20)" }}>{matchingChassis.specials}</span><br />
                         </Typography>
                         <Typography>
                             Speed: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.speed}</span><br />

@@ -1,11 +1,11 @@
 
 import React, { useContext } from 'react';
-import { Weapon } from '../data/weapons';
-import { Modification } from '../data/modifications';
-import { Ammunition, GunnerSpecial } from '../data/gunnerSpecials';
-import { Mine } from '../data/mines';
-import { ConcealedWeapons, DriverSpecial } from '../data/driverSpecials';
-import { RigContext } from '../context/RigContext';
+import { Weapon } from '../../data/weapons';
+import { Modification } from '../../data/modifications';
+import { Ammunition, GunnerSpecial } from '../../data/gunnerSpecials';
+import { Mine } from '../../data/mines';
+import { ConcealedWeapons, DriverSpecial } from '../../data/driverSpecials';
+import { RigContext } from '../../context/RigContext';
 import { Button, Container } from '@mui/material';
 
 interface ShowProps {

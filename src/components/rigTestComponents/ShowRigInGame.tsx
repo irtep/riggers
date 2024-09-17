@@ -1,7 +1,7 @@
 
 import React, { useContext } from 'react';
 import { RigContext, RigObject } from '../../context/RigContext';
-import ShowDetails from '../ShowDetails';
+import ShowDetails from '../createRigComponents/ShowDetails';
 
 interface Props {
     selectedRig: RigObject;
@@ -43,7 +43,8 @@ const ShowRigInGame: React.FC<Props> = (props: Props): React.ReactElement => {
                 <>
                     <div style={{ margin: 1, fontSize: 12 }}>
                         <p style={colors}>
-                            {props.selectedRig.name}<br />
+                            {`${props.selectedRig.name} the ${props.selectedRig.chassis}`}
+                            <br />
                         </p>
                         <div>
                             Damage: <input type="number" style={{ width: 35 }} />

@@ -1,17 +1,23 @@
 import { Container, Typography } from '@mui/material';
-import React, { useContext } from 'react';
-import { MobileDetails, RigContext } from '../context/RigContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { MobileDetails, RigContext } from '../../context/RigContext';
 import { Visibility } from '@mui/icons-material';
-import { Weapon, weapons } from '../data/weapons';
+import { Weapon, weapons } from '../../data/weapons';
 import ShowDetails from './ShowDetails';
-import { Modification, rigModifications, weaponModifications } from '../data/modifications';
-import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../data/driverSpecials';
-import { GunnerSpecial, gunnerSpecials } from '../data/gunnerSpecials';
-import { Mine, mines } from '../data/mines';
-import { familiarModifications, familiarWeapons } from '../data/familiar';
+import { Modification, rigModifications, weaponModifications } from '../../data/modifications';
+import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../../data/driverSpecials';
+import { GunnerSpecial, gunnerSpecials } from '../../data/gunnerSpecials';
+import { Mine, mines } from '../../data/mines';
+import { familiarModifications, familiarWeapons } from '../../data/familiar';
+import { Chassis, chassises } from '../../data/chassises';
 
 const MobileShowRig: React.FC = (): React.ReactElement => {
-
+    const [matchingChassis, setMatchingChassis] = useState<Chassis>({
+        name: '',
+        specials: '',
+        desc: ''
+    });
+    
     const { rigObject,
         setMobileDetails,
         mobileDetails,
@@ -63,6 +69,17 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
         setMobileDetails(fullDetails);
     }
 
+    useEffect( () => {
+        if (rigObject.chassis !== matchingChassis.name) {
+            const matchedChassis = chassises.find(chassis => chassis.name === rigObject.chassis);
+
+            if (matchedChassis) {
+                setMatchingChassis(matchedChassis);
+            }
+            
+        }
+    }, [rigObject]);
+
     if (rigObject) {
 
         if (mobileDetails.name !== '') {
@@ -84,6 +101,12 @@ const MobileShowRig: React.FC = (): React.ReactElement => {
                         </Typography>
                         <Typography>
                             Chassis: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.chassis}</span><br />
+                        </Typography>
+                        <Typography>
+                            Chassis special: <span style={
+                                { color: "rgb(57,255,20)",
+                                  fontSize: 10
+                                }}>{matchingChassis.specials}</span><br />
                         </Typography>
                         <Typography>
                             Speed: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.speed}</span><br />

@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import React, { useContext } from 'react';
-import { RigContext } from '../context/RigContext';
+import { RigContext } from '../../context/RigContext';
 import LeftSide from './LeftSide';
 import MobileShowRig from './MobileShowRig';
 

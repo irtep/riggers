@@ -1,6 +1,6 @@
 import { Container, Grid, Paper } from '@mui/material';
 import React, { useContext } from 'react';
-import { RigContext } from '../context/RigContext';
+import { RigContext } from '../../context/RigContext';
 import ShowDetails from './ShowDetails';
 
 const RightSide: React.FC = (): React.ReactElement => {

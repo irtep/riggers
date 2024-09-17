@@ -1,13 +1,13 @@
 import { Button, Checkbox, Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Switch, TextField, Typography } from '@mui/material';
 import React, { useContext } from 'react';
-import { chassises } from '../data/chassises';
-import { Weapon, weapons } from '../data/weapons';
-import { Modification, SpecialEffect, rigModifications, weaponModifications } from '../data/modifications';
-import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../data/gunnerSpecials';
-import { familiarModifications, familiarWeapons } from '../data/familiar';
-import { Mine, mines } from '../data/mines';
-import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../data/driverSpecials';
-import { MobileDetails, RigContext, RigObject } from '../context/RigContext';
+import { Chassis, chassises } from '../../data/chassises';
+import { Weapon, weapons } from '../../data/weapons';
+import { Modification, SpecialEffect, rigModifications, weaponModifications } from '../../data/modifications';
+import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../../data/gunnerSpecials';
+import { familiarModifications, familiarWeapons } from '../../data/familiar';
+import { Mine, mines } from '../../data/mines';
+import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../../data/driverSpecials';
+import { MobileDetails, RigContext, RigObject } from '../../context/RigContext';
 import { Visibility } from '@mui/icons-material';
 
 const LeftSide: React.FC = (): React.ReactElement => {
@@ -93,7 +93,6 @@ const LeftSide: React.FC = (): React.ReactElement => {
     }
 
     const payPrice = (values: Prices, familiar: boolean): void => {
-
 
         if (familiar) {
             const newSlots: number = (rigObject.familiarStats.emptySlots as number) - values.slots;
@@ -332,8 +331,14 @@ const LeftSide: React.FC = (): React.ReactElement => {
         if (isChecked) {
             if (!rigObject.mods.includes(modName)) {
 
-                payPrice({ slots: mod.costMod }, false);
-
+                if (rigObject.chassis === 'Swamp stomper' &&
+                    modName === 'Computer Assisted Steering'
+                ) {
+                    payPrice({ slots: 0 }, false);
+                } else {
+                    payPrice({ slots: mod.costMod }, false);
+                }
+                
                 addStats(statsToAdd, false, false);
 
                 setRigObject((prevRigObject: RigObject) => ({
@@ -342,9 +347,14 @@ const LeftSide: React.FC = (): React.ReactElement => {
                 }));
             }
         } else {
-
-            payPrice({ slots: -mod.costMod }, false);
-
+            if (rigObject.chassis === 'Swamp stomper' &&
+                modName === 'Computer Assisted Steering'
+            ) {
+                payPrice({ slots: 0 }, false);
+            } else {
+                payPrice({ slots: -mod.costMod }, false);
+            }
+            
             addStats(statsToAdd, false, true);
 
             setRigObject((prevRigObject: RigObject) => ({
@@ -444,9 +454,9 @@ const LeftSide: React.FC = (): React.ReactElement => {
                             });
                         }}
                     >
-                        {chassises.map((value: string, index: number) => (
-                            <MenuItem key={index} value={value}>
-                                {value}
+                        {chassises.map((value: Chassis, index: number) => (
+                            <MenuItem key={`chassis ${index}`} value={value.name}>
+                                {value.name}
                             </MenuItem>
                         ))}
                     </Select>
@@ -613,8 +623,6 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                     /> :
                                                     <></>
                                             }
-
-
                                         </Container>
                                     )
                                 })
@@ -625,7 +633,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
                     showMods ?
                         <>
                             {
-                                rigModifications.map((m: Modification, i: number) => {
+                                rigModifications.map((m: Modification, i: number) => { 
                                     return (
                                         <Container
                                             key={`mx ${i}`}

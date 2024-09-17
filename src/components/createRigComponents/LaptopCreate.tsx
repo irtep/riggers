@@ -4,7 +4,6 @@ import LaptopShowRig from './LaptopShowRig';
 import LeftSide from './LeftSide';
 import RightSide from './RightSide';
 
-
 const LaptopCreate: React.FC = (): React.ReactElement => {
     return (
         <>

@@ -1,6 +1,6 @@
 import { Button, Container, Typography } from '@mui/material';
 import React, { useEffect, useContext } from 'react';
-import Create from './Create';
+import Create from './createRigComponents/Create';
 import { RigContext, RigObject } from '../context/RigContext';
 import TestRigs from './rigTestComponents/TestRigs';
 import Lore from './Lore';
@@ -18,38 +18,49 @@ const Main: React.FC = (): React.ReactElement => {
         deleteRig
     } = useContext(RigContext);
 
+    // handle special mods like chassis specials, turbo chargers, drifters etc.
     useEffect(() => {
         let roundedSpeed;
-        let extras = 0;
+        let extras: number = 0; // handling modificators
+        let speedOfRig: number = rigObject.speed;
+        let stomperSpecial: boolean = false;
 
-        if (rigObject.mods.includes('Turbo Charger')) {
-            // Round up to the next multiple of 5
-            roundedSpeed = Math.ceil(rigObject.speed / 5) * 5;
-        } else {
-            // Round down to the closest multiple of 5
-            roundedSpeed = Math.floor(rigObject.speed / 5) * 5;
-        }
+        (rigObject.chassis === 'Desert spear' &&
+         (!rigObject.mods.includes('Gunner'))
+        ) ?
+        speedOfRig = rigObject.speed + 10 : speedOfRig = rigObject.speed;
 
-        // temporary fix, need to make so, that comes from all other... maybe
-        if (rigObject.driverSpecial.includes('Drifter')) {
-            extras = 1;
-        } else {
-            extras = 0;
-        }
+        (rigObject.chassis === 'Swamp Stomper') ?
+        stomperSpecial = true : stomperSpecial = false;
+
+        (rigObject.mods.includes('Turbo Charger')) ?
+        roundedSpeed = Math.ceil(speedOfRig / 5) * 5 : roundedSpeed = Math.floor(speedOfRig / 5) * 5;
+
+        (rigObject.driverSpecial.includes('Drifter')) ?
+        extras = 1 : extras = 0;
 
         setRigObject({
             ...rigObject,
-            handling: Math.floor(rigObject.realSpeed / 5) + rigObject.handlingMods + extras,
+            handling: Math.floor(speedOfRig / 5) + rigObject.handlingMods + extras,
             realSpeed: roundedSpeed
         });
 
-    }, [rigObject.speed, rigObject.realSpeed, rigObject.handlingMods, rigObject.driverSpecial]);
+    }, [rigObject.chassis,
+        rigObject.speed,
+        rigObject.realSpeed,
+        rigObject.handlingMods,
+        rigObject.driverSpecial,
+        rigObject.mods]);
 
     useEffect(() => {
 
         fetchSavedRigs();
 
     }, []);
+
+    useEffect( () => {
+        console.log('rigObject: ', rigObject);
+    });
 
     return (
         <Container sx={{

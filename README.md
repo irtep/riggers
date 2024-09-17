@@ -32,3 +32,4 @@ Versions:
 0.4.8. link to official site and amorcitas 2 story added
 0.4.9. stories fixed to match the timeline
 0.4.10 typing errors fixed
+0.5.0 extended chassis rules + small refactor
