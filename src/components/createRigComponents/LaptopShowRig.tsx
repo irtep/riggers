@@ -10,7 +10,8 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
     const [matchingChassis, setMatchingChassis] = useState<Chassis>({
         name: '',
         specials: '',
-        desc: ''
+        desc: '',
+        type: 'car'
     });
 
     const { rigObject,

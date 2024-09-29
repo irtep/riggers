@@ -4,6 +4,7 @@
 
  * 
  * BUGS:
- *  it is possible to trick the cost when adding and deleting mines in "incorrect" order
- *  probably can do so too, that can choose swamp stomper, buy C.A.S for free, and then change chassis
+ *  drifter ei anna +1 handling
+ *  kun avaa 0.5.0 version rigin, niin chassis bonarit ei aktivoidu
+ *  jos vaihtelee chassista, ainakin aluksi, niin ei vaihu chassis bonarit, vasta kun ostaa aseen tai modin
  */

@@ -33,7 +33,8 @@ const LeftSide: React.FC = (): React.ReactElement => {
         showConcealedWeapons, setShowConcealedWeapons,
         setHovered,
         stripParentheses,
-        setMobileDetails
+        setMobileDetails,
+        updateRig
     } = useContext(RigContext);
 
     interface Prices {
@@ -92,277 +93,82 @@ const LeftSide: React.FC = (): React.ReactElement => {
         setMobileDetails(fullDetails);
     }
 
-    const payPrice = (values: Prices, familiar: boolean): void => {
-
-        if (familiar) {
-            const newSlots: number = (rigObject.familiarStats.emptySlots as number) - values.slots;
-
-            setRigObject((prevRigObject: any) => ({
-                ...prevRigObject,
-                familiarStats: {
-                    ...prevRigObject.familiarStats,
-                    emptySlots: newSlots
-                }
-            }));
-        } else {
-            const newSlots: number = (rigObject.emptySlots as number) - values.slots;
-
-            setRigObject((prevRigObject: any) => ({
-                ...prevRigObject,
-                emptySlots: newSlots,
-            }));
-        }
-
-    };
-
-    const addStats = (values: Stats, familiar: boolean, negative: boolean): void => {
-
-        if (familiar) {
-            let newSpeed: number = (rigObject.familiarStats.speed as number) + (negative ? -values.speed : values.speed);
-            let newArmour: number = (rigObject.familiarStats.armour as number) + (negative ? -values.armour : values.armour);
-
-            setRigObject((prevRigObject: any) => ({
-                ...prevRigObject,
-                familiarStats: {
-                    ...prevRigObject.familiarStats,
-                    speed: newSpeed,
-                    armour: newArmour
-                }
-            }));
-        } else {
-            let newSpeed: number = (rigObject.speed as number) + (negative ? -values.speed : values.speed);
-            let newArmour: number = (rigObject.armour as number) + (negative ? -values.armour : values.armour);
-            let newHandling: number = (rigObject.handlingMods as number) + (negative ? -values.handling : values.handling);
-            let newResistanceFields: number = (rigObject.resistanceFields as number) + (negative ? -values.resistanceFields : values.resistanceFields);
-
-            setRigObject((prevRigObject: any) => ({
-                ...prevRigObject,
-                speed: newSpeed,
-                armour: newArmour,
-                handlingMods: newHandling, // useEffect at Main.tsx handles the calculation
-                resistanceFields: newResistanceFields
-            }));
-        }
-    };
-
     const handleWeaponChange = (event: React.ChangeEvent<HTMLInputElement>, weapon: Weapon, dublicates: number) => {
-        let weaponName = weapon.name;
+        let prevRigObject = { ...rigObject };
         const isChecked = event.target.checked;
-        let statsToAdd = {
-            speed: -weapon.costSpeed,
-            armour: 0,
-            handling: 0,
-            resistanceFields: 0
-        }
-
-        if (dublicates !== 0) {
-            weaponName = `${weapon.name}(${dublicates})`;
-        }
+        let weaponName = weapon.name;
 
         if (isChecked) {
-            if (!rigObject.selectedWeapons.includes(weaponName)) {
-
-                payPrice({ slots: weapon.costMod }, false);
-
-                addStats(statsToAdd, false, false);
-
-                setRigObject((prevRigObject: RigObject) => ({
-                    ...prevRigObject,
-                    selectedWeapons: [...prevRigObject.selectedWeapons, weaponName]
-                }));
-            }
+            prevRigObject = {
+                ...prevRigObject,
+                selectedWeapons: [...prevRigObject.selectedWeapons, weaponName]
+            };
         } else {
-
-            payPrice({ slots: -weapon.costMod }, false);
-
-            addStats(statsToAdd, false, true);
-
-            setRigObject((prevRigObject: RigObject) => ({
+            prevRigObject = {
                 ...prevRigObject,
                 selectedWeapons: prevRigObject.selectedWeapons.filter((name: string) => name !== weaponName)
-            }));
+            };
         }
-
+        setRigObject(updateRig(prevRigObject));
     };
 
     const handleMineChange = (event: React.ChangeEvent<HTMLInputElement>, mine: Mine, dublicates: number) => {
+        let prevRigObject = { ...rigObject };
         let mineName = mine.name;
         const isChecked = event.target.checked;
-        let statsToAdd = {
-            speed: -mine.costSpeed,
-            armour: 0,
-            handling: 0,
-            resistanceFields: 0
-        }
 
         if (isChecked) {
-            if (!rigObject.mines.includes(mineName)) {
-
-                if (rigObject.mines.length > 0) {
-                    addStats(statsToAdd, false, false);
-                }
-
-                setRigObject((prevRigObject: RigObject) => ({
-                    ...prevRigObject,
-                    mines: [...prevRigObject.mines, mineName]
-                }));
-            }
+            prevRigObject = {
+                ...prevRigObject,
+                mines: [...prevRigObject.mines, mineName]
+            };
         } else {
-
-            if (rigObject.mines.length > 1) {
-                addStats(statsToAdd, false, true);
-            }
-
-            setRigObject((prevRigObject: RigObject) => ({
+            prevRigObject = {
                 ...prevRigObject,
                 mines: prevRigObject.mines.filter((name: string) => name !== mineName)
-            }));
+            };
         }
-
+        setRigObject(updateRig(prevRigObject));
     };
 
     const handleFamiliarChange = (event: React.ChangeEvent<HTMLInputElement>, eq: any, dublicates: number) => {
+        let prevRigObject = { ...rigObject };
         let eqName = eq.name;
         const isChecked = event.target.checked;
-        let statsToAdd = {
-            speed: 0,
-            armour: 0,
-            handling: 0,
-            resistanceFields: 0
-        }
-
-        if (eq.specialEffect) {
-            eq.specialEffect.forEach((spessu: SpecialEffect) => {
-                switch (spessu.prop) {
-                    case 'speed':
-                        statsToAdd.speed = spessu.value;
-                        break;
-                    case 'armour':
-                        statsToAdd.armour = spessu.value;
-                        break;
-                    case 'handling':
-                        statsToAdd.handling = spessu.value;
-                        break;
-                    case 'resistanceFields':
-                        statsToAdd.resistanceFields = spessu.value;
-                        break;
-                    default: console.log('spessu.prop not found: ', spessu.prop);
-                }
-            });
-        }
-
-        if (eq.costSpeed > 0) {
-            statsToAdd.speed = -eq.costSpeed;
-        }
-
-        if (dublicates !== 0) {
-            eqName = `${eq.name}(${dublicates})`;
-        }
 
         if (isChecked) {
-
-            if (!rigObject.familiar.includes(eqName)) {
-
-                payPrice({ slots: eq.costMod }, true);
-
-                addStats(statsToAdd, true, false);
-
-                setRigObject((prevRigObject: RigObject) => ({
-                    ...prevRigObject,
-                    familiar: [...prevRigObject.familiar, eqName]
-                }));
-            }
+            prevRigObject = {
+                ...prevRigObject,
+                familiar: [...prevRigObject.familiar, eqName]
+            };
         } else {
 
-            payPrice({ slots: -eq.costMod }, true);
-
-            addStats(statsToAdd, true, true);
-
-            setRigObject((prevRigObject: RigObject) => ({
+            prevRigObject = {
                 ...prevRigObject,
                 familiar: prevRigObject.familiar.filter((name: string) => name !== eqName)
-            }));
+            };
         }
-
+        setRigObject(updateRig(prevRigObject));
     };
 
     const handleModChange = (event: React.ChangeEvent<HTMLInputElement>, mod: Modification, dublicates: number, forWho?: string) => {
+        let prevRigObject = { ...rigObject };
         let modName = mod.name;
         const isChecked = event.target.checked;
-        let statsToAdd = {
-            speed: 0,
-            armour: 0,
-            handling: 0,
-            resistanceFields: 0
-        }
-
-        if (mod.specialEffect) {
-            mod.specialEffect.forEach((spessu: SpecialEffect) => {
-                switch (spessu.prop) {
-                    case 'speed':
-                        statsToAdd.speed = spessu.value;
-                        break;
-                    case 'armour':
-                        statsToAdd.armour = spessu.value;
-                        break;
-                    case 'handling':
-                        statsToAdd.handling = spessu.value;
-                        break;
-                    case 'resistanceFields':
-                        statsToAdd.resistanceFields = spessu.value;
-                        break;
-                    default: console.log('spessu.prop not found: ', spessu.prop);
-                }
-            });
-        }
-
-        if (mod.costSpeed > 0) {
-            statsToAdd.speed = -mod.costSpeed;
-        }
-
-        if (dublicates !== 0) {
-            modName = `${mod.name}(${dublicates})`;
-        }
-
-        if (forWho) {
-            modName = `${mod.name}(${forWho})`;
-        }
 
         if (isChecked) {
-            if (!rigObject.mods.includes(modName)) {
-
-                if (rigObject.chassis === 'Swamp stomper' &&
-                    modName === 'Computer Assisted Steering'
-                ) {
-                    payPrice({ slots: 0 }, false);
-                } else {
-                    payPrice({ slots: mod.costMod }, false);
-                }
-                
-                addStats(statsToAdd, false, false);
-
-                setRigObject((prevRigObject: RigObject) => ({
-                    ...prevRigObject,
-                    mods: [...prevRigObject.mods, modName]
-                }));
-            }
+            prevRigObject = {
+                ...prevRigObject,
+                mods: [...prevRigObject.mods, modName]
+            };
         } else {
-            if (rigObject.chassis === 'Swamp stomper' &&
-                modName === 'Computer Assisted Steering'
-            ) {
-                payPrice({ slots: 0 }, false);
-            } else {
-                payPrice({ slots: -mod.costMod }, false);
-            }
-            
-            addStats(statsToAdd, false, true);
-
-            setRigObject((prevRigObject: RigObject) => ({
+            prevRigObject = {
                 ...prevRigObject,
                 mods: prevRigObject.mods.filter((name: string) => name !== modName)
-            }));
+            };
         }
 
+        setRigObject(updateRig(prevRigObject));
     };
 
     return (
@@ -452,6 +258,10 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                 ...rigObject,
                                 chassis: e.target.value
                             });
+                            updateRig({
+                                ...rigObject,
+                                chassis: e.target.value
+                            });
                         }}
                     >
                         {chassises.map((value: Chassis, index: number) => (
@@ -473,7 +283,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         }}
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
-                    <br/>
+                    <br />
                     Show modifications:
                     <Switch
                         checked={showMods}
@@ -633,7 +443,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
                     showMods ?
                         <>
                             {
-                                rigModifications.map((m: Modification, i: number) => { 
+                                rigModifications.map((m: Modification, i: number) => {
                                     return (
                                         <Container
                                             key={`mx ${i}`}
