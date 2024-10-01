@@ -40,7 +40,7 @@ export interface RigObject {
     mods: string[];
     gunnerSpecial: string;
     driverSpecial: string;
-    rightTool: string;
+    rightTool: string[];
     concealedWeapon: string;
     familiar: string[];
     familiarStats: FamiliarStats;
@@ -62,7 +62,7 @@ const initialObject: RigObject = {
     mods: [],
     gunnerSpecial: '',
     driverSpecial: '',
-    rightTool: '',
+    rightTool: [],
     concealedWeapon: '',
     familiar: [],
     familiarStats: {
@@ -409,7 +409,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         rigNow.mines.forEach((m: string, i: number) => {
             const foundMine = mines.filter((listMine: Mine) => listMine.name === m);
             let statsToAdd = {
-                speed: foundMine[0].costSpeed,
+                speed: -foundMine[0].costSpeed,
                 armour: 0,
                 handling: 0,
                 resistanceFields: 0

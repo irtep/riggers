@@ -112,7 +112,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
         setRigObject(updateRig(prevRigObject));
     };
 
-    const handleMineChange = (event: React.ChangeEvent<HTMLInputElement>, mine: Mine, dublicates: number) => {
+    const handleMineChange = (event: React.ChangeEvent<HTMLInputElement>, mine: Mine) => {
         let prevRigObject = { ...rigObject };
         let mineName = mine.name;
         const isChecked = event.target.checked;
@@ -126,6 +126,24 @@ const LeftSide: React.FC = (): React.ReactElement => {
             prevRigObject = {
                 ...prevRigObject,
                 mines: prevRigObject.mines.filter((name: string) => name !== mineName)
+            };
+        }
+        setRigObject(updateRig(prevRigObject));
+    };
+
+    const handleRightToolChange = (event: React.ChangeEvent<HTMLInputElement>, tool: string) => {
+        let prevRigObject = { ...rigObject };
+        const isChecked = event.target.checked;
+
+        if (isChecked) {
+            prevRigObject = {
+                ...prevRigObject,
+                rightTool: [...prevRigObject.rightTool, tool]
+            };
+        } else {
+            prevRigObject = {
+                ...prevRigObject,
+                rightTool: prevRigObject.rightTool.filter((name: string) => name !== tool)
             };
         }
         setRigObject(updateRig(prevRigObject));
@@ -149,6 +167,15 @@ const LeftSide: React.FC = (): React.ReactElement => {
             };
         }
         setRigObject(updateRig(prevRigObject));
+    };
+
+    const handleChassisChange = (newValue: React.ChangeEvent<HTMLInputElement>) => {
+        let chassisAdded = { 
+            ...rigObject,
+            chassis: newValue
+        };
+
+        setRigObject(updateRig(chassisAdded));
     };
 
     const handleModChange = (event: React.ChangeEvent<HTMLInputElement>, mod: Modification, dublicates: number, forWho?: string) => {
@@ -252,16 +279,8 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         labelId="dropdown-label"
                         id="dropdown"
                         value={rigObject.chassis}
-                        label="What game?"
                         onChange={(e) => {
-                            setRigObject({
-                                ...rigObject,
-                                chassis: e.target.value
-                            });
-                            updateRig({
-                                ...rigObject,
-                                chassis: e.target.value
-                            });
+                            handleChassisChange(e.target.value);
                         }}
                     >
                         {chassises.map((value: Chassis, index: number) => (
@@ -733,7 +752,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             <Checkbox
                                                 checked={rigObject.mines.includes(mine.name)}
-                                                onChange={(event) => handleMineChange(event, mine, 0)}
+                                                onChange={(event) => handleMineChange(event, mine)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
                                             {
@@ -776,9 +795,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             <Checkbox
                                                 checked={rigObject.rightTool.includes(ammu.name)}
-                                                onChange={() => setRigObject({
-                                                    ...rigObject, rightTool: ammu.name
-                                                })}
+                                                onChange={(event) => handleRightToolChange(event, ammu.name)}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
                                         </Container>

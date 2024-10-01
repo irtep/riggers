@@ -1,10 +1,10 @@
 /**
  * 
  * DEV:
-
+    add ja delete painikkeet
  * 
  * BUGS:
- *  drifter ei anna +1 handling
- *  kun avaa 0.5.0 version rigin, niin chassis bonarit ei aktivoidu
- *  jos vaihtelee chassista, ainakin aluksi, niin ei vaihu chassis bonarit, vasta kun ostaa aseen tai modin
+ *  drifter antaa handling, mutta päivittää "seuraavassa ase/mod päivityksessä"
+ *  kun avaa 0.5.0 version rigin, niin chassis bonarit ei aktivoidu, eikä varmaa wep modit yhteensopivia
+ *  weapon modit bugaa, mutta ehkä kuntoon, kun tulee add ja delete
  */
