@@ -1,10 +1,8 @@
 /**
  * 
  * DEV:
-    add ja delete painikkeet
+    sääntö index
  * 
  * BUGS:
- *  drifter antaa handling, mutta päivittää "seuraavassa ase/mod päivityksessä"
- *  kun avaa 0.5.0 version rigin, niin chassis bonarit ei aktivoidu, eikä varmaa wep modit yhteensopivia
- *  weapon modit bugaa, mutta ehkä kuntoon, kun tulee add ja delete
+ *  kun avaa 0.5.0 version rigin, niin rigit ei valitettavasti ole ihan sopivia
  */

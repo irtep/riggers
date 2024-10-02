@@ -18,44 +18,6 @@ const Main: React.FC = (): React.ReactElement => {
         deleteRig
     } = useContext(RigContext);
 
-    // handle special mods like chassis specials, turbo chargers, drifters etc.
-    /*
-    useEffect(() => {
-        let roundedSpeed;
-        let extras: number = 0; // handling modificators
-        let speedOfRig: number = rigObject.speed;
-        let stomperSpecial: boolean = false;
-        let modSlots: number = rigObject.emptySlots;
-        console.log('mS', modSlots);
-        console.log('rO.eS', rigObject.emptySlots);
-        (rigObject.chassis === 'Desert spear') ?
-            speedOfRig = rigObject.speed + 10 : speedOfRig = rigObject.speed;
-
-        (rigObject.chassis === 'Swamp Stomper') ?
-            stomperSpecial = true : stomperSpecial = false;
-
-        (rigObject.mods.includes('Turbo Charger')) ?
-            roundedSpeed = Math.ceil(speedOfRig / 5) * 5 : roundedSpeed = Math.floor(speedOfRig / 5) * 5;
-
-        (rigObject.driverSpecial.includes('Drifter')) ?
-            extras = 1 : extras = 0;
-
-        setRigObject({
-            ...rigObject,
-            handling: Math.floor(speedOfRig / 5) + rigObject.handlingMods + extras,
-            realSpeed: roundedSpeed,
-            emptySlots: modSlots
-        });
-
-    }, [rigObject.chassis,
-    rigObject.emptySlots,
-    rigObject.speed,
-    rigObject.realSpeed,
-    rigObject.handlingMods,
-    rigObject.driverSpecial,
-    rigObject.mods]);
-*/
-
     useEffect(() => {
         fetchSavedRigs();
     }, []);

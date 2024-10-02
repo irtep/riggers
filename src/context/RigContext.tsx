@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { Modification, rigModifications, SpecialEffect } from '../data/modifications';
+import { Modification, rigModifications, SpecialEffect, weaponModifications } from '../data/modifications';
 import { Ammunition, GunnerSpecial } from '../data/gunnerSpecials';
 import { ConcealedWeapons, DriverSpecial } from '../data/driverSpecials';
 import { Weapon, weapons } from '../data/weapons';
@@ -324,7 +324,9 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                 handling: 0,
                 resistanceFields: 0
             }
-            const foundMod = rigModifications.filter((listMod: Modification) => listMod.name === rigMod);
+            const foundMod = rigModifications
+                            .concat(weaponModifications)
+                            .filter((listMod: Modification) => listMod.name === rigMod);
 
             if (foundMod[0] && foundMod[0].specialEffect) {
                 foundMod[0].specialEffect.forEach((spessu: SpecialEffect) => {

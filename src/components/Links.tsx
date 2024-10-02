@@ -9,12 +9,15 @@ const Links: React.FC = (): React.ReactElement => {
     }
     return (
         <>
-            {
-                /* rules section not made yet
+            {/*
               <Button
                 onClick={() => { setMode('rules'); }}
-              >rules</Button>        
-                */
+                sx={{
+                    color: 'gray',
+                    background: 'rgb(40,40,40)',
+                    margin: 0.5
+                }}
+              >rules</Button>*/
             }
             <Button
                 onClick={() => { setMode('lore'); }}
