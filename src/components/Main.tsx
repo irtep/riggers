@@ -34,10 +34,15 @@ const Main: React.FC = (): React.ReactElement => {
             {
                 (mode === 'main') ?
                     <>
-                        <Button onClick={() => {
-                            setRigObject(initialObject);
-                            setMode('create');
-                        }}>new rig</Button>
+                        <Button
+                            sx={{
+                                border: '1px solid orange',
+                                color: 'orange'
+                            }}
+                            onClick={() => {
+                                setRigObject(initialObject);
+                                setMode('create');
+                            }}>new rig</Button>
 
                         {
                             (savedRigs.length > 0) ?

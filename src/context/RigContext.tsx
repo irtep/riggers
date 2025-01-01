@@ -5,6 +5,7 @@ import { ConcealedWeapons, DriverSpecial } from '../data/driverSpecials';
 import { Weapon, weapons } from '../data/weapons';
 import { Mine, mines } from '../data/mines';
 import { familiarModifications, familiarWeapons } from '../data/familiar';
+import userIsMobile from '../customHooks/userIsMobile';
 
 export const RigContext: React.Context<any> = createContext(undefined);
 
@@ -152,8 +153,10 @@ export interface TurnOrder {
     pool2: number[];
 }
 export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement => {
-
-    const [device, setDevice] = useState<'mobile' | 'laptop'>('mobile');
+    const isMobile: boolean = userIsMobile();
+    const [device, setDevice] = useState<'mobile' | 'laptop'>((isMobile
+                                                                ? 'mobile'
+                                                                : 'laptop'));
     const [rigObject, setRigObject] = useState<RigObject>(initialObject);
     const [mode, setMode] = useState<
         'main' |
@@ -254,14 +257,14 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         } else {
             let newSpeed: number = (rigATM.speed as number) + (negative ? -values.speed : values.speed);
             let newArmour: number = (rigATM.armour as number) + (negative ? -values.armour : values.armour);
-            let newHandling: number = (rigATM.handlingMods as number) + (negative ? -values.handling : values.handling);
+            let newHandling: number = (rigATM.handling as number) + (negative ? -values.handling : values.handling);
             let newResistanceFields: number = (rigATM.resistanceFields as number) + (negative ? -values.resistanceFields : values.resistanceFields);
 
             rigATM = {
                 ...rigATM,
                 speed: newSpeed,
                 armour: newArmour,
-                handlingMods: newHandling, // useEffect at Main.tsx handles the calculation
+                handling: newHandling,
                 resistanceFields: newResistanceFields
             };
         }
@@ -287,7 +290,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                 armour: 2,
                 emptySlots: 3
             },
-            handlingMods: 0
+            handlingMods: 0 // not used atm. updateRig does this
         };
 
         // update stats, based on chassis
@@ -325,8 +328,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                 resistanceFields: 0
             }
             const foundMod = rigModifications
-                            .concat(weaponModifications)
-                            .filter((listMod: Modification) => listMod.name === rigMod);
+                .concat(weaponModifications)
+                .filter((listMod: Modification) => listMod.name === rigMod);
 
             if (foundMod[0] && foundMod[0].specialEffect) {
                 foundMod[0].specialEffect.forEach((spessu: SpecialEffect) => {
@@ -435,9 +438,12 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         (rigNow.driverSpecial.includes('Drifter')) ?
             extras = 1 : extras = 0;
 
+        (rigNow.driverSpecial.includes('Turbo Charger')) ?
+            extras = extras-2 : extras = extras;
+
         rigNow = {
             ...rigNow,
-            handling: Math.floor(speedOfRig / 5) + rigObject.handlingMods + extras,
+            handling: Math.floor(speedOfRig / 5) + extras,
             realSpeed: roundedSpeed,
             emptySlots: modSlots
         };
@@ -532,7 +538,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             initialObject,
             rigTestObject, setRigTestObject,
             turnOrder, setTurnOrder,
-            updateRig, addStats, payPrice
+            updateRig, addStats, payPrice,
+            isMobile
         }}>
             {props.children}
         </RigContext.Provider>

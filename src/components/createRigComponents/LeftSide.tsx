@@ -229,6 +229,11 @@ const LeftSide: React.FC = (): React.ReactElement => {
                 color: "rgb(150,150,150)"
             }}>
                 <Button
+                    sx={{
+                        border: '1px solid orange',
+                        color: 'orange',
+                        margin: 0.5
+                    }}
                     onClick={
                         () => {
                             setMode('main');
@@ -238,6 +243,10 @@ const LeftSide: React.FC = (): React.ReactElement => {
                     Back to main page
                 </Button>
                 <Button
+                    sx={{
+                        border: '1px solid orange',
+                        color: 'orange'
+                    }}
                     onClick={() => {
                         try {
                             if (mode === 'edit') {
