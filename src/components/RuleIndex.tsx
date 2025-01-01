@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from '@mui/material';
+import { Button, Container, Input, Typography } from '@mui/material';
 import React, { useContext } from 'react';
 import { RigContext } from '../context/RigContext';
 
@@ -16,7 +16,7 @@ const RuleIndex : React.FC = () : React.ReactElement => {
       <Typography sx={{
         color: 'rgb(180,180,180)'
       }}>
-        section under construction...
+        <input type="text"></input>
       </Typography>
     </Container>
   );

@@ -10,7 +10,8 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
     const [matchingChassis, setMatchingChassis] = useState<Chassis>({
         name: '',
         specials: '',
-        desc: ''
+        desc: '',
+        type: 'car'
     });
 
     const { rigObject,
@@ -200,12 +201,18 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
                         (rigObject.gunnerSpecial.includes('The right tool')) ?
                             <>
                                 <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
-                                    Right tool weapon:
+                                    Right tools:
                                 </span>
 
                                 <br />
 
-                                {rigObject.rightTool}
+                                {rigObject.rightTool.map((tool: string, indx: number) => {
+                                    return (
+                                        <Typography key={`tool:${indx}`}>
+                                            {tool}
+                                        </Typography>
+                                    )
+                                })}
 
                             </> : <></>
                     }

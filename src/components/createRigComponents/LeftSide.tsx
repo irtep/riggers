@@ -2,12 +2,12 @@ import { Button, Checkbox, Container, FormControl, Grid, InputLabel, MenuItem, P
 import React, { useContext } from 'react';
 import { Chassis, chassises } from '../../data/chassises';
 import { Weapon, weapons } from '../../data/weapons';
-import { Modification, SpecialEffect, rigModifications, weaponModifications } from '../../data/modifications';
+import { Modification, rigModifications, weaponModifications } from '../../data/modifications';
 import { Ammunition, GunnerSpecial, ammunitions, gunnerSpecials } from '../../data/gunnerSpecials';
 import { familiarModifications, familiarWeapons } from '../../data/familiar';
 import { Mine, mines } from '../../data/mines';
 import { ConcealedWeapons, DriverSpecial, concealedWeapons, driverSpecials } from '../../data/driverSpecials';
-import { MobileDetails, RigContext, RigObject } from '../../context/RigContext';
+import { MobileDetails, RigContext } from '../../context/RigContext';
 import { Visibility } from '@mui/icons-material';
 
 const LeftSide: React.FC = (): React.ReactElement => {
@@ -33,19 +33,9 @@ const LeftSide: React.FC = (): React.ReactElement => {
         showConcealedWeapons, setShowConcealedWeapons,
         setHovered,
         stripParentheses,
-        setMobileDetails
+        setMobileDetails,
+        updateRig
     } = useContext(RigContext);
-
-    interface Prices {
-        slots: number;
-    }
-
-    interface Stats {
-        speed: number;
-        armour: number;
-        handling: number;
-        resistanceFields: number;
-    }
 
     const handleDetails = (name: string, type: string): void => {
 
@@ -92,277 +82,142 @@ const LeftSide: React.FC = (): React.ReactElement => {
         setMobileDetails(fullDetails);
     }
 
-    const payPrice = (values: Prices, familiar: boolean): void => {
-
-        if (familiar) {
-            const newSlots: number = (rigObject.familiarStats.emptySlots as number) - values.slots;
-
-            setRigObject((prevRigObject: any) => ({
-                ...prevRigObject,
-                familiarStats: {
-                    ...prevRigObject.familiarStats,
-                    emptySlots: newSlots
-                }
-            }));
-        } else {
-            const newSlots: number = (rigObject.emptySlots as number) - values.slots;
-
-            setRigObject((prevRigObject: any) => ({
-                ...prevRigObject,
-                emptySlots: newSlots,
-            }));
-        }
-
-    };
-
-    const addStats = (values: Stats, familiar: boolean, negative: boolean): void => {
-
-        if (familiar) {
-            let newSpeed: number = (rigObject.familiarStats.speed as number) + (negative ? -values.speed : values.speed);
-            let newArmour: number = (rigObject.familiarStats.armour as number) + (negative ? -values.armour : values.armour);
-
-            setRigObject((prevRigObject: any) => ({
-                ...prevRigObject,
-                familiarStats: {
-                    ...prevRigObject.familiarStats,
-                    speed: newSpeed,
-                    armour: newArmour
-                }
-            }));
-        } else {
-            let newSpeed: number = (rigObject.speed as number) + (negative ? -values.speed : values.speed);
-            let newArmour: number = (rigObject.armour as number) + (negative ? -values.armour : values.armour);
-            let newHandling: number = (rigObject.handlingMods as number) + (negative ? -values.handling : values.handling);
-            let newResistanceFields: number = (rigObject.resistanceFields as number) + (negative ? -values.resistanceFields : values.resistanceFields);
-
-            setRigObject((prevRigObject: any) => ({
-                ...prevRigObject,
-                speed: newSpeed,
-                armour: newArmour,
-                handlingMods: newHandling, // useEffect at Main.tsx handles the calculation
-                resistanceFields: newResistanceFields
-            }));
-        }
-    };
-
-    const handleWeaponChange = (event: React.ChangeEvent<HTMLInputElement>, weapon: Weapon, dublicates: number) => {
+    const handleWeaponChange = (weapon: Weapon, add: boolean) => {
+        let prevRigObject = { ...rigObject };
         let weaponName = weapon.name;
-        const isChecked = event.target.checked;
-        let statsToAdd = {
-            speed: -weapon.costSpeed,
-            armour: 0,
-            handling: 0,
-            resistanceFields: 0
-        }
 
-        if (dublicates !== 0) {
-            weaponName = `${weapon.name}(${dublicates})`;
-        }
-
-        if (isChecked) {
-            if (!rigObject.selectedWeapons.includes(weaponName)) {
-
-                payPrice({ slots: weapon.costMod }, false);
-
-                addStats(statsToAdd, false, false);
-
-                setRigObject((prevRigObject: RigObject) => ({
-                    ...prevRigObject,
-                    selectedWeapons: [...prevRigObject.selectedWeapons, weaponName]
-                }));
-            }
-        } else {
-
-            payPrice({ slots: -weapon.costMod }, false);
-
-            addStats(statsToAdd, false, true);
-
-            setRigObject((prevRigObject: RigObject) => ({
+        if (add) {
+            prevRigObject = {
                 ...prevRigObject,
-                selectedWeapons: prevRigObject.selectedWeapons.filter((name: string) => name !== weaponName)
-            }));
+                selectedWeapons: [...prevRigObject.selectedWeapons, weaponName]
+            };
+        } else {
+            const weaponIndex = prevRigObject.selectedWeapons.indexOf(weaponName);
+            if (weaponIndex !== -1) {
+                prevRigObject = {
+                    ...prevRigObject,
+                    selectedWeapons: [
+                        ...prevRigObject.selectedWeapons.slice(0, weaponIndex),
+                        ...prevRigObject.selectedWeapons.slice(weaponIndex + 1)
+                    ]
+                };
+            }
         }
 
+        setRigObject(updateRig(prevRigObject));
     };
 
-    const handleMineChange = (event: React.ChangeEvent<HTMLInputElement>, mine: Mine, dublicates: number) => {
+    const handleMineChange = (mine: Mine, add: boolean) => {
+        let prevRigObject = { ...rigObject };
         let mineName = mine.name;
-        const isChecked = event.target.checked;
-        let statsToAdd = {
-            speed: -mine.costSpeed,
-            armour: 0,
-            handling: 0,
-            resistanceFields: 0
-        }
 
-        if (isChecked) {
-            if (!rigObject.mines.includes(mineName)) {
-
-                if (rigObject.mines.length > 0) {
-                    addStats(statsToAdd, false, false);
-                }
-
-                setRigObject((prevRigObject: RigObject) => ({
-                    ...prevRigObject,
-                    mines: [...prevRigObject.mines, mineName]
-                }));
-            }
+        if (add) {
+            prevRigObject = {
+                ...prevRigObject,
+                mines: [...prevRigObject.mines, mineName]
+            };
         } else {
-
-            if (rigObject.mines.length > 1) {
-                addStats(statsToAdd, false, true);
-            }
-
-            setRigObject((prevRigObject: RigObject) => ({
+            prevRigObject = {
                 ...prevRigObject,
                 mines: prevRigObject.mines.filter((name: string) => name !== mineName)
-            }));
+            };
         }
-
+        setRigObject(updateRig(prevRigObject));
     };
 
-    const handleFamiliarChange = (event: React.ChangeEvent<HTMLInputElement>, eq: any, dublicates: number) => {
+    const handleDriverSpecial = (special: string, add: boolean) => {
+        let prevRigObject = { ...rigObject };
+
+        if (add) {
+            prevRigObject = {
+                ...prevRigObject,
+                driverSpecial: special
+            };
+        }
+
+        setRigObject(updateRig(prevRigObject));
+    };
+
+    const handleRightToolChange = (tool: any, add: boolean) => {
+        let prevRigObject = { ...rigObject };
+        let selectedTool = tool.name;
+
+        if (add) {
+            prevRigObject = {
+                ...prevRigObject,
+                rightTool: [...prevRigObject.rightTool, selectedTool]
+            };
+        } else {
+            const rtIndex = prevRigObject.rightTool.indexOf(selectedTool);
+            if (rtIndex !== -1) {
+                prevRigObject = {
+                    ...prevRigObject,
+                    rightTool: [
+                        ...prevRigObject.rightTool.slice(0, rtIndex),
+                        ...prevRigObject.rightTool.slice(rtIndex + 1)
+                    ]
+                };
+            }
+        }
+        setRigObject(updateRig(prevRigObject));
+    };
+
+    const handleFamiliarChange = (eq: any, add: boolean) => {
+        let prevRigObject = { ...rigObject };
         let eqName = eq.name;
-        const isChecked = event.target.checked;
-        let statsToAdd = {
-            speed: 0,
-            armour: 0,
-            handling: 0,
-            resistanceFields: 0
-        }
 
-        if (eq.specialEffect) {
-            eq.specialEffect.forEach((spessu: SpecialEffect) => {
-                switch (spessu.prop) {
-                    case 'speed':
-                        statsToAdd.speed = spessu.value;
-                        break;
-                    case 'armour':
-                        statsToAdd.armour = spessu.value;
-                        break;
-                    case 'handling':
-                        statsToAdd.handling = spessu.value;
-                        break;
-                    case 'resistanceFields':
-                        statsToAdd.resistanceFields = spessu.value;
-                        break;
-                    default: console.log('spessu.prop not found: ', spessu.prop);
-                }
-            });
-        }
-
-        if (eq.costSpeed > 0) {
-            statsToAdd.speed = -eq.costSpeed;
-        }
-
-        if (dublicates !== 0) {
-            eqName = `${eq.name}(${dublicates})`;
-        }
-
-        if (isChecked) {
-
-            if (!rigObject.familiar.includes(eqName)) {
-
-                payPrice({ slots: eq.costMod }, true);
-
-                addStats(statsToAdd, true, false);
-
-                setRigObject((prevRigObject: RigObject) => ({
-                    ...prevRigObject,
-                    familiar: [...prevRigObject.familiar, eqName]
-                }));
-            }
-        } else {
-
-            payPrice({ slots: -eq.costMod }, true);
-
-            addStats(statsToAdd, true, true);
-
-            setRigObject((prevRigObject: RigObject) => ({
+        if (add) {
+            prevRigObject = {
                 ...prevRigObject,
-                familiar: prevRigObject.familiar.filter((name: string) => name !== eqName)
-            }));
+                familiar: [...prevRigObject.familiar, eqName]
+            };
+        } else {
+            const famEqIndex = prevRigObject.familiar.indexOf(eqName);
+            if (famEqIndex !== -1) {
+                prevRigObject = {
+                    ...prevRigObject,
+                    familiar: [
+                        ...prevRigObject.familiar.slice(0, famEqIndex),
+                        ...prevRigObject.familiar.slice(famEqIndex + 1)
+                    ]
+                };
+            }
         }
-
+        setRigObject(updateRig(prevRigObject));
     };
 
-    const handleModChange = (event: React.ChangeEvent<HTMLInputElement>, mod: Modification, dublicates: number, forWho?: string) => {
+    const handleChassisChange = (newValue: React.ChangeEvent<HTMLInputElement>) => {
+        let chassisAdded = {
+            ...rigObject,
+            chassis: newValue
+        };
+
+        setRigObject(updateRig(chassisAdded));
+    };
+
+    const handleModChange = (mod: Modification, add: boolean) => {
+        let prevRigObject = { ...rigObject };
         let modName = mod.name;
-        const isChecked = event.target.checked;
-        let statsToAdd = {
-            speed: 0,
-            armour: 0,
-            handling: 0,
-            resistanceFields: 0
-        }
 
-        if (mod.specialEffect) {
-            mod.specialEffect.forEach((spessu: SpecialEffect) => {
-                switch (spessu.prop) {
-                    case 'speed':
-                        statsToAdd.speed = spessu.value;
-                        break;
-                    case 'armour':
-                        statsToAdd.armour = spessu.value;
-                        break;
-                    case 'handling':
-                        statsToAdd.handling = spessu.value;
-                        break;
-                    case 'resistanceFields':
-                        statsToAdd.resistanceFields = spessu.value;
-                        break;
-                    default: console.log('spessu.prop not found: ', spessu.prop);
-                }
-            });
-        }
-
-        if (mod.costSpeed > 0) {
-            statsToAdd.speed = -mod.costSpeed;
-        }
-
-        if (dublicates !== 0) {
-            modName = `${mod.name}(${dublicates})`;
-        }
-
-        if (forWho) {
-            modName = `${mod.name}(${forWho})`;
-        }
-
-        if (isChecked) {
-            if (!rigObject.mods.includes(modName)) {
-
-                if (rigObject.chassis === 'Swamp stomper' &&
-                    modName === 'Computer Assisted Steering'
-                ) {
-                    payPrice({ slots: 0 }, false);
-                } else {
-                    payPrice({ slots: mod.costMod }, false);
-                }
-                
-                addStats(statsToAdd, false, false);
-
-                setRigObject((prevRigObject: RigObject) => ({
-                    ...prevRigObject,
-                    mods: [...prevRigObject.mods, modName]
-                }));
-            }
-        } else {
-            if (rigObject.chassis === 'Swamp stomper' &&
-                modName === 'Computer Assisted Steering'
-            ) {
-                payPrice({ slots: 0 }, false);
-            } else {
-                payPrice({ slots: -mod.costMod }, false);
-            }
-            
-            addStats(statsToAdd, false, true);
-
-            setRigObject((prevRigObject: RigObject) => ({
+        if (add) {
+            prevRigObject = {
                 ...prevRigObject,
-                mods: prevRigObject.mods.filter((name: string) => name !== modName)
-            }));
+                mods: [...prevRigObject.mods, modName]
+            };
+        } else {
+            const modIndex = prevRigObject.mods.indexOf(modName);
+            if (modIndex !== -1) {
+                prevRigObject = {
+                    ...prevRigObject,
+                    mods: [
+                        ...prevRigObject.mods.slice(0, modIndex),
+                        ...prevRigObject.mods.slice(modIndex + 1)
+                    ]
+                };
+            }
         }
 
+        setRigObject(updateRig(prevRigObject));
     };
 
     return (
@@ -374,6 +229,11 @@ const LeftSide: React.FC = (): React.ReactElement => {
                 color: "rgb(150,150,150)"
             }}>
                 <Button
+                    sx={{
+                        border: '1px solid orange',
+                        color: 'orange',
+                        margin: 0.5
+                    }}
                     onClick={
                         () => {
                             setMode('main');
@@ -383,6 +243,10 @@ const LeftSide: React.FC = (): React.ReactElement => {
                     Back to main page
                 </Button>
                 <Button
+                    sx={{
+                        border: '1px solid orange',
+                        color: 'orange'
+                    }}
                     onClick={() => {
                         try {
                             if (mode === 'edit') {
@@ -446,12 +310,8 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         labelId="dropdown-label"
                         id="dropdown"
                         value={rigObject.chassis}
-                        label="What game?"
                         onChange={(e) => {
-                            setRigObject({
-                                ...rigObject,
-                                chassis: e.target.value
-                            });
+                            handleChassisChange(e.target.value);
                         }}
                     >
                         {chassises.map((value: Chassis, index: number) => (
@@ -473,7 +333,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         }}
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
-                    <br/>
+                    <br />
                     Show modifications:
                     <Switch
                         checked={showMods}
@@ -603,16 +463,35 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             {w.name}
 
-                                            <Checkbox
-                                                checked={rigObject.selectedWeapons.includes(w.name)}
-                                                onChange={(event) => handleWeaponChange(event, w, 0)}
-                                                inputProps={{ 'aria-label': 'controlled' }}
-                                            />
-                                            <Checkbox
-                                                checked={rigObject.selectedWeapons.includes(`${w.name}(2)`)}
-                                                onChange={(event) => handleWeaponChange(event, w, 2)}
-                                                inputProps={{ 'aria-label': 'controlled' }}
-                                            />
+                                            <Button
+                                                sx={{
+                                                    background: 'darkGreen',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleWeaponChange(w, true);
+                                                }}
+                                            >
+                                                +
+                                            </Button>
+
+                                            <Button
+                                                sx={{
+                                                    background: 'darkRed',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleWeaponChange(w, false);
+                                                }}
+                                            >
+                                                -
+                                            </Button>
 
                                             {
                                                 (device === 'mobile') ?
@@ -633,7 +512,7 @@ const LeftSide: React.FC = (): React.ReactElement => {
                     showMods ?
                         <>
                             {
-                                rigModifications.map((m: Modification, i: number) => { 
+                                rigModifications.map((m: Modification, i: number) => {
                                     return (
                                         <Container
                                             key={`mx ${i}`}
@@ -647,45 +526,42 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             {m.name}
 
-                                            <Checkbox
-                                                checked={rigObject.mods.includes(m.name)}
-                                                onChange={(event) => handleModChange(event, m, 0)}
-                                                inputProps={{ 'aria-label': 'controlled' }}
-                                            />
+                                            <Button
+                                                sx={{
+                                                    background: 'darkGreen',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleModChange(m, true);
+                                                }}
+                                            >
+                                                +
+                                            </Button>
+
+                                            <Button
+                                                sx={{
+                                                    background: 'darkRed',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleModChange(m, false);
+                                                }}
+                                            >
+                                                -
+                                            </Button>
                                             {
-                                                (!m.onePerRig) ?
-                                                    <>
-                                                        <Checkbox
-                                                            checked={rigObject.mods.includes(`${m.name}(2)`)}
-                                                            onChange={(event) => handleModChange(event, m, 2)}
-                                                            inputProps={{ 'aria-label': 'controlled' }}
-                                                        />
-                                                        <Checkbox
-                                                            checked={rigObject.mods.includes(`${m.name}(3)`)}
-                                                            onChange={(event) => handleModChange(event, m, 3)}
-                                                            inputProps={{ 'aria-label': 'controlled' }}
-                                                        />
-                                                        {
-                                                            (m.name === 'Armour Plating') ?
-                                                                <>
-                                                                    <Checkbox
-                                                                        checked={rigObject.mods.includes(`${m.name}(4)`)}
-                                                                        onChange={(event) => handleModChange(event, m, 4)}
-                                                                        inputProps={{ 'aria-label': 'controlled' }}
-                                                                    />
-                                                                </>
-                                                                : <></>
-                                                        }
-                                                        {
-                                                            (device === 'mobile') ?
-                                                                <Visibility
-                                                                    onClick={() => {
-                                                                        handleDetails(m.name, 'modification');
-                                                                    }}
-                                                                /> :
-                                                                <></>
-                                                        }
-                                                    </> :
+                                                (device === 'mobile') ?
+                                                    <Visibility
+                                                        onClick={() => {
+                                                            handleDetails(m.name, 'modification');
+                                                        }}
+                                                    /> :
                                                     <></>
                                             }
 
@@ -716,34 +592,42 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                             }}
                                         >
 
-                                            {wm.name}
+                                            <strong>{wm.name}</strong><br />
 
                                             {
                                                 rigObject.selectedWeapons.map((sw: string, ixx: number) => {
                                                     return (
-                                                        <>
-                                                            <br />for {sw} :
-                                                            <Checkbox
-                                                                checked={rigObject.mods.includes(`${wm.name}(${sw})`)}
-                                                                onChange={(event) => handleModChange(event, wm, 0, sw)}
-                                                                inputProps={{ 'aria-label': 'controlled' }}
-                                                            />
-                                                            {
-                                                                (!wm.onePerWeapon) ?
-                                                                    <>
-                                                                        <Checkbox
-                                                                            checked={rigObject.mods.includes(`${wm.name}(2)(${sw})`)}
-                                                                            onChange={(event) => handleModChange(event, wm, 2, sw)}
-                                                                            inputProps={{ 'aria-label': 'controlled' }}
-                                                                        />
-                                                                        <Checkbox
-                                                                            checked={rigObject.mods.includes(`${wm.name}(3)(${sw})`)}
-                                                                            onChange={(event) => handleModChange(event, wm, 3, sw)}
-                                                                            inputProps={{ 'aria-label': 'controlled' }}
-                                                                        />
-                                                                    </> :
-                                                                    <></>
-                                                            }
+                                                        <span key={` swM ${ixx}`}>
+                                                            {` for ${sw}`}
+                                                            <Button
+                                                                sx={{
+                                                                    background: 'darkGreen',
+                                                                    color: 'white',
+                                                                    margin: 0.5,
+                                                                    width: 20,
+                                                                    height: 20
+                                                                }}
+                                                                onClick={() => {
+                                                                    handleModChange(wm, true);
+                                                                }}
+                                                            >
+                                                                +
+                                                            </Button>
+
+                                                            <Button
+                                                                sx={{
+                                                                    background: 'darkRed',
+                                                                    color: 'white',
+                                                                    margin: 0.5,
+                                                                    width: 20,
+                                                                    height: 20
+                                                                }}
+                                                                onClick={() => {
+                                                                    handleModChange(wm, false);
+                                                                }}
+                                                            >
+                                                                -
+                                                            </Button>
                                                             {
                                                                 (device === 'mobile') ?
                                                                     <Visibility
@@ -753,7 +637,8 @@ const LeftSide: React.FC = (): React.ReactElement => {
                                                                     /> :
                                                                     <></>
                                                             }
-                                                        </>
+                                                            <br />
+                                                        </span>
                                                     )
                                                 })
                                             }
@@ -878,9 +763,9 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             <Checkbox
                                                 checked={rigObject.driverSpecial.includes(driverSpecial.name)}
-                                                onChange={() => setRigObject({
-                                                    ...rigObject, driverSpecial: driverSpecial.name
-                                                })}
+                                                onChange={() => {
+                                                    handleDriverSpecial(driverSpecial.name, true);
+                                                }}
                                                 inputProps={{ 'aria-label': 'controlled' }}
                                             />
                                             {
@@ -921,11 +806,35 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             {mine.name}
 
-                                            <Checkbox
-                                                checked={rigObject.mines.includes(mine.name)}
-                                                onChange={(event) => handleMineChange(event, mine, 0)}
-                                                inputProps={{ 'aria-label': 'controlled' }}
-                                            />
+                                            <Button
+                                                sx={{
+                                                    background: 'darkGreen',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleMineChange(mine, true);
+                                                }}
+                                            >
+                                                +
+                                            </Button>
+
+                                            <Button
+                                                sx={{
+                                                    background: 'darkRed',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleMineChange(mine, false);
+                                                }}
+                                            >
+                                                -
+                                            </Button>
                                             {
                                                 (device === 'mobile') ?
                                                     <Visibility
@@ -964,13 +873,35 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             {ammu.name}
 
-                                            <Checkbox
-                                                checked={rigObject.rightTool.includes(ammu.name)}
-                                                onChange={() => setRigObject({
-                                                    ...rigObject, rightTool: ammu.name
-                                                })}
-                                                inputProps={{ 'aria-label': 'controlled' }}
-                                            />
+                                            <Button
+                                                sx={{
+                                                    background: 'darkGreen',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleRightToolChange(ammu, true);
+                                                }}
+                                            >
+                                                +
+                                            </Button>
+
+                                            <Button
+                                                sx={{
+                                                    background: 'darkRed',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleRightToolChange(ammu, false);
+                                                }}
+                                            >
+                                                -
+                                            </Button>
                                         </Container>
                                     )
                                 })
@@ -1000,17 +931,35 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             {faWe.name}
 
-                                            <Checkbox
-                                                checked={rigObject.familiar.includes(faWe.name)}
-                                                onChange={(event) => handleFamiliarChange(event, faWe, 0)}
-                                                inputProps={{ 'aria-label': 'controlled' }}
-                                            />
+                                            <Button
+                                                sx={{
+                                                    background: 'darkGreen',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleFamiliarChange(faWe, true);
+                                                }}
+                                            >
+                                                +
+                                            </Button>
 
-                                            <Checkbox
-                                                checked={rigObject.familiar.includes(`${faWe.name}(2)`)}
-                                                onChange={(event) => handleFamiliarChange(event, faWe, 2)}
-                                                inputProps={{ 'aria-label': 'controlled' }}
-                                            />
+                                            <Button
+                                                sx={{
+                                                    background: 'darkRed',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleFamiliarChange(faWe, false);
+                                                }}
+                                            >
+                                                -
+                                            </Button>
                                             {
                                                 (device === 'mobile') ?
                                                     <Visibility
@@ -1049,21 +998,35 @@ const LeftSide: React.FC = (): React.ReactElement => {
 
                                             {faMo.name}
 
-                                            <Checkbox
-                                                checked={rigObject.familiar.includes(faMo.name)}
-                                                onChange={(event) => handleFamiliarChange(event, faMo, 0)}
-                                                inputProps={{ 'aria-label': 'controlled' }}
-                                            />
-                                            {
-                                                (!faMo.onePerRig) ?
-                                                    <>
-                                                        <Checkbox
-                                                            checked={rigObject.familiar.includes(`${faMo.name}(2)`)}
-                                                            onChange={(event) => handleFamiliarChange(event, faMo, 2)}
-                                                            inputProps={{ 'aria-label': 'controlled' }}
-                                                        />
-                                                    </> : <></>
-                                            }
+                                            <Button
+                                                sx={{
+                                                    background: 'darkGreen',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleFamiliarChange(faMo, true);
+                                                }}
+                                            >
+                                                +
+                                            </Button>
+
+                                            <Button
+                                                sx={{
+                                                    background: 'darkRed',
+                                                    color: 'white',
+                                                    margin: 0.5,
+                                                    width: 20,
+                                                    height: 20
+                                                }}
+                                                onClick={() => {
+                                                    handleFamiliarChange(faMo, false);
+                                                }}
+                                            >
+                                                -
+                                            </Button>
                                             {
                                                 (device === 'mobile') ?
                                                     <Visibility

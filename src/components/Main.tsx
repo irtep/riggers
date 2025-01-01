@@ -18,47 +18,11 @@ const Main: React.FC = (): React.ReactElement => {
         deleteRig
     } = useContext(RigContext);
 
-    // handle special mods like chassis specials, turbo chargers, drifters etc.
     useEffect(() => {
-        let roundedSpeed;
-        let extras: number = 0; // handling modificators
-        let speedOfRig: number = rigObject.speed;
-        let stomperSpecial: boolean = false;
-
-        (rigObject.chassis === 'Desert spear' &&
-         (!rigObject.mods.includes('Gunner'))
-        ) ?
-        speedOfRig = rigObject.speed + 10 : speedOfRig = rigObject.speed;
-
-        (rigObject.chassis === 'Swamp Stomper') ?
-        stomperSpecial = true : stomperSpecial = false;
-
-        (rigObject.mods.includes('Turbo Charger')) ?
-        roundedSpeed = Math.ceil(speedOfRig / 5) * 5 : roundedSpeed = Math.floor(speedOfRig / 5) * 5;
-
-        (rigObject.driverSpecial.includes('Drifter')) ?
-        extras = 1 : extras = 0;
-
-        setRigObject({
-            ...rigObject,
-            handling: Math.floor(speedOfRig / 5) + rigObject.handlingMods + extras,
-            realSpeed: roundedSpeed
-        });
-
-    }, [rigObject.chassis,
-        rigObject.speed,
-        rigObject.realSpeed,
-        rigObject.handlingMods,
-        rigObject.driverSpecial,
-        rigObject.mods]);
-
-    useEffect(() => {
-
         fetchSavedRigs();
-
     }, []);
 
-    useEffect( () => {
+    useEffect(() => {
         console.log('rigObject: ', rigObject);
     });
 
@@ -70,10 +34,15 @@ const Main: React.FC = (): React.ReactElement => {
             {
                 (mode === 'main') ?
                     <>
-                        <Button onClick={() => {
-                            setRigObject(initialObject);
-                            setMode('create');
-                        }}>new rig</Button>
+                        <Button
+                            sx={{
+                                border: '1px solid orange',
+                                color: 'orange'
+                            }}
+                            onClick={() => {
+                                setRigObject(initialObject);
+                                setMode('create');
+                            }}>new rig</Button>
 
                         {
                             (savedRigs.length > 0) ?
@@ -126,28 +95,28 @@ const Main: React.FC = (): React.ReactElement => {
             {
                 (mode === 'create' || mode === 'edit') ?
                     <>
-                        <Create/>
+                        <Create />
                     </> :
                     <></>
             }
             {
                 (mode === 'testRigs') ?
                     <>
-                        <TestRigs/>
+                        <TestRigs />
                     </> :
                     <></>
             }
             {
                 (mode === 'rules') ?
                     <>
-                        <RuleIndex/>
+                        <RuleIndex />
                     </> :
                     <></>
             }
             {
                 (mode === 'lore') ?
                     <>
-                        <Lore/>
+                        <Lore />
                     </> :
                     <></>
             }

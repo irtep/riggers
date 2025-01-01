@@ -158,10 +158,10 @@ export const RTApart2: BookType = {
             subTitle: ``,
             locationStr: ``,
             strings: `
-            The man and his cat entered public house named The Charred Pit. It was a charred axle themed pub, where most of the humans of the town liked to watch events.
+            The man and his cat entered public house named The Pit. It was a charred axle themed pub, where most of the humans of the town liked to watch events.
             There was around fifteen persons watching the big screen, where was a charred axle event from Fornax Theta being broadcasted. The man took a seat on a table, Lydia sat on the shoulder of Ollie and owner, fierce young human female named Nena appeared. "Good to see you Lydia, and you too Ollie. I take that Lydia takes some dead rodent and you a big ale?".
             Ollie did not pay here for his drinks. There was a time when some assholes of some or whatever team fans were watching the event here. One of those guys lost his wallet and whole bunch of around 20 guys started to break places.
-            Ollie and his now ex-wife Sally joined Nena in defence of the pub, against around 20 furious idiots. They Fought bravely, but took some hits. Nena never forgot that, so Ollie drinked and ate free here.
+            Ollie and his now ex-wife Sally, joined Nena in defence of the pub, against around 20 furious idiots. They Fought bravely, but took some hits. Nena never forgot that, so Ollie drinked and ate free here.
             `
         },
         {
