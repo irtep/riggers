@@ -457,29 +457,6 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             realSpeed: roundedSpeed
         };
 
-        /*
-        let roundedSpeed;
-        let extras: number = 0; // handling modificators
-        let speedOfRig: number = rigNow.speed;
-        let modSlots: number = rigNow.emptySlots;
-
-        (rigNow.mods.includes('Turbo Charger')) ?
-            roundedSpeed = Math.ceil(speedOfRig / 5) * 5 : roundedSpeed = Math.floor(speedOfRig / 5) * 5;
-
-        (rigNow.driverSpecial.includes('Drifter')) ?
-            extras = 1 : extras = 0;
-
-        (rigNow.driverSpecial.includes('Turbo Charger')) ?
-            extras = extras-2 : extras = extras;
-
-        rigNow = {
-            ...rigNow,
-            handling: Math.floor(speedOfRig / 5) + extras,
-            realSpeed: roundedSpeed,
-            emptySlots: modSlots
-        };
-        */
-
         return rigNow;
     };
 
