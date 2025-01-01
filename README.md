@@ -1,6 +1,8 @@
 # riggers
 
-Rigg planning app for Charred Axle game.
+Rigg planning app for Charred Axle game. Design, build and test your rigs. Also fan fiction section with some stuff to read.
+
+Online at: https://irtep.github.io/riggarage/
 
 Versions:
 0.0.1 initial version
@@ -34,3 +36,4 @@ Versions:
 0.4.10 typing errors fixed
 0.5.0 extended chassis rules + small refactor
 0.6.2 refactored create rigs
+0.7.1 automatic mobile support and fixed the handling bug
