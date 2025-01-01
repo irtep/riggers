@@ -155,8 +155,8 @@ export interface TurnOrder {
 export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement => {
     const isMobile: boolean = userIsMobile();
     const [device, setDevice] = useState<'mobile' | 'laptop'>((isMobile
-                                                                ? 'mobile'
-                                                                : 'laptop'));
+        ? 'mobile'
+        : 'laptop'));
     const [rigObject, setRigObject] = useState<RigObject>(initialObject);
     const [mode, setMode] = useState<
         'main' |
@@ -428,6 +428,37 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
         // specials like, turbo chargers, drifters etc.
         let roundedSpeed;
+        let speedOfRig: number = rigNow.speed;
+
+        // Round speed based on Turbo Charger presence
+        if (rigNow.mods.includes('Turbo Charger')) {
+            roundedSpeed = Math.ceil(speedOfRig / 5) * 5;
+        } else {
+            roundedSpeed = Math.floor(speedOfRig / 5) * 5;
+        }
+
+        // Calculate base handling from realSpeed
+        let baseHandling = Math.floor(roundedSpeed / 5);
+
+        // Apply Drifter modifier (+1 handling)
+        if (rigNow.driverSpecial.includes('Drifter')) {
+            baseHandling += 1;
+        }
+
+        // Apply Turbo Charger modifier (-2 handling)
+        if (rigNow.mods.includes('Turbo Charger')) {
+            baseHandling -= 2;
+        }
+
+        // Update rigNow with the final values
+        rigNow = {
+            ...rigNow,
+            handling: baseHandling,
+            realSpeed: roundedSpeed
+        };
+
+        /*
+        let roundedSpeed;
         let extras: number = 0; // handling modificators
         let speedOfRig: number = rigNow.speed;
         let modSlots: number = rigNow.emptySlots;
@@ -447,6 +478,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             realSpeed: roundedSpeed,
             emptySlots: modSlots
         };
+        */
 
         return rigNow;
     };
