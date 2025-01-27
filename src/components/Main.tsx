@@ -5,6 +5,7 @@ import { RigContext, RigObject } from '../context/RigContext';
 import TestRigs from './rigTestComponents/TestRigs';
 import Lore from './Lore';
 import RuleIndex from './RuleIndex';
+import FamousRigs from './FamousRigs';
 
 const Main: React.FC = (): React.ReactElement => {
 
@@ -117,6 +118,13 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'lore') ?
                     <>
                         <Lore />
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'famousRigs') ?
+                    <>
+                        <FamousRigs />
                     </> :
                     <></>
             }
