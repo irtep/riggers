@@ -37,3 +37,4 @@ Versions:
 0.5.0 extended chassis rules + small refactor
 0.6.2 refactored create rigs
 0.7.1 automatic mobile support and fixed the handling bug
+0.8.0 famous rigs section
