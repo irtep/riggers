@@ -25,12 +25,12 @@ const listOfFamousRigs: FamousRig[] = [
     {
         name: 'Starblade',
         image: 'starblade',
-        desc: `Former champion Starblade is also reigning champion of Ropecon tournament. Magnetised weapon racks make possible, that it is impossible to guess what this famous rig brings to fight. It's japanese text read: "truth", "katana" and "champion"... it has earned all those.`
+        desc: `A rugged truck, that is a former champion, the Starblade is also reigning champion of Ropecon tournament. Magnetised weapon racks make possible, that it is impossible to guess what this famous rig brings to fight. It's japanese text read: "truth", "katana" and "champion"... it has earned all those.`
     },
     {
         name: 'Arty and Morty',
         image: 'arty',
-        desc: `Arty has the most hard hitting gun ever seen the rearguard with every boost available. If you don't know any special tricks to counter Morty's protective care, the Arty will pulverize your rig in very short time. And as all Team Warheads rights, these is a beautiful rig!`
+        desc: `Arty has the most hard hitting gun ever seen the rearguard with every boost available. If you don't know any special tricks to counter Morty's protective care, the Arty will pulverize your rig in very short time. And as all Team Warheads rigs, this is a very beautiful rig!`
     }
 ];
 

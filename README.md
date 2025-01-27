@@ -38,3 +38,4 @@ Versions:
 0.6.2 refactored create rigs
 0.7.1 automatic mobile support and fixed the handling bug
 0.8.0 famous rigs section
+0.8.1 typing errors fixed
