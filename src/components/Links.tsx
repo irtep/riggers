@@ -26,14 +26,28 @@ const Links: React.FC = (): React.ReactElement => {
                     background: 'rgb(40,40,40)',
                     margin: 0.5
                 }}
-            >(Stories)</Button>
+            >(Stories)
+            </Button>
+
             <Button
                 sx={{
-                    color: 'darkRed',
-                    background: 'rgb(40,40,40)'
+                    color: 'red',
+                    background: 'rgb(40,40,40)',
+                    margin: 0.5
                 }}
                 onClick={goOfficialSite}
-            >(Charred Axle official site)</Button>
+            >(Official site)
+            </Button>
+
+            <Button
+                sx={{
+                    color: 'gold',
+                    background: 'rgb(40,40,40)',
+                    margin: 0.5
+                }}
+                onClick={() => { setMode('famousRigs'); }}
+            >(Famous rigs)
+            </Button>
         </>
     );
 }
