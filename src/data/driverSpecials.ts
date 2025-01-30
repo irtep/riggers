@@ -30,9 +30,7 @@ export const driverSpecials: DriverSpecial[] = [
         do not provide extra Speed and cannot be used again for
         the rest of the game. Calculate any Damage before you
         move. However, for every other result you gain an
-        additional +5 Speed for the duration of this Action. A Rig is
-        unable to turn or Reposition during the same Action in
-        which it gains any additional Speed from this Speciality.
+        additional +5 Speed for the duration of this Action.
         If a Rig fitted with Boost Juice is Charred, all Rigs and
         Creatures within [5cm] will automatically receive an
         amount of Damage equal to the number of remaining Boost
@@ -41,12 +39,7 @@ export const driverSpecials: DriverSpecial[] = [
     },
     {
         name: 'Circle work',
-        desc: `Once per
-        Round , during your own Action, you may reduce your
-        Momentum by 1 to Obscure your Rig from all non-Combat
-        Weapon Attacks until the start of your next Action. If you
-        move your Rig after activating this Speciality, this eﬀect
-        ends. When activating this Speciality, you may also Turn your Rig without losing any additional Momentum. `,
+        desc: `Once per Round, during your own Action, you may reduce your Momentum by 1 to turn your Rig and count it as being Obscured from all non-Combat Weapon Attacks until the start of your next Action. If you move your Rig after activating this Speciality, this effect ends.`,
         whatIsThis: 'driverSpecial'
     },
     {
@@ -62,11 +55,10 @@ export const driverSpecials: DriverSpecial[] = [
     {
         name: 'Concealed weapon',
         desc: `A secret compartment in the Rig conceals an illegal,
-        non-Primer-reliant Weapon. Choose 1 Weapon from the
-        table at the bottom of this page. Once per Round, you may
-        Attack with the Weapon during any of your Actions. This
-        Speciality counts as using a Weapon. These weapons cannot
-        be modded in any way.`,
+        non-Primer-reliant Weapon. Choose 1 Weapon from the table at the bottom of this page. You may Attack with the Weapon during any of your Actions. This Speciality counts as using a Weapon. These weapons cannot be modified.
+        Weapons: Boom Stick; range 10, shell, impact power 4, point blank.
+         Bad Ugly: range 10, shell, ip: 1-6, Punk Buster.
+         Razor: range 10, shell, ip: 4, Sticky Trigger`,
         whatIsThis: 'driverSpecial'
     },
     {
@@ -86,7 +78,7 @@ export const driverSpecials: DriverSpecial[] = [
         Attempts made against an incoming Attack; also, apply this
         Specialty's eﬀect to a single re-rolled Evasion Attempt. The
         use of this Speciality must be declared immediately after your
-        Rig is declared the target of an Attack.`,
+        Rig is declared the target of an Attack. Apply this effect before and after any re-rolls have been made.`,
         whatIsThis: 'driverSpecial'
     },
     {

@@ -32,7 +32,7 @@ export const gunnerSpecials: GunnerSpecial[] = [
         Evasion Attempt results by -1; also, apply this Specialty's
         eﬀect to a single re-rolled Evasion Attempt. The use of this
         Speciality must be declared at the same time the target of the
-        Attack is declared.`,
+        Attack is declared. Apply this effect before and after any re-rolls have been made.`,
         whatIsThis: 'gunnerSpecial'
     },
     {
