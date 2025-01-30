@@ -66,5 +66,10 @@ Attempts.`
         rule: `A Weapon with this Speciality can reroll all of its Impact Power dice a single time if the first result
 fails to exceed the Armour value of the target.`
     },
+    {
+        title: `ROCKBURST`,
+        type: 'weapon speciality',
+        rule: `This Weapon can draw a line of sight and Attack through 1 Obstacle as if it wasn't in the Arena. If this Speciality is activated and it does not Attack through an Obstacle, it deals 1 additional point of Damage if it hits a target.`
+    },
 
 ];

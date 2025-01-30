@@ -39,3 +39,4 @@ Versions:
 0.7.1 automatic mobile support and fixed the handling bug
 0.8.0 famous rigs section
 0.8.1 typing errors fixed
+0.8.2 rule updates of jan 25
