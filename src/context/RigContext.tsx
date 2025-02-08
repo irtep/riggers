@@ -308,8 +308,9 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         if ( // walkers
             rigNow.chassis === 'Swamp stomper'
         ) {
-            rigNow.speed = 25;
+            rigNow.speed = 20;
             // add inbuilt computer assisted steering, and mod point, to pay for it
+            /* changed to 0.8.3, but i save the code, just in case
             const checkIfHasCAS = rigNow.mods.filter((mod: string) => mod === 'Computer Assisted Steering');
             if (checkIfHasCAS.length === 0) {
                 rigNow.mods.push('Computer Assisted Steering');
@@ -317,6 +318,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             } else {
                 rigNow.emptySlots = 7;
             }
+            */
         }
 
         // rig modifications

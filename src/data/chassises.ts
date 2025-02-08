@@ -44,7 +44,7 @@ export const chassises: Chassis[] = [
     },
     {
         name: 'Swamp stomper',
-        specials: '1 Computer Assisted Steering for free, -5 speed',
+        specials: 'Evade dices get +1, -10 speed',
         desc: 'They are used to scout waterlogged areas and Silt mines on Ainash, where wheeled Rigs cant access.',
         type: 'walker'
     }

@@ -40,3 +40,4 @@ Versions:
 0.8.0 famous rigs section
 0.8.1 typing errors fixed
 0.8.2 rule updates of jan 25
+0.8.3 updated new rules for swamp stomper
