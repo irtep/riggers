@@ -131,7 +131,7 @@ export const rigModifications: Modification[] = [
     },
     {
         name: 'Resistance Field',
-        effect: `A Rig may be equipped with a Resistance Field Modification that provides it with a forcefield. A Resistance Field has 1 Layer by default. Each Layer forces the attacking Player to reroll 1 of their Impact Power dice after a successful Impact Power roll, starting with the highest dice result(s) first`,
+        effect: `A Rig may be equipped with a Resistance Field Modification that provides it with a forcefield. A Resistance Field has 1 Layer by default. For each layer a Resistance Field has, reduce the Impact Power value (not result) of incoming Attacks by 1.`,
         costMod: 1,
         costSpeed: 0,
         specialEffect: [
