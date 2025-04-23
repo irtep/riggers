@@ -6,6 +6,7 @@ import TestRigs from './rigTestComponents/TestRigs';
 import Lore from './Lore';
 import RuleIndex from './RuleIndex';
 import FamousRigs from './FamousRigs';
+import BookEditor from './bookComponents/BookEditor';
 
 const Main: React.FC = (): React.ReactElement => {
 
@@ -118,6 +119,13 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'lore') ?
                     <>
                         <Lore />
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'bookEditor') ?
+                    <>
+                        <BookEditor />
                     </> :
                     <></>
             }

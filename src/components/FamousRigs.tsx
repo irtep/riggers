@@ -57,26 +57,32 @@ const FamousRigs: React.FC = (): React.ReactElement => {
                 }}
             >
                 <Button
-                    onClick={ () => {setMode('main');}}
+                    onClick={() => { setMode('main'); }}
                 >
                     Back to main page
                 </Button>
-                
+
                 <h3>Click rigs name to read about it.</h3>
 
                 {
-                    listOfFamousRigs.map( (rig: FamousRig, i: number) => {
-                        return(
-                            <Container 
+                    listOfFamousRigs.map((rig: FamousRig, i: number) => {
+                        return (
+                            <Box
                                 key={`${rig.name}${i}`}
-                                onClick={ () => {
-                                    console.log('clikde');
+                                component='div'
+                                onClick={() => {
                                     setReadAbout(rig.name);
                                 }}
-                                
-                                >
+                                sx={{
+                                    border: '1px solid white',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(255,255,255,0.1)'
+                                    },
+                                    p: 1, // padding for nicer spacing, optional
+                                }}
+                            >
                                 {rig.name}
-                            </Container>
+                            </Box>
                         )
                     })
                 }

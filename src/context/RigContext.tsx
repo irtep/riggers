@@ -164,7 +164,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         'edit' |
         'testRigs' |
         'lore' |
-        'rules'
+        'rules' |
+        'bookEditor'
     >('main');
     const [hovered, setHovered] = useState<string | undefined>('');
     const [savedRigs, setSavedRigs] = useState<any[]>([]);

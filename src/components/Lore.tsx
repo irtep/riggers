@@ -21,6 +21,10 @@ const Lore: React.FC = (): React.ReactElement => {
                 onClick={() => { setSelectedBook(''); }}>
                 back to lore menu
             </Button>
+            <Button
+                onClick={() => { setMode('bookEditor'); }}>
+                book editor
+            </Button>
             <Container sx={{
                 color: 'rgb(180,180,180)'
             }}>
@@ -42,6 +46,13 @@ const Lore: React.FC = (): React.ReactElement => {
                                                 onClick={() => {
                                                     setSelectedBook(book);
                                                 }}
+                                                sx={{
+                                                    border: '1px solid white',
+                                                    '&:hover': {
+                                                        backgroundColor: 'rgba(255,255,255,0.1)'
+                                                    },
+                                                    p: 1, // padding for nicer spacing, optional
+                                                }}
                                             >
                                                 {book.title}
                                             </Container>
@@ -50,11 +61,11 @@ const Lore: React.FC = (): React.ReactElement => {
                                 }
                             </> :
                             <>
-                            {
-                                <Book
-                                    {...selectedBook}
-                                />
-                            }
+                                {
+                                    <Book
+                                        {...selectedBook}
+                                    />
+                                }
                             </>
                     }
                 </Typography>
