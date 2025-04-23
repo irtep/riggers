@@ -45,7 +45,7 @@ const BookEditor: React.FC = () => {
                 strings: `\n${p.strings.trim()}\n`
             }))
         };
-
+        
         const jsonString = JSON.stringify(exportFormat, null, 4);
 
         // Copy to clipboard
