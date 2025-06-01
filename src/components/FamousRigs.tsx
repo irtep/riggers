@@ -1,4 +1,4 @@
-import { Box, Button, Container } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import DescOfRig from './DescOfRig';
 import { RigContext } from '../context/RigContext';
@@ -13,7 +13,7 @@ const listOfFamousRigs: FamousRig[] = [
     {
         name: 'Tarantula',
         image: 'tarantula',
-        desc: `Current Charred Axle champion Tarantula is known for its hard armour, what it uses to lure the opponent to grinding battle of attrition.
+        desc: `Former Charred Axle champion, that has record of most successful title defences Tarantula is known for its hard armour, what it uses to lure the opponent to grinding battle of attrition.
               It has magnetised weapon racks, to make harder to challengers to quess what kind of weapon they'll face, but it took the title with punishing bursts of vanguard and astro cutter of drone Welder.`
     },
     {
@@ -25,12 +25,17 @@ const listOfFamousRigs: FamousRig[] = [
     {
         name: 'Starblade',
         image: 'starblade',
-        desc: `A rugged truck, that is a former champion, the Starblade is also reigning champion of Ropecon tournament. Magnetised weapon racks make possible, that it is impossible to guess what this famous rig brings to fight. It's japanese text read: "truth", "katana" and "champion"... it has earned all those.`
+        desc: `A rugged truck, that is a former charred axle discord champion, the Starblade is also reigning champion of Ropecon tournament. Magnetised weapon racks make possible, that it is impossible to guess what this famous rig brings to fight. It's japanese text read: "truth", "katana" and "champion"... it has earned all those.`
     },
     {
         name: 'Arty and Morty',
         image: 'arty',
         desc: `Arty has the most hard hitting gun ever seen the rearguard with every boost available. If you don't know any special tricks to counter Morty's protective care, the Arty will pulverize your rig in very short time. And as all Team Warheads rigs, this is a very beautiful rig!`
+    },
+    {
+        name: 'Sideshow',
+        image: 'sideshow',
+        desc: `The fast Sideshow, the current charred axle discord champion devastates its opponents with very accurate whiplash missiles and bursts of primed flak blasters. Fast speed, long range and accuracy of weapons make Sideshow one of the best rigs ever, that have entered the Arena. `
     }
 ];
 

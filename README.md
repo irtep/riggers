@@ -42,3 +42,4 @@ Versions:
 0.8.2 rule updates of jan 25
 0.8.3 updated new rules for swamp stomper
 0.8.4 rockburst and reflection field rule updates
+0.9.2 famous rig updates
