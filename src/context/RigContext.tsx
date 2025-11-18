@@ -294,17 +294,21 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             handlingMods: 0 // not used atm. updateRig does this
         };
 
-        // update stats, based on chassis
+        // update stats, based on chassis, not in use now
         if ( // bikes
             rigNow.chassis === 'Desert spear'
         ) {
+            /*
             rigNow.speed = 40;
             rigNow.emptySlots = 5;
+            */
         }
         if ( // tanks
             rigNow.chassis === 'All terrain roller'
         ) {
+            /*
             rigNow.speed = 25;
+            */
         }
         if ( // walkers
             rigNow.chassis === 'Swamp stomper'
@@ -429,10 +433,15 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             }
         });
 
+        // Apply speed bonus from Catapult Thrusters, sadly hard coded here
+        if (rigNow.mods.includes('Catapult Thrusters')) {
+            rigNow.speed += 2;
+        }
+
         // specials like, turbo chargers, drifters etc.
         let roundedSpeed;
         let speedOfRig: number = rigNow.speed;
-
+        
         // Round speed based on Turbo Charger presence
         if (rigNow.mods.includes('Turbo Charger')) {
             roundedSpeed = Math.ceil(speedOfRig / 5) * 5;
@@ -448,9 +457,19 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             baseHandling += 1;
         }
 
+        // hardcoding some handling modifiers... should change to something dynamic at some point
+
         // Apply Turbo Charger modifier (-2 handling)
         if (rigNow.mods.includes('Turbo Charger')) {
             baseHandling -= 2;
+        }
+        // Apply Computer Assistant Steering
+        if (rigNow.mods.includes('Computer Assisted Steering')) {
+            baseHandling += 1;
+        }        
+        // Apply Catapult Thrusters
+        if (rigNow.mods.includes('Catapult Thrusters')) {
+            baseHandling -= 1;
         }
 
         // Update rigNow with the final values

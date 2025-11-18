@@ -8,10 +8,12 @@ export interface Modification {
     effect: string;
     costMod: number;
     costSpeed: number;
+    //costHandling: number; // dealt in updateRig in Rig Context... for now
     specialEffect?: SpecialEffect[];
     onePerWeapon?: boolean;
     onePerRig?: boolean;
     whatIsThis: 'modification';
+    uniqueToChassis?: string;
 };
 
 
@@ -28,7 +30,8 @@ export const rigModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerRig: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Armour Plating',
@@ -41,30 +44,26 @@ export const rigModifications: Modification[] = [
                 value: 3
             }
         ],
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
-
     {
         name: 'Carbon-alloy Lattice',
         effect: `The Impact Power results of all Shell type Weapon Attacks that target you are reduced by -3.
         Only one instance of these Modifications may be taken per Rig.`,
         costMod: 0,
         costSpeed: 2,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
-        name: 'Computer Assisted Steering',
+        name: 'Computer Assisted Steering', // + handling handled in updateRig in RigContext
         effect: `Increase your Rigʼs Handling by +1. In addition, once per each of your own Actions, you may
         reroll a failed Handling Test.`,
         costMod: 1,
         costSpeed: 0,
-        specialEffect: [
-            {
-                prop: 'handling',
-                value: 1
-            }
-        ],
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Decoy Flare Launcher',
@@ -73,14 +72,16 @@ export const rigModifications: Modification[] = [
         costMod: 0,
         costSpeed: 0,
         onePerRig: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Decoy Flares',
         effect: `Increase the number of uses of your Decoy Flare Launcher by 1.`,
         costMod: 0,
         costSpeed: 1,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Exo-plate Panelling',
@@ -89,7 +90,8 @@ export const rigModifications: Modification[] = [
         costMod: 0,
         costSpeed: 2,
         onePerRig: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Extended Chassis',
@@ -99,7 +101,8 @@ export const rigModifications: Modification[] = [
         costMod: -1,
         costSpeed: 0,
         onePerRig: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Gunner',
@@ -109,7 +112,8 @@ export const rigModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerRig: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Polarised Matter Webbing',
@@ -117,7 +121,8 @@ export const rigModifications: Modification[] = [
         MAX one per rig`,
         costMod: 0,
         costSpeed: 2,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Reinforced Armour',
@@ -127,7 +132,8 @@ export const rigModifications: Modification[] = [
         example — Armour: 12 (1).`,
         costMod: 0,
         costSpeed: 2,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Resistance Field',
@@ -141,7 +147,8 @@ export const rigModifications: Modification[] = [
             }
         ],
         onePerRig: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Resistance Field Capacitor',
@@ -154,7 +161,8 @@ export const rigModifications: Modification[] = [
                 value: 1
             }
         ],
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Slam Ram',
@@ -173,7 +181,8 @@ export const rigModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerRig: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Turbo Charger',
@@ -181,13 +190,8 @@ export const rigModifications: Modification[] = [
         and -2 handling.`,
         costMod: 0,
         costSpeed: 0,
-        specialEffect: [
-            {
-                prop: 'handling',
-                value: -2
-            }
-        ],
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Target Acquisition System',
@@ -196,15 +200,32 @@ export const rigModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerRig: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Hardened Chassis Floor',
         effect: `Reduce the total amount of Damage you receive from a Mine by -1 to a minimum of 0.`,
         costMod: 0,
         costSpeed: 2,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
+    {
+        name: 'Catapult Thrusters', // both -1 handling and +2 speed handled in updateRig in RigContext
+        effect: `Stomper rigs only. Jump - This Modification allows a Stomper Rig to Jump forwards
+5cm for each 1 Momentum it has, moving over Rigs and Creatures
+as if they were not in the Arena. Upon landing it loses 1 Momentum
+and must make a Handling test; if it fails, it must lose 1 additional
+Momentum. The Rig cannot end a Jump on top of another
+Rig/Creature. The distance moved during the Jump does not increase
+the Rig's Momentum. Cost 1 handling, but gives +2 speed`,
+        costMod: 0,
+        costSpeed: 0,
+        onePerWeapon: true,
+        whatIsThis: 'modification',
+        uniqueToChassis: 'Swamp stomper' // 
+    }
 ];
 
 export const weaponModifications: Modification[] = [
@@ -216,7 +237,8 @@ export const weaponModifications: Modification[] = [
         costMod: 0,
         costSpeed: 3,
         onePerWeapon: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
 
     {
@@ -227,7 +249,8 @@ export const weaponModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Destructor Module',
@@ -237,7 +260,8 @@ export const weaponModifications: Modification[] = [
         costMod: 0,
         costSpeed: 1,
         onePerWeapon: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Prototype Variant',
@@ -253,7 +277,8 @@ export const weaponModifications: Modification[] = [
         costMod: 0,
         costSpeed: 2,
         onePerWeapon: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Heavy Variant',
@@ -264,7 +289,8 @@ export const weaponModifications: Modification[] = [
         costMod: 1,
         costSpeed: 0,
         onePerWeapon: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Omni-directional Mount',
@@ -272,6 +298,7 @@ export const weaponModifications: Modification[] = [
         costMod: 0,
         costSpeed: 1,
         onePerWeapon: true,
-        whatIsThis: 'modification'
+        whatIsThis: 'modification',
+        uniqueToChassis: 'all'
     }
 ];

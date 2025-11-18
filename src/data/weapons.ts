@@ -8,6 +8,7 @@ export interface Weapon {
     specialties: string;
     primed: string;
     whatIsThis: 'weapon';
+    uniqueToChassis?: string;
 };
 
 export const weapons: Weapon[] = [
@@ -18,9 +19,10 @@ export const weapons: Weapon[] = [
         range: 40,
         costMod: 1,
         costSpeed: 0,
-        specialties: 'Kinetic Overdrivers — Ignores 1 Layer of the targetʼs Resistance Field.', 
+        specialties: 'Kinetic Overdrivers — Ignores 1 Layer of the targetʼs Resistance Field.',
         primed: 'BREACHER (4+)',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Astro-driver',
@@ -29,9 +31,10 @@ export const weapons: Weapon[] = [
         range: 20,
         costMod: 2,
         costSpeed: 0,
-        specialties: '', 
+        specialties: '',
         primed: `ROCKBURST: This Weapon can draw a line of sight and Attack through 1 Obstacle as if it wasn't in the Arena. If this Speciality is activated and it does not Attack through an Obstacle, it deals 1 additional point of Damage if it hits a target.`,
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Blaster',
@@ -40,9 +43,10 @@ export const weapons: Weapon[] = [
         range: 20,
         costMod: 0,
         costSpeed: 0,
-        specialties: 'Light — This Weapon only deals Damage as a result of its Impact Power rolls.', 
+        specialties: 'Light — This Weapon only deals Damage as a result of its Impact Power rolls.',
         primed: 'PRIMER-LINK',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Breach Sling',
@@ -51,9 +55,10 @@ export const weapons: Weapon[] = [
         range: 15,
         costMod: 1,
         costSpeed: 0,
-        specialties: '', 
+        specialties: '',
         primed: 'BREACHER (3+), if 3+ hits, then 4+ after scores another damage',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Burstfire Blaster',
@@ -62,9 +67,10 @@ export const weapons: Weapon[] = [
         range: 20,
         costMod: 0,
         costSpeed: 2,
-        specialties: 'Light weapon', 
+        specialties: 'Light weapon',
         primed: 'SUSTAINED TRIGGER, PRIMER-LINK',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Charged Accelerator',
@@ -73,9 +79,10 @@ export const weapons: Weapon[] = [
         range: 20,
         costMod: 1,
         costSpeed: 0,
-        specialties: 'Kinetic Overdrivers — Ignores 1 Layer of the targetʼs Resistance Field.', 
+        specialties: 'Kinetic Overdrivers — Ignores 1 Layer of the targetʼs Resistance Field.',
         primed: 'BREACHER (3+)',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Convergence Beam Cannon',
@@ -87,9 +94,10 @@ export const weapons: Weapon[] = [
         specialties: `Choose one of the following Firing Modes when using this Weapon: 1. Converge or 2. Fractal Bloom: (Profile written in parentheses). Light — This Weapon only
         deals Damage as a result of its Impact Power rolls. Targets all other Rigs &
         Creatures within range and in all directions. Roll for Impact Power against
-        each target separately.`, 
+        each target separately.`,
         primed: 'Converge: SUPERSONIC MUNITIONS',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Flak Blaster',
@@ -100,9 +108,10 @@ export const weapons: Weapon[] = [
         costSpeed: 1,
         specialties: `Dispersion Shells — Reduce one of the targetʼs Evasion Attempt results by -1 if it is more
         than [10cm] away.
-        Light — This Weapon only deals Damage as a result of its Impact Power rolls.`, 
+        Light — This Weapon only deals Damage as a result of its Impact Power rolls.`,
         primed: 'PRIMER-LINK',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Matter Rail',
@@ -111,9 +120,10 @@ export const weapons: Weapon[] = [
         range: 30,
         costMod: 2,
         costSpeed: 0,
-        specialties: ``, 
+        specialties: ``,
         primed: 'SUPERSONIC MUNITIONS',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Microbeam',
@@ -122,9 +132,10 @@ export const weapons: Weapon[] = [
         range: 20,
         costMod: 0,
         costSpeed: 0,
-        specialties: `Light — This Weapon only deals Damage as a result of its Impact Power rolls.`, 
+        specialties: `Light — This Weapon only deals Damage as a result of its Impact Power rolls.`,
         primed: 'PRIMER-LINK',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Micro Rocket Pod',
@@ -133,9 +144,10 @@ export const weapons: Weapon[] = [
         range: 20,
         costMod: 0,
         costSpeed: 0,
-        specialties: `Light — This Weapon only deals Damage as a result of its Impact Power rolls.`, 
+        specialties: `Light — This Weapon only deals Damage as a result of its Impact Power rolls.`,
         primed: 'PRIMER-LINK',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Particle Beam',
@@ -144,9 +156,10 @@ export const weapons: Weapon[] = [
         range: 30,
         costMod: 1,
         costSpeed: 2,
-        specialties: ``, 
+        specialties: ``,
         primed: 'SUSTAINED TRIGGER',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Poly-Ballistica Salvo',
@@ -155,9 +168,10 @@ export const weapons: Weapon[] = [
         range: 20,
         costMod: 2,
         costSpeed: 2,
-        specialties: ``, 
+        specialties: ``,
         primed: 'SUSTAINED TRIGGER',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Rattler',
@@ -167,9 +181,10 @@ export const weapons: Weapon[] = [
         costMod: 1,
         costSpeed: 3,
         specialties: `Suppressive Volley — If this Weapon hits a target, the attacking Rig is considered
-        Obscured from all Attacks made by that target until the end of the targetʼs next Action.`, 
+        Obscured from all Attacks made by that target until the end of the targetʼs next Action.`,
         primed: 'SUSTAINED TRIGGER',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Rearguard',
@@ -178,9 +193,10 @@ export const weapons: Weapon[] = [
         range: '10-50',
         costMod: 2,
         costSpeed: 0,
-        specialties: `Mobile Artillery: This Weapon cannot attack targets that are less than [10cm] away.`, 
+        specialties: `Mobile Artillery: This Weapon cannot attack targets that are less than [10cm] away.`,
         primed: 'SUPERSONIC MUNITIONS',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Reduction Lance',
@@ -189,9 +205,10 @@ export const weapons: Weapon[] = [
         range: 15,
         costMod: 1,
         costSpeed: 0,
-        specialties: ``, 
+        specialties: ``,
         primed: 'PARTICLE FOCUS',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Shatterblast',
@@ -200,9 +217,10 @@ export const weapons: Weapon[] = [
         range: 20,
         costMod: 1,
         costSpeed: 1,
-        specialties: `Detonate [5cm]`, 
+        specialties: `Detonate [5cm]`,
         primed: 'FULL PAYLOAD',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Shreik Missile',
@@ -213,7 +231,8 @@ export const weapons: Weapon[] = [
         costSpeed: 0,
         specialties: ``,
         primed: 'SEEKER',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Swarm Missile Pod',
@@ -224,9 +243,10 @@ export const weapons: Weapon[] = [
         costSpeed: 2,
         specialties: `Light — This Weapon only deals Damage as a result of its Impact Power rolls.
         Dual Silos — This Weapon can Attack 2 targets, or 1 target twice and only count as
-        attacking once.`, 
+        attacking once.`,
         primed: '',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Vanguard',
@@ -236,9 +256,10 @@ export const weapons: Weapon[] = [
         costMod: 1,
         costSpeed: 0,
         specialties: `Point Blank — Add +2 to this Weaponʼs Impact Power result if the target is no more than
-        [5cm] away.`, 
+        [5cm] away.`,
         primed: '',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
     },
     {
         name: 'Vengeance Cannon',
@@ -247,8 +268,24 @@ export const weapons: Weapon[] = [
         range: 30,
         costMod: 2,
         costSpeed: 0,
-        specialties: `Detonate [5cm]`, 
+        specialties: `Detonate [5cm]`,
         primed: 'DETONATION RADIUS [+5CM]',
-        whatIsThis: 'weapon'
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'all'
+    },
+    {
+        name: 'Stomping Pistons',
+        impactPower: 3,
+        type: 'Combat',
+        range: 0,
+        costMod: 0,
+        costSpeed: 0,
+        specialties: `Stomper Rigs only.
+Light.`,
+        primed: `HIGH VELOCITY - Add your
+Rig’s Momentum to this Weapon’s
+Impact Power value.`,
+        whatIsThis: 'weapon',
+        uniqueToChassis: 'Swamp stomper'
     }
 ];

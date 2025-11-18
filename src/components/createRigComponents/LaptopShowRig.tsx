@@ -42,10 +42,12 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
                         </Typography>
                         <Typography>
                             Chassis: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.chassis}</span><br />
-                        </Typography>
+                        </Typography> 
+                        {/* not in use
                         <Typography>
                             Chassis special: <span style={{ color: "rgb(57,255,20)" }}>{matchingChassis.specials}</span><br />
                         </Typography>
+                         */}
                         <Typography>
                             Speed: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.speed}</span><br />
                             Speed in game: <span style={{ color: "rgb(57,255,20)" }}>{rigObject.realSpeed}</span><br />

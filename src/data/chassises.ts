@@ -44,7 +44,7 @@ export const chassises: Chassis[] = [
     },
     {
         name: 'Swamp stomper',
-        specials: 'Evade dices get +1, -10 speed',
+        specials: 'Evade dices get +1, -10 speed, can sidestep 5cm per turn',
         desc: 'They are used to scout waterlogged areas and Silt mines on Ainash, where wheeled Rigs cant access.',
         type: 'walker'
     }

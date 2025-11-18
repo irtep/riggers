@@ -450,60 +450,62 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         <>
                             {
                                 weapons.map((w: Weapon, i: number) => {
-                                    return (
-                                        <Container
-                                            key={`w ${i}`}
-                                            onMouseEnter={() => {
-                                                setHovered(w);
-                                            }}
-                                            onMouseLeave={() => {
-                                                setHovered(undefined);
-                                            }}
-                                        >
-
-                                            {w.name}
-
-                                            <Button
-                                                sx={{
-                                                    background: 'darkGreen',
-                                                    color: 'white',
-                                                    margin: 0.5,
-                                                    width: 20,
-                                                    height: 20
+                                    if (w.uniqueToChassis === 'all' || w.uniqueToChassis === rigObject.chassis) {
+                                        return (
+                                            <Container
+                                                key={`w ${i}`}
+                                                onMouseEnter={() => {
+                                                    setHovered(w);
                                                 }}
-                                                onClick={() => {
-                                                    handleWeaponChange(w, true);
+                                                onMouseLeave={() => {
+                                                    setHovered(undefined);
                                                 }}
                                             >
-                                                +
-                                            </Button>
 
-                                            <Button
-                                                sx={{
-                                                    background: 'darkRed',
-                                                    color: 'white',
-                                                    margin: 0.5,
-                                                    width: 20,
-                                                    height: 20
-                                                }}
-                                                onClick={() => {
-                                                    handleWeaponChange(w, false);
-                                                }}
-                                            >
-                                                -
-                                            </Button>
+                                                {w.name}
 
-                                            {
-                                                (device === 'mobile') ?
-                                                    <Visibility
-                                                        onClick={() => {
-                                                            handleDetails(w.name, 'weapon');
-                                                        }}
-                                                    /> :
-                                                    <></>
-                                            }
-                                        </Container>
-                                    )
+                                                <Button
+                                                    sx={{
+                                                        background: 'darkGreen',
+                                                        color: 'white',
+                                                        margin: 0.5,
+                                                        width: 20,
+                                                        height: 20
+                                                    }}
+                                                    onClick={() => {
+                                                        handleWeaponChange(w, true);
+                                                    }}
+                                                >
+                                                    +
+                                                </Button>
+
+                                                <Button
+                                                    sx={{
+                                                        background: 'darkRed',
+                                                        color: 'white',
+                                                        margin: 0.5,
+                                                        width: 20,
+                                                        height: 20
+                                                    }}
+                                                    onClick={() => {
+                                                        handleWeaponChange(w, false);
+                                                    }}
+                                                >
+                                                    -
+                                                </Button>
+
+                                                {
+                                                    (device === 'mobile') ?
+                                                        <Visibility
+                                                            onClick={() => {
+                                                                handleDetails(w.name, 'weapon');
+                                                            }}
+                                                        /> :
+                                                        <></>
+                                                }
+                                            </Container>
+                                        )
+                                    } else { return null; }
                                 })
                             }
                         </> : <></>
@@ -513,60 +515,66 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         <>
                             {
                                 rigModifications.map((m: Modification, i: number) => {
-                                    return (
-                                        <Container
-                                            key={`mx ${i}`}
-                                            onMouseEnter={() => {
-                                                setHovered(m);
-                                            }}
-                                            onMouseLeave={() => {
-                                                setHovered(undefined);
-                                            }}
-                                        >
-
-                                            {m.name}
-
-                                            <Button
-                                                sx={{
-                                                    background: 'darkGreen',
-                                                    color: 'white',
-                                                    margin: 0.5,
-                                                    width: 20,
-                                                    height: 20
+                                    if (m.uniqueToChassis === 'all' || m.uniqueToChassis === rigObject.chassis) {
+                                        return (
+                                            <Container
+                                                key={`mx ${i}`}
+                                                onMouseEnter={() => {
+                                                    setHovered(m);
                                                 }}
-                                                onClick={() => {
-                                                    handleModChange(m, true);
+                                                onMouseLeave={() => {
+                                                    setHovered(undefined);
                                                 }}
                                             >
-                                                +
-                                            </Button>
 
-                                            <Button
-                                                sx={{
-                                                    background: 'darkRed',
-                                                    color: 'white',
-                                                    margin: 0.5,
-                                                    width: 20,
-                                                    height: 20
-                                                }}
-                                                onClick={() => {
-                                                    handleModChange(m, false);
-                                                }}
-                                            >
-                                                -
-                                            </Button>
-                                            {
-                                                (device === 'mobile') ?
-                                                    <Visibility
-                                                        onClick={() => {
-                                                            handleDetails(m.name, 'modification');
-                                                        }}
-                                                    /> :
-                                                    <></>
-                                            }
+                                                {m.name}
 
-                                        </Container>
-                                    )
+                                                <Button
+                                                    sx={{
+                                                        background: 'darkGreen',
+                                                        color: 'white',
+                                                        margin: 0.5,
+                                                        width: 20,
+                                                        height: 20
+                                                    }}
+                                                    onClick={() => {
+                                                        handleModChange(m, true);
+                                                    }}
+                                                >
+                                                    +
+                                                </Button>
+
+                                                <Button
+                                                    sx={{
+                                                        background: 'darkRed',
+                                                        color: 'white',
+                                                        margin: 0.5,
+                                                        width: 20,
+                                                        height: 20
+                                                    }}
+                                                    onClick={() => {
+                                                        handleModChange(m, false);
+                                                    }}
+                                                >
+                                                    -
+                                                </Button>
+                                                {
+                                                    (device === 'mobile') ?
+                                                        <Visibility
+                                                            onClick={() => {
+                                                                handleDetails(m.name, 'modification');
+                                                            }}
+                                                        /> :
+                                                        <></>
+                                                }
+
+                                            </Container>
+                                        )
+                                    } else {
+                                        // console.log('else: ', m.uniqueToChassis);
+                                        // console.log('rig.chassis: ', rigObject.chassis);
+                                        return null;
+                                    }
                                 })
                             }
                         </> : <></>

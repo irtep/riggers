@@ -13,29 +13,28 @@ const listOfFamousRigs: FamousRig[] = [
     {
         name: 'Tarantula',
         image: 'tarantula',
-        desc: `Former Charred Axle champion, that has record of most successful title defences Tarantula is known for its hard armour, what it uses to lure the opponent to grinding battle of attrition.
-              It has magnetised weapon racks, to make harder to challengers to quess what kind of weapon they'll face, but it took the title with punishing bursts of vanguard and astro cutter of drone Welder.`
+        desc: `2 time and reigning Charred Axle discord champion of Helsinki. It has the record of most successful title defences. Tarantula is known for its hard armour, that it uses to lure the opponent to grinding battle of attrition.
+              It took the title with punishing bursts of vanguard and astro cutter of drone Welder. After some successful defences, it lost the title to Sideshow, but in a rematch Tarantula with slightly changed rigg and familiar took the title, what he think its his, back to his spider cave.`
     },
     {
         name: 'Star Flame',
         image: 'starflame',
-        desc: `Someone might say, that there are more intimidating sights, than former champion Star Flame... that someone is incorrect. Star Flame is usually equipped with heavy variant breach sling, that is used by very trigger happy gunner. 
-        It once dealt 10 points of damage to armour 9 drone. This is one of the most hard hitting rigs ever seen at the arena.`
+        desc: `Someone might say, that there are more intimidating sights, than former champion Star Flame... that someone is incorrect. Star Flame is usually equipped with heavy variant breach sling, that is used by a very trigger happy gunner. This is one of the most hard hitting rigs ever seen at the arena.`
     },
     {
         name: 'Starblade',
         image: 'starblade',
-        desc: `A rugged truck, that is a former charred axle discord champion, the Starblade is also reigning champion of Ropecon tournament. Magnetised weapon racks make possible, that it is impossible to guess what this famous rig brings to fight. It's japanese text read: "truth", "katana" and "champion"... it has earned all those.`
+        desc: `A rugged truck, that is a former charred axle discord champion, the Starblade is also reigning champion of Ropecon tournament, the Axle Clash. Magnetised weapon racks make possible, that it is impossible to guess what this famous rig brings to fight. It's japanese text read: "truth", "katana" and "champion"... it has earned right to bear all those texts.`
     },
     {
         name: 'Arty and Morty',
         image: 'arty',
-        desc: `Arty has the most hard hitting gun ever seen the rearguard with every boost available. If you don't know any special tricks to counter Morty's protective care, the Arty will pulverize your rig in very short time. And as all Team Warheads rigs, this is a very beautiful rig!`
+        desc: `Arty has the most hard hitting gun ever seen in arenas. The rearguard with every boost available. If you don't know any special tricks to counter Morty's protective care, the Arty will pulverize your rig in very short time. And as all Team Warheads rigs, this is a very beautiful rig!`
     },
     {
         name: 'Sideshow',
         image: 'sideshow',
-        desc: `The fast Sideshow, the current charred axle discord champion devastates its opponents with very accurate whiplash missiles and bursts of primed flak blasters. Fast speed, long range and accuracy of weapons make Sideshow one of the best rigs ever, that have entered the Arena. `
+        desc: `The fast Sideshow, former charred axle discord champion devastates its opponents with very accurate whiplash missiles and bursts of primed flak blasters. Fast speed, long range and accuracy of weapons make Sideshow one of the best rigs ever, that have entered the Arena. It is only rig that has beaten the current Helsinki discord champion Tarantula.`
     }
 ];
 
