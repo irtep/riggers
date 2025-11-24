@@ -165,10 +165,12 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         'testRigs' |
         'lore' |
         'rules' |
-        'bookEditor'
+        'bookEditor' |
+        'login' |
+        'register'
     >('main');
     const [hovered, setHovered] = useState<string | undefined>('');
-    const [savedRigs, setSavedRigs] = useState<any[]>([]);
+    const [savedRigs, setSavedRigs] = useState<RigObject[]>([]);
     const [mobileDetails, setMobileDetails] = useState<MobileDetails>({ name: '', type: '', fullDetails: '' });
     const [showWeapons, setShowWeapons] = useState<boolean>(false);
     const [showMods, setShowMods] = useState<boolean>(false);
@@ -203,6 +205,9 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             familiarTwo: initialFamiliar
         }
     );
+    const [token, setToken] = useState<string>(String(''));
+    const [username, setUsername] = useState<string>(String(''));
+    const [admin, setAdmin] = useState<boolean>(false);
 
     const stripParentheses = (str: string): string => {
         const index = str.indexOf("(");
@@ -441,7 +446,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         // specials like, turbo chargers, drifters etc.
         let roundedSpeed;
         let speedOfRig: number = rigNow.speed;
-        
+
         // Round speed based on Turbo Charger presence
         if (rigNow.mods.includes('Turbo Charger')) {
             roundedSpeed = Math.ceil(speedOfRig / 5) * 5;
@@ -466,7 +471,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         // Apply Computer Assistant Steering
         if (rigNow.mods.includes('Computer Assisted Steering')) {
             baseHandling += 1;
-        }        
+        }
         // Apply Catapult Thrusters
         if (rigNow.mods.includes('Catapult Thrusters')) {
             baseHandling -= 1;
@@ -544,6 +549,12 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         setSavedRigs(updatedRigs);
     };
 
+    const logUserOut = () => {
+        setUsername('');
+        setToken('');
+        localStorage.setItem("uDetails", '');
+    }
+
     return (
         <RigContext.Provider value={{
             device, setDevice,
@@ -570,7 +581,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             rigTestObject, setRigTestObject,
             turnOrder, setTurnOrder,
             updateRig, addStats, payPrice,
-            isMobile
+            isMobile,
+            username, setUsername, admin, setAdmin, token, setToken, logUserOut
         }}>
             {props.children}
         </RigContext.Provider>

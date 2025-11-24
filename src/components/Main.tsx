@@ -7,10 +7,12 @@ import Lore from './Lore';
 import RuleIndex from './RuleIndex';
 import FamousRigs from './FamousRigs';
 import BookEditor from './bookComponents/BookEditor';
+import Login from './Login';
+import Register from './Register';
 
 const Main: React.FC = (): React.ReactElement => {
 
-    const { rigObject,
+    const { /*rigObject,*/
         setRigObject,
         fetchSavedRigs,
         mode,
@@ -25,7 +27,8 @@ const Main: React.FC = (): React.ReactElement => {
     }, []);
 
     useEffect(() => {
-        console.log('rigObject: ', rigObject);
+        console.log('savedRigs: ', savedRigs);
+        console.log('user');
     });
 
     return (
@@ -133,6 +136,20 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'famousRigs') ?
                     <>
                         <FamousRigs />
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'login') ?
+                    <>
+                        <Login />
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'register') ?
+                    <>
+                        <Register />
                     </> :
                     <></>
             }
