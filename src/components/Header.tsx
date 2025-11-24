@@ -9,7 +9,9 @@ const Header: React.FC = (): React.ReactElement => {
         device,
         setMode,
         mode,
-        savedRigs
+        savedRigs,
+        username,
+        logUserOut
     } = useContext(RigContext);
 
     return (
@@ -55,6 +57,34 @@ const Header: React.FC = (): React.ReactElement => {
                                             : <></>
                                     }
                                     <Links />
+                                    {
+                                        username ?
+                                            <>
+                                            {`username: ${username}`}
+                                            <Button
+                                                onClick={ logUserOut }
+                                            >log out</Button>
+                                            </> :
+                                            <>
+                                                <Button
+                                                    sx={{ color: 'white' }}
+                                                    onClick={() => {
+                                                        setMode('login');
+                                                    }}
+                                                >
+                                                    login
+                                                </Button>
+
+                                                <Button
+                                                    sx={{ color: 'white' }}
+                                                    onClick={() => {
+                                                        setMode('register');
+                                                    }}
+                                                >
+                                                    register
+                                                </Button>
+                                            </>
+                                    }
                                     <Typography variant="h3" align='center' sx={{ 'padding': 3 }}>
                                         * Rig Garage *
                                     </Typography>
