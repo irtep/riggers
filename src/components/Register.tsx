@@ -39,14 +39,19 @@
                                 setMode("/login");
                             }, 5000);
 
-
                         } else if (connection.status === 400) {
+                            console.log('con: ', connection);
                             setMsg('This username is already registered');
                             setTimeout(() => { setMsg('') }, 10000);
                         }
 
                         else if (connection.status === 403) {
                             setMsg('No permission. Ask permission from the admin');
+                            setTimeout(() => { setMsg('') }, 10000);
+                        }
+
+                        else if (connection.status === 406) {
+                            setMsg('Fields missing');
                             setTimeout(() => { setMsg('') }, 10000);
                         }
 

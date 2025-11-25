@@ -19,7 +19,8 @@ const Main: React.FC = (): React.ReactElement => {
         setMode,
         initialObject,
         savedRigs,
-        deleteRig
+        deleteRig,
+        userDetails
     } = useContext(RigContext);
 
     useEffect(() => {
@@ -28,7 +29,7 @@ const Main: React.FC = (): React.ReactElement => {
 
     useEffect(() => {
         console.log('savedRigs: ', savedRigs);
-        console.log('user');
+        console.log('user', userDetails);
     });
 
     return (

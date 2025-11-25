@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Modification, rigModifications, SpecialEffect, weaponModifications } from '../data/modifications';
 import { Ammunition, GunnerSpecial } from '../data/gunnerSpecials';
 import { ConcealedWeapons, DriverSpecial } from '../data/driverSpecials';
@@ -148,6 +148,13 @@ export interface Familiar {
     name: string;
 };
 
+export interface UserDetails {
+    id: number | '';
+    username: string;
+    token: string;
+    admin: boolean;
+};
+
 export interface TurnOrder {
     pool1: number[];
     pool2: number[];
@@ -205,10 +212,17 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             familiarTwo: initialFamiliar
         }
     );
+    const [userDetails, setUserDetails] = useState<UserDetails>({
+        id: '',
+        username: '',
+        token: '',
+        admin: false
+    });
+    /*
     const [token, setToken] = useState<string>(String(''));
     const [username, setUsername] = useState<string>(String(''));
     const [admin, setAdmin] = useState<boolean>(false);
-
+    */
     const stripParentheses = (str: string): string => {
         const index = str.indexOf("(");
         if (index !== -1) {
@@ -550,10 +564,34 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     };
 
     const logUserOut = () => {
-        setUsername('');
-        setToken('');
+        //setUsername('');
+        //setToken('');
+        setUserDetails({
+            id: 0,
+            username: '',
+            token: '',
+            admin: false
+        });
         localStorage.setItem("uDetails", '');
     }
+
+    useEffect(() => {
+        // logs in, if user did not logged out
+        const loggedUserJSON = window.localStorage.getItem('uDetails');
+
+        if (loggedUserJSON) {
+            const user = JSON.parse(loggedUserJSON);
+            setUserDetails({
+                id: user.id,
+                username: user.username,
+                admin: user.admin,
+                token: user.token
+            });
+
+            // fetches users saved rigs
+            //apiCall(undefined, undefined, user.token);
+        }
+    }, []);
 
     return (
         <RigContext.Provider value={{
@@ -582,7 +620,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             turnOrder, setTurnOrder,
             updateRig, addStats, payPrice,
             isMobile,
-            username, setUsername, admin, setAdmin, token, setToken, logUserOut
+            /*username, setUsername, admin, setAdmin, token, setToken,*/ logUserOut,
+            userDetails, setUserDetails
         }}>
             {props.children}
         </RigContext.Provider>
