@@ -34,7 +34,8 @@ const LeftSide: React.FC = (): React.ReactElement => {
         setHovered,
         stripParentheses,
         setMobileDetails,
-        updateRig
+        updateRig,
+        userDetails
     } = useContext(RigContext);
 
     const handleDetails = (name: string, type: string): void => {
@@ -251,13 +252,17 @@ const LeftSide: React.FC = (): React.ReactElement => {
                         try {
                             if (mode === 'edit') {
                                 overwriteRig(rigObject);
-                                setMsg('Rig saved to your browser!');
+                                (userDetails.username === '') ?
+                                    setMsg('Rig saved to your browser!') :
+                                    setMsg('Rig saved to database!');
                                 setTimeout(() => {
                                     setMsg('');
                                 }, 2000);
                             } else if (mode === 'create') {
                                 saveRig(rigObject);
-                                setMsg('Rig saved to your browser!');
+                                (userDetails.username === '') ?
+                                    setMsg('Rig saved to your browser!') :
+                                    setMsg('Rig saved to database!');
                                 setTimeout(() => {
                                     setMsg('');
                                 }, 2000);
