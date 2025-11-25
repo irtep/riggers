@@ -218,6 +218,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         token: '',
         admin: false
     });
+    const [loading, setLoading] = useState<boolean>(false);
     /*
     const [token, setToken] = useState<string>(String(''));
     const [username, setUsername] = useState<string>(String(''));
@@ -501,8 +502,27 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         return rigNow;
     };
 
-    const saveRig = (rig: RigObject) => {
-        // Find the maximum ID in the existing rigs
+    const apiCall = (action: 'update' | 'new', id?: string, payload?: RigObject) => {
+        // if logged in, save to database
+        try {
+            const baseUrl: string = "http://localhost:5509/api/rigs";
+            let response: Response;
+
+            if (action === 'update') {
+
+
+            } else {
+
+            }
+
+        } catch {
+
+        }
+    };
+
+    const saveRig = async (rig: RigObject) => {
+
+        // Find the maximum ID in the existing rigs (will be used only when saving to browser, in database gets id from back end)
         const maxId = savedRigs.reduce((max, rig) => (rig.id > max ? rig.id : max), 0);
 
         // Assign a new unique ID
@@ -510,12 +530,30 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
         // Create a new array with the rig and save it
         const toBeSaved = [...savedRigs, rig];
-        localStorage.setItem("rigs", JSON.stringify(toBeSaved));
+
+        // if not logged in, save to browser:
+        if (userDetails.username === '') {
+            localStorage.setItem("rigs", JSON.stringify(toBeSaved))
+        } else {
+            let response: Response;
+            // Create new rig
+            response = await fetch("http://localhost:5509/api/rigs", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userDetails.token}`
+                },
+                body: JSON.stringify({
+                    userId: userDetails.id,
+                    rig: rig
+                })
+            });
+        }
         setSavedRigs(toBeSaved);
         setMode('edit');
     };
 
-    const overwriteRig = (rigToSave: RigObject) => {
+    const overwriteRig = async (rigToSave: RigObject) => {
         // Find the index of the rig with the same ID in savedRigs array
         const indexToUpdate = savedRigs.findIndex((rig) => rig.id === rigToSave.id);
 
@@ -525,8 +563,23 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             const updatedRigs = [...savedRigs];
             updatedRigs[indexToUpdate] = rigToSave;
 
-            // Update localStorage and state with the updated array
-            localStorage.setItem("rigs", JSON.stringify(updatedRigs));
+            // Update localStorage and state with the updated array if not logged in:
+            if (userDetails.username === '') {
+                localStorage.setItem("rigs", JSON.stringify(updatedRigs));
+            } else {
+                let response: Response;
+                response = await fetch(`"http://localhost:5509/api/rigs"/${userDetails.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userDetails.token}`
+                    },
+                    body: JSON.stringify({
+                        id: rigToSave.id,
+                        rig: rigToSave
+                    })
+                });
+            }
             setSavedRigs(updatedRigs);
         } else {
             // If the rig with the same ID is not found, add the new rig to the array
@@ -621,7 +674,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             updateRig, addStats, payPrice,
             isMobile,
             /*username, setUsername, admin, setAdmin, token, setToken,*/ logUserOut,
-            userDetails, setUserDetails
+            userDetails, setUserDetails,
+            loading, setLoading
         }}>
             {props.children}
         </RigContext.Provider>
