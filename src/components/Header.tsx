@@ -10,7 +10,7 @@ const Header: React.FC = (): React.ReactElement => {
         setMode,
         mode,
         savedRigs,
-        username,
+        userDetails,
         logUserOut
     } = useContext(RigContext);
 
@@ -58,9 +58,9 @@ const Header: React.FC = (): React.ReactElement => {
                                     }
                                     <Links />
                                     {
-                                        username ?
+                                        userDetails.username ?
                                             <>
-                                            {`username: ${username}`}
+                                            {`username: ${userDetails.username}`}
                                             <Button
                                                 onClick={ logUserOut }
                                             >log out</Button>
