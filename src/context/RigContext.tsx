@@ -6,6 +6,7 @@ import { Weapon, weapons } from '../data/weapons';
 import { Mine, mines } from '../data/mines';
 import { familiarModifications, familiarWeapons } from '../data/familiar';
 import userIsMobile from '../customHooks/userIsMobile';
+import { v4 as uuidv4 } from 'uuid';
 
 export const RigContext: React.Context<any> = createContext(undefined);
 
@@ -27,8 +28,9 @@ export interface FamiliarStats {
 };
 
 export interface RigObject {
-    [key: string]: string | number | string[] | FamiliarStats;
-    id: number;
+    //[key: string]: string | number | string[] | FamiliarStats;
+    id: number | string; // used to have numbers in old system, were rigs were only in browser. switched to string now, but i keep number type here too
+    userId?: number; // those that are saved to database should have this, but to browser will not have
     name: string;
     chassis: string;
     speed: number;
@@ -501,41 +503,43 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
         return rigNow;
     };
-
-    const apiCall = (action: 'update' | 'new', id?: string, payload?: RigObject) => {
-        // if logged in, save to database
-        try {
-            const baseUrl: string = "http://localhost:5509/api/rigs";
-            let response: Response;
-
-            if (action === 'update') {
-
-
-            } else {
-
+    /*
+        const apiCall = (action: 'update' | 'new', id?: string, payload?: RigObject) => {
+            // if logged in, save to database
+            try {
+                const baseUrl: string = "http://localhost:5509/api/rigs";
+                let response: Response;
+    
+                if (action === 'update') {
+    
+    
+                } else {
+    
+                }
+    
+            } catch {
+    
             }
-
-        } catch {
-
-        }
-    };
-
+        };
+    */
     const saveRig = async (rig: RigObject) => {
 
         // Find the maximum ID in the existing rigs (will be used only when saving to browser, in database gets id from back end)
-        const maxId = savedRigs.reduce((max, rig) => (rig.id > max ? rig.id : max), 0);
+        //const maxId = savedRigs.reduce((max, rig) => (rig.id > max ? rig.id : max), 0);
 
         // Assign a new unique ID
-        rig.id = maxId + 1;
-
+        //rig.id = maxId + 1;
+        rig.id = uuidv4();
         // Create a new array with the rig and save it
         const toBeSaved = [...savedRigs, rig];
 
         // if not logged in, save to browser:
         if (userDetails.username === '') {
+            console.log('not logged in, saving to localstorage');
             localStorage.setItem("rigs", JSON.stringify(toBeSaved))
         } else {
             let response: Response;
+            console.log('sending to backend');
             // Create new rig
             response = await fetch("http://localhost:5509/api/rigs", {
                 method: 'POST',
@@ -544,10 +548,11 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                     'Authorization': `Bearer ${userDetails.token}`
                 },
                 body: JSON.stringify({
-                    userId: userDetails.id,
-                    rig: rig
+                    ...rig,
+                    userId: userDetails.id
                 })
             });
+            console.log('response: ', response);
         }
         setSavedRigs(toBeSaved);
         setMode('edit');
@@ -568,16 +573,13 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                 localStorage.setItem("rigs", JSON.stringify(updatedRigs));
             } else {
                 let response: Response;
-                response = await fetch(`"http://localhost:5509/api/rigs"/${userDetails.id}`, {
+                response = await fetch(`http://localhost:5509/api/rigs/${rigToSave.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${userDetails.token}`
                     },
-                    body: JSON.stringify({
-                        id: rigToSave.id,
-                        rig: rigToSave
-                    })
+                    body: JSON.stringify(rigToSave)
                 });
             }
             setSavedRigs(updatedRigs);
@@ -591,8 +593,38 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         }
     };
 
-    const fetchSavedRigs = () => {
+    const fetchSavedRigs = async () => {
+        console.log('fetching rigs');
+        // get from localStorage:
         let storedRigs = localStorage.getItem("rigs");
+        // get from database if logged in:
+        if (userDetails.username !== '') {
+            console.log('username found');
+            setLoading(true);
+            try {
+                const response = await fetch('http://localhost:5509/api/rigs', {
+                    headers: {
+                        'Authorization': `Bearer ${userDetails.token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('data', data);
+                    // setSavedRigs(data); // Uncomment and use this
+                } else {
+                    console.log('Failed to load saved rigs');
+                }
+            } catch (err) {
+                // setError('Error connecting to server');
+                console.error('Error fetching rigs:', err);
+            } finally {
+                setLoading(false);
+                console.log('finalized fetch');
+            }
+        } else {
+            console.log('username not found', userDetails);
+        }
 
         if (typeof (storedRigs) === 'string') {
             // Apply the replace to the string before parsing it into JSON
@@ -634,6 +666,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON);
+            console.log('user from storage: ', user);
             setUserDetails({
                 id: user.id,
                 username: user.username,

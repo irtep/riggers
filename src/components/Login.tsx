@@ -62,10 +62,10 @@ const Login: React.FC = (): React.ReactElement => {
                         admin: response.user.admin
                     })
                     const userDetails: DetailsOfUser = {
-                        id: response.id,
+                        id: response.user.id,
                         token: response.token,
                         username: formRef.current?.username.value,
-                        admin: response.admin,
+                        admin: response.user.admin
                     }
 
                     localStorage.setItem("uDetails", JSON.stringify(userDetails));
