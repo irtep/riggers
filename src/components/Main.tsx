@@ -28,6 +28,11 @@ const Main: React.FC = (): React.ReactElement => {
     }, []);
 
     useEffect(() => {
+        // if user details change, need to fetch again
+        fetchSavedRigs();
+    }, [userDetails]);
+
+    useEffect(() => {
         console.log('savedRigs: ', savedRigs);
         console.log('user', userDetails);
     });
