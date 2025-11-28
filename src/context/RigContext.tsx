@@ -572,15 +572,19 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             if (userDetails.username === '') {
                 localStorage.setItem("rigs", JSON.stringify(updatedRigs));
             } else {
-                let response: Response;
-                response = await fetch(`http://localhost:5509/api/rigs/${rigToSave.id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userDetails.token}`
-                    },
-                    body: JSON.stringify(rigToSave)
-                });
+                try {
+                    let response: Response;
+                    response = await fetch(`http://localhost:5509/api/rigs/${rigToSave.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${userDetails.token}`
+                        },
+                        body: JSON.stringify(rigToSave)
+                    });
+                } catch (err) {
+                    console.error('Error updating rig:', err);
+                }
             }
             setSavedRigs(updatedRigs);
         } else {
@@ -595,9 +599,19 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
     const fetchSavedRigs = async () => {
         console.log('fetching rigs');
-        // get from localStorage:
+
+        // Get from localStorage first
         let storedRigs = localStorage.getItem("rigs");
-        // get from database if logged in:
+        let localRigs: RigObject[] = [];
+
+        if (storedRigs !== null) {
+            if (typeof storedRigs === 'string') {
+                storedRigs = storedRigs.replace(/\(2\)/g, '').replace(/\(3\)/g, '').replace(/\(4\)/g, '');
+            }
+            localRigs = JSON.parse(storedRigs);
+        }
+
+        // Get from database if logged in
         if (userDetails.username !== '') {
             console.log('username found');
             setLoading(true);
@@ -607,45 +621,70 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                         'Authorization': `Bearer ${userDetails.token}`
                     }
                 });
-
                 if (response.ok) {
                     const data = await response.json();
                     console.log('data', data);
-                    // setSavedRigs(data); // Uncomment and use this
+
+                    // Merge local and remote rigs, deduplicate by id
+                    const rigMap = new Map(localRigs.map(rig => [rig.id, rig]));
+                    data.forEach((rig: RigObject) => {
+                        rigMap.set(rig.id, rig);
+                    });
+
+                    setSavedRigs(Array.from(rigMap.values()));
                 } else {
                     console.log('Failed to load saved rigs');
+                    setSavedRigs(localRigs); // Fallback to local
                 }
             } catch (err) {
-                // setError('Error connecting to server');
                 console.error('Error fetching rigs:', err);
+                setSavedRigs(localRigs); // Fallback to local
             } finally {
                 setLoading(false);
                 console.log('finalized fetch');
             }
         } else {
             console.log('username not found', userDetails);
-        }
-
-        if (typeof (storedRigs) === 'string') {
-            // Apply the replace to the string before parsing it into JSON
-            // to convert pre 0.6.0 version rigs to newer
-            storedRigs = storedRigs.replace(/\(2\)/g, '').replace(/\(3\)/g, '').replace(/\(4\)/g, '');
-        }
-
-        if (storedRigs !== null) {
-            setSavedRigs(JSON.parse(storedRigs));
-        } else {
-            setSavedRigs([]);
+            setSavedRigs(localRigs); // Just use local rigs
         }
     }
 
-    const deleteRig = (id: number): void => {
-        // Create a new array excluding the rig with the specified ID
-        const updatedRigs = savedRigs.filter((rig) => rig.id !== id);
+    const deleteRig = async (id: number | string) => {
+        const foundRig = savedRigs.find((rig) => rig.id === id);
+        console.log('found rig: ', foundRig);
 
-        // Update localStorage and state with the modified array
-        localStorage.setItem("rigs", JSON.stringify(updatedRigs));
-        setSavedRigs(updatedRigs);
+        // logged in and database rig - delete from server
+        if (userDetails.username !== '' && foundRig && foundRig.userId !== undefined) {
+            console.log('deleting from database');
+            setLoading(true);
+            try {
+                const response = await fetch(`http://localhost:5509/api/rigs/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userDetails.token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to delete rig from server');
+                    return;
+                }
+
+                const updatedRigs = savedRigs.filter((rig) => rig.id !== id);
+                setSavedRigs(updatedRigs);
+
+            } catch (err) {
+                console.error('Error deleting the rig:', err);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            // Browser-only rig or not logged in - delete from localStorage
+            const updatedRigs = savedRigs.filter((rig) => rig.id !== id);
+            localStorage.setItem("rigs", JSON.stringify(updatedRigs));
+            setSavedRigs(updatedRigs);
+        }
     };
 
     const logUserOut = () => {
