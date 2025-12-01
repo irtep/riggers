@@ -9,6 +9,7 @@ import FamousRigs from './FamousRigs';
 import BookEditor from './bookComponents/BookEditor';
 import Login from './Login';
 import Register from './Register';
+import ControlUsers from './ControlUsers';
 
 const Main: React.FC = (): React.ReactElement => {
 
@@ -35,6 +36,7 @@ const Main: React.FC = (): React.ReactElement => {
     useEffect(() => {
         console.log('savedRigs: ', savedRigs);
         console.log('user', userDetails);
+        console.log('mode: ', mode);
     });
 
     return (
@@ -156,6 +158,13 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'register') ?
                     <>
                         <Register />
+                    </> :
+                    <></>
+            }
+            {
+                (mode === 'controlUsers') ?
+                    <>
+                        <ControlUsers />
                     </> :
                     <></>
             }
