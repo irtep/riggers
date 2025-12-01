@@ -151,7 +151,7 @@ export interface Familiar {
 };
 
 export interface UserDetails {
-    id: number | '';
+    id: number;
     username: string;
     token: string;
     admin: boolean;
@@ -176,7 +176,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         'rules' |
         'bookEditor' |
         'login' |
-        'register'
+        'register' |
+        'controlUsers'
     >('main');
     const [hovered, setHovered] = useState<string | undefined>('');
     const [savedRigs, setSavedRigs] = useState<RigObject[]>([]);
@@ -215,7 +216,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         }
     );
     const [userDetails, setUserDetails] = useState<UserDetails>({
-        id: '',
+        id: 5000,
         username: '',
         token: '',
         admin: false
@@ -559,6 +560,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     };
 
     const overwriteRig = async (rigToSave: RigObject) => {
+        setLoading(true);
         // Find the index of the rig with the same ID in savedRigs array
         const indexToUpdate = savedRigs.findIndex((rig) => rig.id === rigToSave.id);
 
@@ -582,8 +584,11 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                         },
                         body: JSON.stringify(rigToSave)
                     });
+                    console.log('response: ', response.status);
                 } catch (err) {
                     console.error('Error updating rig:', err);
+                } finally {
+                    setLoading(false);
                 }
             }
             setSavedRigs(updatedRigs);
@@ -709,7 +714,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             setUserDetails({
                 id: user.id,
                 username: user.username,
-                admin: user.admin,
+                admin: false, // admin false always when comes from here, to avoid hacking, by changing localStorage value
                 token: user.token
             });
 

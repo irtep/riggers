@@ -60,15 +60,22 @@ const Header: React.FC = (): React.ReactElement => {
                                     {
                                         userDetails.username ?
                                             <>
-                                            {`username: ${userDetails.username}`}
-                                            <Button
-                                                onClick={ logUserOut }
-                                            >log out</Button>
+                                                {`username: ${userDetails.username}`}
+                                                <Button
+                                                    onClick={logUserOut}
+                                                >log out</Button>
+                                                <Button
+                                                    onClick={() => {
+                                                        setMode('controlUsers');
+                                                    }}
+                                                >
+                                                    settings
+                                                </Button>
                                             </> :
                                             <>
                                                 <Button
                                                     sx={{ color: 'white' }}
-                                                    onClick={() => {
+                                                    onClick={ () => {
                                                         setMode('login');
                                                     }}
                                                 >
