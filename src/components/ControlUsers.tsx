@@ -33,10 +33,7 @@ export interface ApiData {
 
 const ControlUsers: React.FC = (): React.ReactElement => {
     const {
-        token,
         userDetails,
-        loading,
-        setLoading,
         setMode,
         logUserOut
     } = useContext(RigContext);
@@ -71,26 +68,27 @@ const ControlUsers: React.FC = (): React.ReactElement => {
         const baseUrl: string = `http://localhost:5509/api/`;
         let urlTarget: string = 'auth';
         let url: string = `${baseUrl}${urlTarget}`;
-        let authToken: string = token;
+        let authToken: string = userDetails.token;
         //let url: string = "http://localhost:5509/api/auth";
 
         //if (action.includes('product')) { urlTarget = 'products'; }
         //if (action.includes('message')) { urlTarget = 'messages'; }
         // here also rest of the categories: orders, web page, messages
 
-        console.log('api call: ', action, method, payload, importToken, id, url);
+        //console.log('api call: ', action, method, payload, importToken, id, url);
 
         // needs to update url to get latest urltarget
         //url = `/.netlify/functions/api/${urlTarget}`;
 
         // if it is PUT or DELETE, url needs the id:
         if (method === "PUT" || method === "DELETE") {
-            url = `${baseUrl}${urlTarget}/${id}`;
+            url = `${baseUrl}${urlTarget}/id/${id}`;
         }
 
         // in some cases token statevariable is empty, so then user needs to send it by importToken
-        if (importToken) { authToken = importToken }
-
+        //if (importToken) { authToken = importToken }
+        //console.log('token in state: ', userDetails.token);
+        //console.log('with: ', authToken);
         let settings: FetchSettings = {
             method: method || "GET",
             headers: {
@@ -144,7 +142,7 @@ const ControlUsers: React.FC = (): React.ReactElement => {
 
                     if (action?.includes('fetch')) {
                         const receivedPack = await connection.json();
-                        console.log('received pack: ', receivedPack);
+                        //console.log('received pack: ', receivedPack);
                         switch (action) {
                             //  case 'fetch users': setUsers(await connection.json()); break;
                             //  case 'fetch products': setProducts(await connection.json()); break;
@@ -211,34 +209,34 @@ const ControlUsers: React.FC = (): React.ReactElement => {
 
     // to change if is admin
     const handleToggle = async (id: number, current: boolean) => { 
-        await apiCall('update user', 'PUT', { id, admin: !current }, token, id);
+        await apiCall('update user', 'PUT', { id, admin: !current }, userDetails.token, id);
         await apiCall('fetch users', 'GET');
     };
 
     const handlePasswordChange = (id: number) => {
         const newPassword = passwords[id];
         if (newPassword?.length > 0) {
-            apiCall('pswchange', 'PUT', { id, password: newPassword }, token, id);
+            apiCall('pswchange', 'PUT', { id, password: newPassword }, userDetails.token, id);
             setPasswords(prev => ({ ...prev, [id]: '' })); // Clear input
         }
     };
 
     const handleConfirmDelete = async () => {
-        console.log('deleting: ', idOfSelectedUser);
+        //console.log('deleting: ', idOfSelectedUser);
         setDeleteDialog(false);
-        await apiCall('delete user', 'DELETE', undefined, token, idOfSelectedUser);
+        await apiCall('delete user', 'DELETE', undefined, userDetails.token, idOfSelectedUser);
         await apiCall('fetch users', 'GET');
     };
 
 
     useEffect(() => {
         // http://localhost:5509/api/auth
-        console.log('loaded control users');
+        //console.log('loaded control users');
         apiCall('fetch users', 'GET');
     }, []); // when loaded
 
     useEffect( () => {
-        console.log('users: ', users);
+        //console.log('users: ', users);
     });
 
     return (
