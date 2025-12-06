@@ -35,7 +35,8 @@ const LeftSide: React.FC = (): React.ReactElement => {
         stripParentheses,
         setMobileDetails,
         updateRig,
-        userDetails
+        userDetails,
+        setAnteriorMode
     } = useContext(RigContext);
 
     const handleDetails = (name: string, type: string): void => {
@@ -288,6 +289,17 @@ const LeftSide: React.FC = (): React.ReactElement => {
                     }
 
                 </Button>
+                <Button
+                    sx={{
+                        border: '1px solid orange',
+                        color: 'orange',
+                        background: 'rgb(20, 20, 20)'
+                    }}
+                    onClick={ () => {
+                        setAnteriorMode(mode);
+                        setMode('showPdf')
+                    }}
+                >pdf printable</Button>
 
                 {msg}
 

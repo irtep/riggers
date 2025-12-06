@@ -225,7 +225,7 @@ const TestRigs: React.FC = (): React.ReactElement => {
 
     useEffect(() => {
         draw();
-        console.log('rto: ', rigTestObject, ' selecting: ', rigTestObject.selectingPlace);
+        //console.log('rto: ', rigTestObject, ' selecting: ', rigTestObject.selectingPlace);
     }, [rigTestObject, rigTestObject.selectingPlace]);
 
     useEffect(() => {
@@ -236,7 +236,7 @@ const TestRigs: React.FC = (): React.ReactElement => {
                 const x = event.clientX - rect.left;
                 const y = event.clientY - rect.top;
                 if (rigTestObject.selectingPlace && rigTestObject.selectedRig > 0) {
-                    console.log('selecting true and selected rig');
+                    //console.log('selecting true and selected rig');
                     const updatedPlayers = [...rigTestObject.players];
                     updatedPlayers[rigTestObject.selectedRig - 1].x = x;
                     updatedPlayers[rigTestObject.selectedRig - 1].y = y;

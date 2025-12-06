@@ -10,6 +10,7 @@ import BookEditor from './bookComponents/BookEditor';
 import Login from './Login';
 import Register from './Register';
 import ControlUsers from './ControlUsers';
+import ShowPdf from './ShowPdf';
 
 const Main: React.FC = (): React.ReactElement => {
 
@@ -34,9 +35,9 @@ const Main: React.FC = (): React.ReactElement => {
     }, [userDetails]);
 
     useEffect(() => {
-        console.log('savedRigs: ', savedRigs);
-        console.log('user', userDetails);
-        console.log('mode: ', mode);
+        //console.log('savedRigs: ', savedRigs);
+        //console.log('user', userDetails);
+        //console.log('mode: ', mode);
     });
 
     return (
@@ -73,7 +74,7 @@ const Main: React.FC = (): React.ReactElement => {
                                                             color: 'rgb(165,165,165)'
                                                         }}
                                                         onClick={() => {
-                                                            console.log('clicked: ', rig);
+                                                            //console.log('clicked: ', rig);
                                                             const matchingRig = savedRigs.find((savedRig: RigObject) => savedRig.id === rig.id);
 
                                                             setRigObject({ ...matchingRig });
@@ -89,7 +90,7 @@ const Main: React.FC = (): React.ReactElement => {
                                                             marginLeft: 2
                                                         }}
                                                         onClick={() => {
-                                                            //console.log('clicked: ', rig);
+                                                            ////console.log('clicked: ', rig);
                                                             deleteRig(rig.id);
                                                         }}
                                                     >
@@ -165,6 +166,13 @@ const Main: React.FC = (): React.ReactElement => {
                 (mode === 'controlUsers') ?
                     <>
                         <ControlUsers />
+                    </> :
+                    <></>
+            }
+                        {
+                (mode === 'showPdf') ?
+                    <>
+                        <ShowPdf />
                     </> :
                     <></>
             }

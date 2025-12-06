@@ -177,7 +177,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         'bookEditor' |
         'login' |
         'register' |
-        'controlUsers'
+        'controlUsers' |
+        'showPdf'
     >('main');
     const [hovered, setHovered] = useState<string | undefined>('');
     const [savedRigs, setSavedRigs] = useState<RigObject[]>([]);
@@ -222,6 +223,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         admin: false
     });
     const [loading, setLoading] = useState<boolean>(false);
+    const [anteriorMode, setAnteriorMode] = useState<string>('');
     /*
     const [token, setToken] = useState<string>(String(''));
     const [username, setUsername] = useState<string>(String(''));
@@ -298,7 +300,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
     // Update for stats of rigs and familiars
     const updateRig = (oldRigObject: RigObject): RigObject => {
-        console.log('update called with: ', oldRigObject);
+        //console.log('update called with: ', oldRigObject);
         // Rigs:
         // reset to update all correctly
         let rigNow = {
@@ -376,7 +378,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                         case 'resistanceFields':
                             statsToAdd.resistanceFields = spessu.value;
                             break;
-                        default: console.log('spessu.prop not found: ', spessu.prop);
+                        default: //console.log('spessu.prop not found: ', spessu.prop);
                     }
                 });
             }
@@ -432,7 +434,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                             case 'armour':
                                 statsToAdd.armour = spessu.value;
                                 break;
-                            default: console.log('spessu.prop not found: ', spessu.prop);
+                            default: //console.log('spessu.prop not found: ', spessu.prop);
                         }
                     });
                 }
@@ -536,11 +538,11 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
         // if not logged in, save to browser:
         if (userDetails.username === '') {
-            console.log('not logged in, saving to localstorage');
+            //console.log('not logged in, saving to localstorage');
             localStorage.setItem("rigs", JSON.stringify(toBeSaved))
         } else {
             let response: Response;
-            console.log('sending to backend');
+            //console.log('sending to backend');
             // Create new rig
             response = await fetch("http://localhost:5509/api/rigs", {
                 method: 'POST',
@@ -553,7 +555,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                     userId: userDetails.id
                 })
             });
-            console.log('response: ', response);
+            //console.log('response: ', response);
         }
         setSavedRigs(toBeSaved);
         setMode('edit');
@@ -584,7 +586,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                         },
                         body: JSON.stringify(rigToSave)
                     });
-                    console.log('response: ', response.status);
+                    //console.log('response: ', response.status);
                 } catch (err) {
                     console.error('Error updating rig:', err);
                 } finally {
@@ -603,7 +605,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     };
 
     const fetchSavedRigs = async () => {
-        console.log('fetching rigs');
+        //console.log('fetching rigs');
 
         // Get from localStorage first
         let storedRigs = localStorage.getItem("rigs");
@@ -618,7 +620,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
         // Get from database if logged in
         if (userDetails.username !== '') {
-            console.log('username found');
+            //console.log('username found');
             setLoading(true);
             try {
                 const response = await fetch('http://localhost:5509/api/rigs', {
@@ -628,7 +630,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('data', data);
+                    //console.log('data', data);
 
                     // Merge local and remote rigs, deduplicate by id
                     const rigMap = new Map(localRigs.map(rig => [rig.id, rig]));
@@ -638,7 +640,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
                     setSavedRigs(Array.from(rigMap.values()));
                 } else {
-                    console.log('Failed to load saved rigs');
+                    //console.log('Failed to load saved rigs');
                     setSavedRigs(localRigs); // Fallback to local
                 }
             } catch (err) {
@@ -646,21 +648,21 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
                 setSavedRigs(localRigs); // Fallback to local
             } finally {
                 setLoading(false);
-                console.log('finalized fetch');
+                //console.log('finalized fetch');
             }
         } else {
-            console.log('username not found', userDetails);
+            //console.log('username not found', userDetails);
             setSavedRigs(localRigs); // Just use local rigs
         }
     }
 
     const deleteRig = async (id: number | string) => {
         const foundRig = savedRigs.find((rig) => rig.id === id);
-        console.log('found rig: ', foundRig);
+        //console.log('found rig: ', foundRig);
 
         // logged in and database rig - delete from server
         if (userDetails.username !== '' && foundRig && foundRig.userId !== undefined) {
-            console.log('deleting from database');
+            //console.log('deleting from database');
             setLoading(true);
             try {
                 const response = await fetch(`http://localhost:5509/api/rigs/${id}`, {
@@ -710,7 +712,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
 
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON);
-            console.log('user from storage: ', user);
+            //console.log('user from storage: ', user);
             setUserDetails({
                 id: user.id,
                 username: user.username,
@@ -752,7 +754,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             isMobile,
             /*username, setUsername, admin, setAdmin, token, setToken,*/ logUserOut,
             userDetails, setUserDetails,
-            loading, setLoading
+            loading, setLoading,
+            anteriorMode, setAnteriorMode
         }}>
             {props.children}
         </RigContext.Provider>

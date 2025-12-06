@@ -224,8 +224,6 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
     } else {
         return (<></>);
     }
-
-
 }
 
 export default LaptopShowRig;
