@@ -7,6 +7,7 @@ import { Chassis, chassises } from '../data/chassises';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Mine, mines } from '../data/mines';
+import RulesForPdf from './RulesForPdf';
 
 const ShowPdf: React.FC = (): React.ReactElement => {
     const [matchingChassis, setMatchingChassis] = useState<Chassis>({
@@ -46,16 +47,16 @@ const ShowPdf: React.FC = (): React.ReactElement => {
         pdf.save(`${rigObject.name || 'rig'}.pdf`);
     };
 
-    const uniqueByName = <T extends { name: string }>(arr: T[]) =>
-        Array.from(
-            new Map(arr.map(item => [item.name, item])).values()
-        );
+    const countStrings = (arr: string[]) => {
+        const map = new Map<string, number>();
+        for (const a of arr) {
+            map.set(a, (map.get(a) || 0) + 1);
+        }
+        return Array.from(map, ([name, count]) => ({ name, count }));
+    };
 
-    const weaponRules = uniqueByName(
-        rigObject.selectedWeapons
-            .map((name: any) => weapons.find(w => w.name === stripParentheses(name)))
-            .filter(Boolean)
-    );
+    const weaponCounts = countStrings(rigObject.selectedWeapons);
+    const modCounts = countStrings(rigObject.mods);
 
     useEffect(() => {
         if (rigObject.chassis !== matchingChassis.name) {
@@ -66,6 +67,7 @@ const ShowPdf: React.FC = (): React.ReactElement => {
             }
 
         }
+        console.log('rig: ', rigObject);
     }, [rigObject]);
 
     if (rigObject) {
@@ -138,56 +140,43 @@ const ShowPdf: React.FC = (): React.ReactElement => {
                                 <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
                                     Weapons:
                                 </span>
-                                {
-                                    rigObject.selectedWeapons.map((w: string, i: number) => {
-                                        return (
-                                            <Typography
-                                                onMouseEnter={() => {
-                                                    // find details of this weapon
-                                                    const foundWeapon: Weapon[] = weapons.filter((wep: Weapon) => wep.name === stripParentheses(w));
-                                                    setHovered(foundWeapon[0]);
-                                                }}
-                                                onMouseLeave={() => {
-                                                    setHovered(undefined);
-                                                }}
-                                                sx={{
-                                                    margin: 1
-                                                }}
-                                                key={`sW: ${i}`}
-                                            >
-                                                {w}
-                                            </Typography>
-                                        )
-                                    })
-                                }
+                                {weaponCounts.map((w: any, i: number) => (
+                                    <Typography
+                                        onMouseEnter={() => {
+                                            const foundWeapon = weapons.find(wep => wep.name === stripParentheses(w.name));
+                                            setHovered(foundWeapon);
+                                        }}
+                                        onMouseLeave={() => {
+                                            setHovered(undefined);
+                                        }}
+                                        sx={{ margin: 1 }}
+                                        key={`sW:${i}`}
+                                    >
+                                        {w.count > 1 ? `${w.name}  (${w.count}x)` : w.name}
+                                    </Typography>
+                                ))}
+
                             </Container>
 
                             <Container>
                                 <span style={{ background: "orange", color: "black", fontWeight: "strong", padding: 1 }}>
                                     Modifications:
                                 </span>
-                                {
-                                    rigObject.mods.map((m: string, i: number) => {
-                                        return (
-                                            <Typography
-                                                onMouseEnter={() => {
-                                                    // find details of this Modification
-                                                    const foundMod: Modification[] = rigModifications.concat(weaponModifications).filter((modi: Modification) => modi.name === stripParentheses(m));
-                                                    setHovered(foundMod[0]);
-                                                }}
-                                                onMouseLeave={() => {
-                                                    setHovered(undefined);
-                                                }}
-                                                sx={{
-                                                    margin: 1
-                                                }}
-                                                key={`sm: ${i}`}
-                                            >
-                                                {m}
-                                            </Typography>
-                                        )
-                                    })
-                                }
+                                {modCounts.map((m, i) => (
+                                    <Typography
+                                        onMouseEnter={() => {
+                                            const foundMod = rigModifications.concat(weaponModifications)
+                                                .find(modi => modi.name === stripParentheses(m.name));
+                                            setHovered(foundMod);
+                                        }}
+                                        onMouseLeave={() => setHovered(undefined)}
+                                        sx={{ margin: 1 }}
+                                        key={`sm:${i}`}
+                                    >
+                                        {m.count > 1 ? `${m.name}  (${m.count}x)` : m.name}
+                                    </Typography>
+                                ))}
+
                             </Container>
 
                         </Grid>
@@ -263,6 +252,8 @@ const ShowPdf: React.FC = (): React.ReactElement => {
 
                                         {rigObject.concealedWeapon}
 
+                                        <br/>
+
                                     </> : <></>
                             }
                             {
@@ -287,116 +278,7 @@ const ShowPdf: React.FC = (): React.ReactElement => {
                         </Grid>
                     </Grid>
 
-                    {/* RULES SECTION */}
-
-                    <div style={{ marginTop: "40px" }}>
-                        <Typography sx={{
-                            background: "black",
-                            color: "orange",
-                            padding: 1,
-                            margin: 1
-                        }}>
-                            RULES SUMMARY
-                        </Typography>
-
-                        {/* WEAPONS */}
-                        <Typography sx={{ marginTop: 2, fontWeight: "bold" }}>Weapons:</Typography>
-                        {weaponRules.map((w: any, i: number) => {
-                            console.log('maping: ', w);
-                            return (
-                                <Typography key={i} sx={{ ml: 2 }}>
-                                    <strong>{`${w.name}: `}</strong>
-                                    {`impact power:  ${w.impactPower}. `}
-                                    {`range:  ${w.range}. `}
-                                    {`specialities:  ${w.specialties}. `}
-                                    {`Primed:  ${w.primed}. `}
-                                </Typography>
-                            )
-                        })}
-
-                        {/* MINES */}
-                        {
-                            rigObject.mods.includes("Mine Launcher") && rigObject.mines.length > 0 &&
-                            <>
-                                <Typography sx={{ marginTop: 2, fontWeight: "bold" }}>Mines:</Typography>
-                                {
-                                    
-                                    rigObject.mines.map((name: string, i: number) => {
-                                        const mineData = mines
-                                            .find((m: Mine) => m.name === stripParentheses(name));
-                                        return (
-                                            <Typography key={`rm${i}`} sx={{ marginLeft: 2 }}>
-                                                {mineData?.name}
-                                            </Typography>
-                                        );
-                                    })
-                                }
-                            </>
-                        }
-
-                        {/* MODIFICATIONS */}
-                        <Typography sx={{ marginTop: 2, fontWeight: "bold" }}>Modifications:</Typography>
-                        {
-                            rigObject.mods.map((name: string, i: number) => {
-                                const m = rigModifications.concat(weaponModifications)
-                                    .find(m => m.name === stripParentheses(name));
-                                if (!m) return null;
-                                return (
-                                    <Typography key={`rmod${i}`} sx={{ marginLeft: 2 }}>
-                                        {m.name}: {m.effect}
-                                    </Typography>
-                                );
-                            })
-                        }
-
-                        {/* DRIVER SPECIAL */}
-                        {
-                            rigObject.driverSpecial.length > 0 &&
-                            <>
-                                <Typography sx={{ marginTop: 2, fontWeight: "bold" }}>Driver Special:</Typography>
-                                <Typography sx={{ marginLeft: 2 }}>
-                                    {rigObject.driverSpecial}
-                                </Typography>
-                            </>
-                        }
-
-                        {/* GUNNER SPECIAL */}
-                        {
-                            rigObject.mods.includes("Gunner") &&
-                            <>
-                                <Typography sx={{ marginTop: 2, fontWeight: "bold" }}>Gunner Special:</Typography>
-                                <Typography sx={{ marginLeft: 2 }}>
-                                    {rigObject.gunnerSpecial}
-                                </Typography>
-                            </>
-                        }
-
-                        {/* FAMILIAR */}
-                        {
-                            rigObject.gunnerSpecial.includes("Familiar") &&
-                            <>
-                                <Typography sx={{ marginTop: 2, fontWeight: "bold" }}>Familiar Traits:</Typography>
-                                <Typography sx={{ marginLeft: 2 }}>
-                                    Speed {rigObject.familiarStats.speed}, Armour {rigObject.familiarStats.armour}, Empty {rigObject.familiarStats.emptySlots}
-                                </Typography>
-                                {rigObject.familiar?.map((f: any, i: number) => (
-                                    <Typography key={`rfam${i}`} sx={{ marginLeft: 2 }}>{f}</Typography>
-                                ))}
-                            </>
-                        }
-
-                        {/* CONCEALED */}
-                        {
-                            rigObject.concealedWeapon.length > 0 &&
-                            <>
-                                <Typography sx={{ marginTop: 2, fontWeight: "bold" }}>Concealed Weapon:</Typography>
-                                <Typography sx={{ marginLeft: 2 }}>
-                                    {rigObject.concealedWeapon}
-                                </Typography>
-                            </>
-                        }
-
-                    </div>
+                    <RulesForPdf />
 
                 </div>
             </Container>

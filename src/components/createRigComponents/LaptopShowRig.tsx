@@ -197,6 +197,8 @@ const LaptopShowRig: React.FC = (): React.ReactElement => {
 
                                 {rigObject.concealedWeapon}
 
+                                <br/>
+
                             </> : <></>
                     }
                     {
