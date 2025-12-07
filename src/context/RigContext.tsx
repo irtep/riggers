@@ -224,11 +224,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     });
     const [loading, setLoading] = useState<boolean>(false);
     const [anteriorMode, setAnteriorMode] = useState<string>('');
-    /*
-    const [token, setToken] = useState<string>(String(''));
-    const [username, setUsername] = useState<string>(String(''));
-    const [admin, setAdmin] = useState<boolean>(false);
-    */
+    const BASEURL: string = `http://localhost:5510/api/`;
+
     const stripParentheses = (str: string): string => {
         const index = str.indexOf("(");
         if (index !== -1) {
@@ -544,7 +541,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             let response: Response;
             //console.log('sending to backend');
             // Create new rig
-            response = await fetch("http://localhost:5509/api/rigs", {
+            response = await fetch(`${BASEURL}rigs`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -578,7 +575,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             } else {
                 try {
                     let response: Response;
-                    response = await fetch(`http://localhost:5509/api/rigs/${rigToSave.id}`, {
+                    response = await fetch(`${BASEURL}rigs/${rigToSave.id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -623,7 +620,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             //console.log('username found');
             setLoading(true);
             try {
-                const response = await fetch('http://localhost:5509/api/rigs', {
+                const response = await fetch(`${BASEURL}rigs`, {
                     headers: {
                         'Authorization': `Bearer ${userDetails.token}`
                     }
@@ -665,7 +662,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             //console.log('deleting from database');
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:5509/api/rigs/${id}`, {
+                const response = await fetch(`${BASEURL}rigs/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -755,7 +752,8 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
             /*username, setUsername, admin, setAdmin, token, setToken,*/ logUserOut,
             userDetails, setUserDetails,
             loading, setLoading,
-            anteriorMode, setAnteriorMode
+            anteriorMode, setAnteriorMode,
+            BASEURL
         }}>
             {props.children}
         </RigContext.Provider>

@@ -35,13 +35,13 @@ const ControlUsers: React.FC = (): React.ReactElement => {
     const {
         userDetails,
         setMode,
-        logUserOut
+        logUserOut,
+        BASEURL
     } = useContext(RigContext);
 
     // Local state for password inputs
     const [passwords, setPasswords] = useState<{ [key: string]: string }>({});
     const [users, setUsers] = useState<UserDetails[]>([]);
-    const [createNewUser, setCreateNewUser] = useState<boolean>(false);
     const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
     const [idOfSelectedUser, setIdOfSelectedUser] = useState<number>(); // for use that is set to be deleted
     const [message, setMessage] = useState<string>('');
@@ -65,9 +65,9 @@ const ControlUsers: React.FC = (): React.ReactElement => {
             error: ""
         });
 
-        const baseUrl: string = `http://localhost:5509/api/`;
+        //const baseUrl: string = `http://localhost:5509/api/`;
         let urlTarget: string = 'auth';
-        let url: string = `${baseUrl}${urlTarget}`;
+        let url: string = `${BASEURL}${urlTarget}`;
         let authToken: string = userDetails.token;
         //let url: string = "http://localhost:5509/api/auth";
 
@@ -82,7 +82,7 @@ const ControlUsers: React.FC = (): React.ReactElement => {
 
         // if it is PUT or DELETE, url needs the id:
         if (method === "PUT" || method === "DELETE") {
-            url = `${baseUrl}${urlTarget}/id/${id}`;
+            url = `${BASEURL}${urlTarget}/id/${id}`;
         }
 
         // in some cases token statevariable is empty, so then user needs to send it by importToken

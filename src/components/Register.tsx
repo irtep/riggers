@@ -7,7 +7,8 @@
         const formRef = useRef<HTMLFormElement>();
 
         const {
-            setMode
+            setMode,
+            BASEURL
         } = useContext(RigContext);
 
         const registerUser = async (e: React.FormEvent): Promise<void> => {
@@ -17,7 +18,7 @@
                 if (formRef.current?.password.value) {
                     if (formRef.current?.password.value === formRef.current?.password2.value) {
                         //const url: string = (modeOfUse === "dev") ?
-                        const url = "http://localhost:5509/api/auth/register" //:
+                        const url = `${BASEURL}auth/register` //:
                        // "/api/users";
                         const connection: Response = await fetch(url, {
                             method: "POST",

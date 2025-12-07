@@ -13,13 +13,9 @@ const Login: React.FC = (): React.ReactElement => {
     const [msg, setMsg] = useState<string>('');
 
     const {
-        /*
-        setToken,
-        setUsername,
-        setAdmin,
-        */
         setUserDetails,
-        setMode
+        setMode,
+        BASEURL
     } = useContext(RigContext);
 
     const formRef = useRef<HTMLFormElement>();
@@ -32,7 +28,7 @@ const Login: React.FC = (): React.ReactElement => {
 
             if (formRef.current?.password.value) {
                 // const url: string = (modeOfUse === "dev") ?
-                const url = "http://localhost:5509/api/auth/login" //:
+                const url = `${BASEURL}auth/login` //:
                 //   "/api/auth/login";
                 const connection = await fetch(url, {
                     method: "POST",

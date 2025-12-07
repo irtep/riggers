@@ -28,7 +28,7 @@ const RulesForPdf: React.FC = (): React.ReactElement => {
 
     const modRules = uniqueByName(
         rigObject.mods
-            .map((name: any) => rigModifications.find(w => w.name === stripParentheses(name)))
+            .map((name: any) => [...rigModifications, ...weaponModifications].find(w => w.name === stripParentheses(name)))
             .filter(Boolean)
     );
 
