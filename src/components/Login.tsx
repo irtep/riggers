@@ -35,6 +35,7 @@ const Login: React.FC = (): React.ReactElement => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify({
                         username: formRef.current?.username.value,
                         password: formRef.current?.password.value

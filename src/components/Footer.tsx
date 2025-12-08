@@ -10,7 +10,7 @@ const Footer: React.FC = (): React.ReactElement => {
       borderRadius: 2
     }}>
       <Typography>
-        Version: 1.7.2
+        Version: 1.8.1
       </Typography>
     </Container>
   );

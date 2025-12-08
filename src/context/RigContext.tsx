@@ -225,7 +225,7 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
     const [loading, setLoading] = useState<boolean>(false);
     const [anteriorMode, setAnteriorMode] = useState<string>('');
     // dev: const BASEURL: string = `http://localhost:5510/api/`;
-    const BASEURL: string = `https://193.28.89.151/api/`;
+    const BASEURL: string = `https://pupuhuhtasolutions.vip/api/`;
 
     const stripParentheses = (str: string): string => {
         const index = str.indexOf("(");

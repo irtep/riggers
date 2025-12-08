@@ -3,15 +3,14 @@ import React, { useContext } from 'react';
 import ModeButton from './ModeButton';
 import Links from './Links';
 import { RigContext } from '../context/RigContext';
+import UserControlButtons from './UserControlButtons';
 
 const Header: React.FC = (): React.ReactElement => {
     const {
         device,
         setMode,
         mode,
-        savedRigs,
-        userDetails,
-        logUserOut
+        savedRigs
     } = useContext(RigContext);
 
     return (
@@ -36,6 +35,7 @@ const Header: React.FC = (): React.ReactElement => {
                                     <ModeButton activateWhat='mobile' />
                                     <ModeButton activateWhat='laptop' />
                                     <Links />
+                                    <UserControlButtons/>
                                     <Typography align='center'>* R  I  G _ G  A  R  A  G  E *</Typography>
                                 </>
                             ) : (
@@ -57,41 +57,7 @@ const Header: React.FC = (): React.ReactElement => {
                                             : <></>
                                     }
                                     <Links />
-                                    {
-                                        userDetails.username ?
-                                            <>
-                                                {`username: ${userDetails.username}`}
-                                                <Button
-                                                    onClick={logUserOut}
-                                                >log out</Button>
-                                                <Button
-                                                    onClick={() => {
-                                                        setMode('controlUsers');
-                                                    }}
-                                                >
-                                                    settings
-                                                </Button>
-                                            </> :
-                                            <>
-                                                <Button
-                                                    sx={{ color: 'white' }}
-                                                    onClick={ () => {
-                                                        setMode('login');
-                                                    }}
-                                                >
-                                                    login
-                                                </Button>
-
-                                                <Button
-                                                    sx={{ color: 'white' }}
-                                                    onClick={() => {
-                                                        setMode('register');
-                                                    }}
-                                                >
-                                                    register
-                                                </Button>
-                                            </>
-                                    }
+                                    <UserControlButtons/>
                                     <Typography variant="h3" align='center' sx={{ 'padding': 3 }}>
                                         * Rig Garage *
                                     </Typography>
