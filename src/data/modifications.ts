@@ -16,6 +16,33 @@ export interface Modification {
     uniqueToChassis?: string;
 };
 
+// mods that are unique to several rigs:
+const wheelScythes: Modification = {
+    name: 'Wheel scythes', // -1 handling handled updateRig in RigContext
+    effect: `Winning a Shunt will deal 1 Damage
+to the target Rig/Creature. Costs 1 handling.`,
+    costMod: 0,
+    costSpeed: 0,
+    onePerRig: true,
+    whatIsThis: 'modification',
+    uniqueToChassis: '' // this will be added below
+};
+
+const supercharger: Modification = {
+    name: 'Supercharger',
+    effect: `Supercharger Increase your Rig’s Speed by 5. 1 Mod`,
+    costMod: 1,
+    costSpeed: 0,
+    specialEffect: [
+        {
+            prop: 'speed',
+            value: 5
+        }
+    ],
+    onePerRig: true,
+        whatIsThis: 'modification',
+        uniqueToChassis: '' // this will be added below
+};
 
 // Mine Launcher cost 1 mod One per Rig. Cannot be modified .
 //Required to lay mines in the Arena. Comes with 1 type of Mine included. Further Mines
@@ -225,7 +252,16 @@ the Rig's Momentum. Cost 1 handling, but gives +2 speed`,
         onePerWeapon: true,
         whatIsThis: 'modification',
         uniqueToChassis: 'Swamp stomper' // 
-    }
+    },
+    { ...wheelScythes, uniqueToChassis: 'Hot rod' },
+    { ...wheelScythes, uniqueToChassis: 'Bakkor miner' },
+    { ...wheelScythes, uniqueToChassis: 'Human truck' },
+    { ...wheelScythes, uniqueToChassis: 'Boor' },
+
+    { ...supercharger, uniqueToChassis: 'Hot rod' },
+    { ...supercharger, uniqueToChassis: 'Bakkor miner' },
+    { ...supercharger, uniqueToChassis: 'Human truck' },
+    { ...supercharger, uniqueToChassis: 'Boor' }
 ];
 
 export const weaponModifications: Modification[] = [

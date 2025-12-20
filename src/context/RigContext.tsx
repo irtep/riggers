@@ -494,7 +494,10 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         if (rigNow.mods.includes('Catapult Thrusters')) {
             baseHandling -= 1;
         }
-
+        // Wheel Scythes
+        if (rigNow.mods.includes('Wheel scythes')) {
+            baseHandling -= 1;
+        }
         // Update rigNow with the final values
         rigNow = {
             ...rigNow,
