@@ -498,6 +498,15 @@ export const RigProvider: React.FC<Props> = (props: Props): React.ReactElement =
         if (rigNow.mods.includes('Wheel scythes')) {
             baseHandling -= 1;
         }
+        // Apply Racer handling bonus
+        if (
+            rigNow.chassis === 'Hot rod' ||
+            rigNow.chassis === 'Bakkor miner' ||
+            rigNow.chassis === 'Human truck' ||
+            rigNow.chassis === 'Boor'
+        ) {
+            baseHandling += 1;
+        }
         // Update rigNow with the final values
         rigNow = {
             ...rigNow,

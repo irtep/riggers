@@ -14,7 +14,7 @@ export const chassises: Chassis[] = [
     },
     {
         name: 'Hot rod',
-        specials: 'n/a',
+        specials: '+1 handling, torque vector (can push opponent up to 5 on collision)',
         desc: 'A salvaged and revitalised planetary rover vehicle that was transported with the human Outreach expedition mission.',
         type: 'car'
     },
@@ -26,19 +26,19 @@ export const chassises: Chassis[] = [
     },
     {
         name: 'Bakkor miner',
-        specials: 'n/a',
+        specials: '+1 handling, torque vector (can push opponent up to 5 on collision)',
         desc: 'Once known as Leader Drills, they were at the forefront of extending mine shafts and tunnels on Bakkoroth.',
         type: 'car'
     },
     {
         name: 'Human truck',
-        specials: 'n/a',
+        specials: '+1 handling, torque vector (can push opponent up to 5 on collision)',
         desc: 'One of a handful of surviving military personnel vehicles shipped to the Tarapor star system with the Human Outreach expedition mission. This vehicle would be replicated by the Ainashians to aid in the fight against the Sprites.',
         type: 'car'
     },
     {
         name: 'Boor',
-        specials: 'n/a',
+        specials: '+1 handling, torque vector (can push opponent up to 5 on collision)',
         desc: 'The Bakkor Boor rig was a vehicle provided to mine workers so that they could commute to the mines. The journey was often long and the terrain rough. So the 4x4 off road capabilities, and their dual-primed propultion systems provided outstanding performance on the rough terrain of the  frozen wilders of the southern continent.',
         type: 'car'
     },
